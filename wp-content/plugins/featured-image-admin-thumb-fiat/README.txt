@@ -4,8 +4,8 @@ Donate link: https://www.seanhayes.biz/
 Tags: post-thumbnail, thumbnail, admin, image, featured, featured image, featured thumbnail, featured admin thumbnail
 Requires at least: 3.5.1
 Requires PHP: 7.0
-Tested up to: 5.2
-Stable tag: 1.5.3
+Tested up to: 5.7
+Stable tag: 1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -64,6 +64,9 @@ During testing I found that if a post has a featured image assigned but does not
 6. Shows the thumb column when sorted descending
 
 == Changelog ==
+1.6 (2021-03-30)
+* Addresses plugin conflict when using Gutenberg editor and ACF [Conflict with ACF](https://wordpress.org/support/topic/conflict-with-acf-11/)
+
 1.5.3 (2019-07-01)
 * Addresses thumb column dislay issue with EDD Frontend Submissions [Plugin not working with EDD](https://wordpress.org/support/topic/plugin-not-working-with-edd/)
 

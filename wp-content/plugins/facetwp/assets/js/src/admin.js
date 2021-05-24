@@ -602,8 +602,6 @@
             <div class="builder-wrap">
                 <div class="builder-canvas-wrap">
                     <div class="builder-canvas">
-                        <div class="builder-edge"></div>
-                        <div class="builder-edge vertical"></div>
                         <draggable :list="layout.items" handle=".builder-row-actions.not-child">
                             <builder-row
                                 v-for="(row, index) in layout.items"
@@ -831,10 +829,10 @@
             template: `
             <div>
                 <div class="utrbl utrbl-unit"><input type="text" v-model="settings[name].unit" /><span>unit</span></div>
-                <div class="utrbl"><input type="number" v-model.number="settings[name].top" /><span>top</span></div>
-                <div class="utrbl"><input type="number" v-model.number="settings[name].right" /><span>right</span></div>
-                <div class="utrbl"><input type="number" v-model.number="settings[name].bottom" /><span>bottom</span></div>
-                <div class="utrbl"><input type="number" v-model.number="settings[name].left" /><span>left</span></div>
+                <div class="utrbl"><input type="text" v-model.number="settings[name].top" /><span>top</span></div>
+                <div class="utrbl"><input type="text" v-model.number="settings[name].right" /><span>right</span></div>
+                <div class="utrbl"><input type="text" v-model.number="settings[name].bottom" /><span>bottom</span></div>
+                <div class="utrbl"><input type="text" v-model.number="settings[name].left" /><span>left</span></div>
             </div>
             `
         });
@@ -1722,8 +1720,7 @@
                     }
                 },
                 saveChanges() {
-                    $('.facetwp-response').html(FWP.__('Saving') + '...');
-                    $('.facetwp-response').addClass('visible');
+                    window.setStatus('load', FWP.__('Saving') + '...');
 
                     let data = JSON.parse(JSON.stringify(FWP.data));
 
@@ -1739,14 +1736,12 @@
                     });
 
                     $.post(ajaxurl, data, {
-                        done: ({message, reindex}) => {
-                            $('.facetwp-response').html(message);
-                            var method = (reindex) ? 'addClass' : 'removeClass';
-                            $('.facetwp-rebuild')[method]('flux');
+                        done: ({code, message}) => {
+                            var code = ('success' == code) ? 'ok' : code;
+                            window.setStatus(code, message);
                         },
                         fail: (err) => {
-                            console.log(err);
-                            // $('.facetwp-response').html(status + ' ' + errorThrown);
+                            window.setStatus('error', err);
                         }
                     });
                 },
@@ -1756,8 +1751,6 @@
                 rebuildIndex() {
                     let self = this;
 
-                    $('.facetwp-rebuild').removeClass('flux');
-
                     if (this.is_indexing) {
                         return;
                     }
@@ -1765,8 +1758,7 @@
                     this.is_indexing = true;
 
                     $.post(ajaxurl, { action: 'facetwp_rebuild_index', nonce: FWP.nonce });
-                    $('.facetwp-response').html(FWP.__('Indexing') + '... 0%');
-                    $('.facetwp-response').addClass('visible');
+                    window.setStatus('load', FWP.__('Indexing') + '... 0%');
                     this.timeout = setTimeout(() => {
                         self.getProgress();
                     }, 5000);
@@ -1782,7 +1774,7 @@
                         done: ({message}) => {
                             self.is_indexing = false;
                             clearTimeout(self.timeout);
-                            $('.facetwp-response').html(message);
+                            window.setStatus('error', message);
                         }
                     });
                 },
@@ -1796,17 +1788,22 @@
                     }, {
                         done: (data) => {
                             if ('-1' == data.pct) {
-                                $('.facetwp-response').html(FWP.__('Indexing complete'));
                                 self.is_indexing = false;
-    
-                                // Update the row counts
-                                $.each(data.rows, function(count, facet_name) {
-                                    Vue.set(self.row_counts, facet_name, count);
-                                });
+
+                                if (data.rows.length < 1) {
+                                    window.setStatus('error', FWP.__('The index table is empty'));
+                                }
+                                else {
+                                    window.setStatus('ok', FWP.__('Indexing complete'));
+
+                                    // Update the row counts
+                                    $.each(data.rows, function(count, facet_name) {
+                                        Vue.set(self.row_counts, facet_name, count);
+                                    });
+                                }
                             }
                             else if (isNumeric(data.pct)) {
-                                $('.facetwp-response').html(FWP.__('Indexing') + '... ' + data.pct + '%');
-                                $('.facetwp-response').addClass('visible');
+                                window.setStatus('load', FWP.__('Indexing') + '... ' + data.pct + '%');
                                 self.is_indexing = true;
     
                                 self.timeout = setTimeout(() => {
@@ -1814,15 +1811,14 @@
                                 }, 5000);
                             }
                             else {
-                                $('.facetwp-response').html(data);
+                                window.setStatus('error', data);
                                 self.is_indexing = false;
                             }
                         }
                     });
                 },
                 getInfo(type, label) {
-                    $('.facetwp-response').html(FWP.__(label) + '...');
-                    $('.facetwp-response').addClass('visible');
+                    window.setStatus('load', FWP.__(label) + '...');
 
                     $.post(ajaxurl, {
                         action: 'facetwp_get_info',
@@ -1830,7 +1826,7 @@
                         nonce: FWP.nonce
                     }, {
                         done: ({message}) => {
-                            $('.facetwp-response').html(message);
+                            window.setStatus('error', message);
                         }
                     });
                 },
@@ -1941,6 +1937,23 @@
 
     function init_custom_js() {
 
+        window.setStatus = (code, message) => {
+            $('.facetwp-response').html(message);
+            $('.facetwp-response-icon').nodes[0].setAttribute('data-status', code);
+
+            if ('error' == code) {
+                $('.facetwp-response').addClass('visible');
+            }
+        };
+
+        $().on('click', '.facetwp-settings-section .facetwp-switch', () => {
+            window.setStatus('error', 'Press "Save changes" to apply');
+        });
+
+        $().on('click', '.facetwp-response-wrap', () => {
+            $('.facetwp-response').toggleClass('visible');
+        });
+
         // Export
         $().on('click', '.export-submit', () => {
             $('.import-code').val(FWP.__('Loading') + '...');
@@ -1959,8 +1972,7 @@
 
         // Import
         $().on('click', '.import-submit', () => {
-            $('.facetwp-response').addClass('visible');
-            $('.facetwp-response').html(FWP.__('Importing') + '...');
+            window.setStatus('load', FWP.__('Importing') + '...');
 
             try {
                 var code = JSON.parse($('.import-code').val());
@@ -1974,7 +1986,7 @@
                 }, {
                     dataType: 'text',
                     done: (resp) => {
-                        $('.facetwp-response').html(resp);
+                        window.setStatus('ok', resp);
                         setTimeout(() => {
                             window.location.reload();
                         }, 1500);
@@ -1982,7 +1994,7 @@
                 });
             }
             catch(err) {
-                $('.facetwp-response').html('Invalid JSON');
+                window.setStatus('error', 'Invalid JSON');
             }
         });
 

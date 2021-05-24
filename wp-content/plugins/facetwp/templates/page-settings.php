@@ -121,11 +121,18 @@ FWP.data.settings = FWP.hooks.applyFilters('facetwp/load_settings', FWP.data.set
             </div>
         </span>
 
-        <span class="facetwp-response"></span>
+        <div class="facetwp-response-wrap">
+            <div class="facetwp-response"></div>
+            <div class="facetwp-response-icon" data-status="load">
+                <span></span>
+            </div>
+        </div>
     </div>
 
     <div class="wrap">
-        <div class="facetwp-loading" :class="{ hidden: true }"></div>
+        <div class="facetwp-loading" :class="{ hidden: true }">
+            Check your browser console if this text doesn't disappear
+        </div>
 
         <!-- Facets tab -->
 

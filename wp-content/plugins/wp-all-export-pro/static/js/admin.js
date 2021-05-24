@@ -223,6 +223,7 @@
 				$elementName = $elementName.replace('(per tax)','PerTax');
 				$elementName = $elementName.replace('(per coupon)','PerCoupon');
 				$elementName = $elementName.replace('(per surcharge)','PerSurcharge');
+				$elementName = $elementName.replace('/','');
 			}
 
 			return $elementName;
@@ -491,7 +492,7 @@
 
             var is_dismiss_warnings = parseInt($('#dismiss_warnings').val());
 
-            if ( ! is_dismiss_warnings ) {
+            if ( ! is_dismiss_warnings && ! $('#pmxe_dismiss_import_warnings_by_default').length) {
                 $('.wp-all-export-warning').find('p').html(warning_template);
                 $('.wp-all-export-warning').show();
             }
@@ -507,8 +508,8 @@
 
 		var wp_all_export_rules_config = {
 	      '#wp_all_export_xml_element' : {width:"98%"},
-	      '#wp_all_export_rule' : {width:"98%"},
-	    }
+	      '#wp_all_export_rule' : {width:"98%"}
+	    };
 
 	    for (var selector in wp_all_export_rules_config) {
 
@@ -536,6 +537,7 @@
 						data: {'selected' : params.selected},
 						security: wp_all_export_security
 				    };
+
 				    $.ajax({
 						type: 'POST',
 						url: ajaxurl,
@@ -567,11 +569,16 @@
 		    }
 	    });
 
-	}
+	};
 
 	var is_first_load = true;
 
 	var filtering = function(postType){
+
+		// Allow add-ons to disable filters
+		if(window.wpaeFiltersDisabled) {
+			return false;
+		}
 
 		var is_preload = $('.wpallexport-preload-post-data').val();
 		var filter_rules_hierarhy = parseInt(is_preload) ? $('input[name=filter_rules_hierarhy]').val() : '';
@@ -580,7 +587,11 @@
 
 		var request = {
 			action: 'wpae_filtering',
-			data: {'cpt' : postType, 'export_type' : 'specific', 'filter_rules_hierarhy' : filter_rules_hierarhy, 'product_matching_mode' : 'strict', 'taxonomy_to_export' : $('input[name=taxonomy_to_export]').val()},
+			data: {'cpt' : postType, 'export_type' : 'specific', 'filter_rules_hierarhy' : filter_rules_hierarhy, 'product_matching_mode' : 'strict',
+				'taxonomy_to_export' : $('input[name=taxonomy_to_export]').val(),
+				'sub_post_type_to_export' : $('input[name=sub_post_type_to_export]').val(),
+
+			},
 			security: wp_all_export_security
 	    };
 
@@ -633,6 +644,8 @@
 
 	};
 
+	window.wpae_filtering = filtering;
+
 	var liveFiltering = function(first_load, after_filtering){
 
 		// serialize filters
@@ -674,6 +687,7 @@
                 'export_only_customers_that_made_purchases' : $export_only_customers_that_made_purchases,
 				'export_type' : $('input[name=export_type]').val(),
 				'taxonomy_to_export' : $('input[name=taxonomy_to_export]').val(),
+				'sub_post_type_to_export' : $('input[name=sub_post_type_to_export]').val(),
 				'wpml_lang' : $('input[name=wpml_lang]').val(),
 				'export_variations' : $('#export_variations').val()
 			},
@@ -863,6 +877,16 @@
 
 		$('.wpallexport-import-from.selected').click();
 
+		window.wpaeFiltersDisabled = false;
+
+		window.wpaeDisableFiltering = function() {
+			window.wpaeFiltersDisabled = true;
+		};
+
+		window.wpaeEnableFiltering = function() {
+            window.wpaeFiltersDisabled = false;
+		};
+
 		$('#file_selector').ddslick({
 			width: 600,
 			onSelected: function(selectedData){
@@ -879,6 +903,7 @@
 					});
 
 					$('.wpallexport-choose-file').find('input[name=cpt]').val(postType);
+                    $('.wpallexport-choose-file').find('input[name=cpt]').trigger("change");
 
 					if (postType == 'taxonomies'){
 						$('.taxonomy_to_export_wrapper').slideDown();
@@ -1169,9 +1194,9 @@
 					xml_editor.autoIndentRange({line:0, ch:0}, {line:totalLines,ch:100});
 				}
 
-				if (ui.draggable.find('input[name^=rules]').length){
+				if ($('#available_data').find(ui.draggable.find('input[name^=rules]')).length){
 					var content = "";
-					$('li.' + ui.draggable.find('input[name^=rules]').val()).each(function(){
+					$($('#available_data').find('li.' + ui.draggable.find('input[name^=rules]').val())).each(function(){
 						var $elementName = $(this).find('input[name^=cc_name]').val();
 						$elementName = processElementName($(this),$elementName);
 						content = content + getCodeToPlace($elementName);
@@ -1232,7 +1257,7 @@
 			});
 
 			$('.wp-all-export-chosen-select').trigger('chosen:updated');
-			$('.wp_all_export_saving_status').html('');
+			$('.wp_all_export_saving_status').removeClass('error updated').html('');
 
 			$('.wpallexport-overlay').show();
 			$addAnotherForm.find('input.switcher').change();
@@ -2214,7 +2239,7 @@
 			security: wp_all_export_security
 	    };
 	    $('.wp_all_export_functions_preloader').show();
-	    $('.wp_all_export_saving_status').html('');
+	    $('.wp_all_export_saving_status').removeClass('error updated').html('');
 
 		$.ajax({
 			type: 'POST',
@@ -2225,14 +2250,14 @@
 
 				if (response.result)
 				{
-					$('.wp_all_export_saving_status').css({'color':'green'});
+					$('.wp_all_export_saving_status').addClass('updated');
 					setTimeout(function() {
-						$('.wp_all_export_saving_status').html('').fadeOut();
+						$('.wp_all_export_saving_status').removeClass('error updated').html('').fadeOut();
 					}, 3000);
 				}
 				else
 				{
-					$('.wp_all_export_saving_status').css({'color':'red'});
+					$('.wp_all_export_saving_status').addClass('error');
 				}
 
 				$('.wp_all_export_saving_status').html(response.msg).show();
@@ -2559,7 +2584,6 @@
 				'security' : wp_all_export_security
 			},
 			success: function (data) {
-
                 $('.wpallexport-loader').hide();
                 $(this).pointer({
 					content: '<div id="scheduling-popup">' + data + '</div>',
@@ -2573,9 +2597,10 @@
 						$('.timepicker').timepicker();
 
 						var $leftOffset = ($(window).width() - 715) / 2;
+						var $topOffset = $(document).scrollTop() + 100;
 
 						var $pointer = $('.wp-pointer').last();
-						$pointer.css({'position': 'absolute', 'top': '50px', 'left': $leftOffset + 'px'});
+						$pointer.css({'position': 'absolute', 'top': $topOffset + 'px', 'left': $leftOffset + 'px'});
 
 						$pointer.find('a.close').remove();
 						$pointer.find('.wp-pointer-buttons').append('<button class="save-changes button button-primary button-hero wpallexport-large-button" style="float: right; background-image: none;">Save</button>');

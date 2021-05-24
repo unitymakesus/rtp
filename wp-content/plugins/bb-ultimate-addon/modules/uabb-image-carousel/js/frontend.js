@@ -100,7 +100,7 @@
                 }
             });
 
-            node.find('.slick-list.draggable').animate({ height: max_height }, { duration: 200, easing: 'linear' });
+            node.find('.uabb-image-carousel .slick-list.draggable').animate({ height: max_height }, { duration: 200, easing: 'linear' });
             max_height = -1;
         }
     };

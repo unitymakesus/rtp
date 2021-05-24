@@ -97,19 +97,6 @@
         });
       }
 
-      // Toggle content on Show/Hide button.
-      if ( 'yes' === content_toggle ) {
-        content_selector.css( 'display', 'inline-block' );
-      } else {
-        content_selector.css( 'display', 'none' );
-      }
-
-      if ( 'yes' === content_toggle && 'yes' === auto_collapse ) {
-        nodeClass.find( '#uabb-toc-togglecontents' ).toggle(350);
-        seprator.toggle(200);
-        wrapper.toggleClass( 'uabb-toc-hidden' );
-      }
-
       content_selector.on( 'click', $.proxy( $this._TocToggle, $this ));
     },
 

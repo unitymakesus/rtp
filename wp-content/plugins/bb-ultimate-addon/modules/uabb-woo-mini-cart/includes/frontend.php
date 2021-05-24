@@ -42,7 +42,7 @@ $offcanvas_pos  = ( 'off-canvas' === $settings->cart_style && isset( $settings->
 			}
 			if ( 'yes' === $settings->show_badge ) {
 				?>
-				<span class="uabb-cart-btn-badge uabb-cart-badge-<?php echo esc_attr( $settings->badge_position ); ?>">
+				<span class="uabb-cart-btn-badge">
 					<?php echo wp_kses_post( WC()->cart->get_cart_contents_count() ); ?>
 				</span>
 			<?php } ?>

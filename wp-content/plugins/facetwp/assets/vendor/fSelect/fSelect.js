@@ -102,6 +102,7 @@ window.fSelect = (() => {
 
         open() {
             var wrap = this.input._rel;
+            wrap.classList.add('fs-open');
             wrap.querySelector('.fs-dropdown').classList.remove('hidden');
             wrap.querySelector('.fs-search input').focus();
 
@@ -112,6 +113,7 @@ window.fSelect = (() => {
         }
 
         close() {
+            this.input._rel.classList.remove('fs-open');
             this.input._rel.querySelector('.fs-dropdown').classList.add('hidden');
 
             window.fSelectInit.searchCache = '';
@@ -143,6 +145,14 @@ window.fSelect = (() => {
                     }
 
                     var classes = ['fs-option', 'g' + build.optgroup];
+
+                    // append existing classes
+                    node.className.split(' ').forEach((className) => {
+                        if ('' !== className) {
+                            classes.push(className);
+                        }
+                    });
+
                     if (node.matches('[disabled]')) classes.push('disabled');
                     if (node.matches('[selected]')) classes.push('selected');
                     classes = classes.join(' ');
@@ -302,6 +312,7 @@ window.fSelect = (() => {
                 var currentChoice = input.fselect.getSelectedOptions('value');
     
                 if (JSON.stringify(lastChoice) !== JSON.stringify(currentChoice)) {
+                    input.dispatchEvent(new Event('change', { bubbles: true }));
                     input.fselect.trigger('fs:changed', wrap);
                 }
 

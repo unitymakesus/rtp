@@ -148,7 +148,7 @@ FLBuilder::register_module(
 						'badge_position' => array(
 							'type'    => 'select',
 							'label'   => __( 'Badge Position', 'uabb' ),
-							'default' => 'circle',
+							'default' => 'inline',
 							'options' => array(
 								'inline' => __( 'After Icon', 'uabb' ),
 								'top'    => __( 'Bubble', 'uabb' ),

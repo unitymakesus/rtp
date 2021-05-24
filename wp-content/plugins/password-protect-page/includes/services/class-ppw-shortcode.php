@@ -49,20 +49,23 @@ if ( ! class_exists( 'PPW_Shortcode' ) ) {
 			$this->attributes = apply_filters(
 				PPW_Constants::HOOK_SHORT_CODE_ATTRS,
 				array(
-					'passwords'         => '',
-					'headline'          => PPW_Constants::DEFAULT_SHORTCODE_HEADLINE,
-					'description'       => PPW_Constants::DEFAULT_SHORTCODE_DESCRIPTION,
-					'id'                => '',
-					'class'             => '',
-					'placeholder'       => '',
-					'button'            => PPW_Constants::DEFAULT_SHORTCODE_BUTTON,
-					'whitelisted_roles' => '',
-					'group'             => '',
-					'label'             => PPW_Constants::DEFAULT_SHORTCODE_LABEL,
-					'error_msg'         => PPW_Constants::DEFAULT_SHORTCODE_ERROR_MSG,
-					'loading'           => PPW_Constants::DEFAULT_SHORTCODE_LOADING,
-					'on'                => '',
-					'off'               => '',
+					'passwords'          => '',
+					'headline'           => PPW_Constants::DEFAULT_SHORTCODE_HEADLINE,
+					'description'        => PPW_Constants::DEFAULT_SHORTCODE_DESCRIPTION,
+					'id'                 => '',
+					'class'              => '',
+					'placeholder'        => '',
+					'button'             => PPW_Constants::DEFAULT_SHORTCODE_BUTTON,
+					'whitelisted_roles'  => '',
+					'group'              => '',
+					'label'              => PPW_Constants::DEFAULT_SHORTCODE_LABEL,
+					'error_msg'          => PPW_Constants::DEFAULT_SHORTCODE_ERROR_MSG,
+					'loading'            => PPW_Constants::DEFAULT_SHORTCODE_LOADING,
+					'on'                 => '',
+					'off'                => '',
+					'acf_field'          => '',
+					'show_password'      => PPW_Constants::DEFAULT_SHORTCODE_SHOW_PASSWORD,
+					'show_password_text' => PPW_Constants::DEFAULT_SHORTCODE_SHOW_PASSWORD_TEXT,
 				)
 			);
 
@@ -197,7 +200,8 @@ if ( ! class_exists( 'PPW_Shortcode' ) ) {
 			// In case the shortcode is outside in the loop, the page is 0.
 			$number = ! empty( $page ) ? $page : 1;
 
-			$attrs = shortcode_atts(
+			$this->attributes = apply_filters( 'ppw_pcp_attributes', $this->attributes, $number );
+			$attrs            = shortcode_atts(
 				$this->attributes,
 				$attrs
 			);
@@ -427,6 +431,11 @@ if ( ! class_exists( 'PPW_Shortcode' ) ) {
 		 * @return array|mixed
 		 */
 		private function get_restricted_content_form( $attrs, $number ) {
+			$checkbox = '';
+			if ( wp_validate_boolean( $attrs['show_password'] ) ) {
+				$checkbox = '<label class="ppw-pcp-checkbox-label"><input class="ppw-pcp-checkbox" type="checkbox" /> ' . _x( $this->massage_attributes( $attrs['show_password_text'] ), PPW_Constants::CONTEXT_PCP_PASSWORD_FORM, 'password-protect-page' ) . '</label>';
+			}
+
 			ob_start();
 			include apply_filters(
 				PPW_Constants::HOOK_SHORT_CODE_TEMPLATE,
@@ -436,18 +445,21 @@ if ( ! class_exists( 'PPW_Shortcode' ) ) {
 			ob_end_clean();
 			// phpcs:disable
 			$form_params = array(
-				PPW_Constants::SHORT_CODE_FORM_HEADLINE      => _x( $this->massage_attributes( $attrs['headline'] ), PPW_Constants::CONTEXT_PCP_PASSWORD_FORM, 'password-protect-page' ),
-				PPW_Constants::SHORT_CODE_FORM_INSTRUCT      => _x( $this->massage_attributes( $attrs['description'] ), PPW_Constants::CONTEXT_PCP_PASSWORD_FORM, 'password-protect-page' ),
-				PPW_Constants::SHORT_CODE_FORM_PLACEHOLDER   => _x( $this->massage_attributes( $attrs['placeholder'] ), PPW_Constants::CONTEXT_PCP_PASSWORD_FORM, 'password-protect-page' ),
-				PPW_Constants::SHORT_CODE_FORM_AUTH          => get_the_ID(),
-				PPW_Constants::SHORT_CODE_BUTTON             => _x( wp_kses_post( $attrs['button'] ), PPW_Constants::CONTEXT_PCP_PASSWORD_FORM, 'password-protect-page' ),
-				PPW_Constants::SHORT_CODE_FORM_CURRENT_URL   => $this->get_the_permalink_without_cache( wp_rand( 0, 100 ) ),
-				PPW_Constants::SHORT_CODE_FORM_ID            => '' === $attrs['id'] ? get_the_ID() . wp_rand( 0, 1000 ) : wp_kses_post( $attrs['id'] ),
-				PPW_Constants::SHORT_CODE_FORM_CLASS         => '' === $attrs['class'] ? $this->get_main_class_name( $attrs ) : $this->get_main_class_name( $attrs ) . ' ' . wp_kses_post( $attrs['class'] ),
-				PPW_Constants::SHORT_CODE_PASSWORD_LABEL     => _x( $this->massage_attributes( $attrs['label'] ), PPW_Constants::CONTEXT_PCP_PASSWORD_FORM, 'password-protect-page' ),
-				PPW_Constants::SHORT_CODE_FORM_ERROR_MESSAGE => '',
-				'[PPW_PAGE]'                                 => $number,
-				'[PPW_BUTTON_LOADING]'                       => esc_attr_x( $attrs['loading'], PPW_Constants::CONTEXT_PCP_PASSWORD_FORM, 'password-protect-page' ),
+				PPW_Constants::SHORT_CODE_FORM_HEADLINE       => _x( $this->massage_attributes( $attrs['headline'] ), PPW_Constants::CONTEXT_PCP_PASSWORD_FORM, 'password-protect-page' ),
+				PPW_Constants::SHORT_CODE_FORM_INSTRUCT       => _x( $this->massage_attributes( $attrs['description'] ), PPW_Constants::CONTEXT_PCP_PASSWORD_FORM, 'password-protect-page' ),
+				PPW_Constants::SHORT_CODE_FORM_PLACEHOLDER    => _x( $this->massage_attributes( $attrs['placeholder'] ), PPW_Constants::CONTEXT_PCP_PASSWORD_FORM, 'password-protect-page' ),
+				PPW_Constants::SHORT_CODE_FORM_AUTH           => get_the_ID(),
+				PPW_Constants::SHORT_CODE_BUTTON              => _x( wp_kses_post( $attrs['button'] ), PPW_Constants::CONTEXT_PCP_PASSWORD_FORM, 'password-protect-page' ),
+				PPW_Constants::SHORT_CODE_FORM_CURRENT_URL    => $this->get_the_permalink_without_cache( wp_rand( 0, 100 ) ),
+				PPW_Constants::SHORT_CODE_FORM_ID             => '' === $attrs['id'] ? get_the_ID() . wp_rand( 0, 1000 ) : wp_kses_post( $attrs['id'] ),
+				PPW_Constants::SHORT_CODE_FORM_CLASS          => '' === $attrs['class'] ? $this->get_main_class_name( $attrs ) : $this->get_main_class_name( $attrs ) . ' ' . wp_kses_post( $attrs['class'] ),
+				PPW_Constants::SHORT_CODE_PASSWORD_LABEL      => _x( $this->massage_attributes( $attrs['label'] ), PPW_Constants::CONTEXT_PCP_PASSWORD_FORM, 'password-protect-page' ),
+				PPW_Constants::SHORTCODE_ABOVE_PASSWORD_INPUT => apply_filters( 'ppw_pcp_above_password_field', '', $attrs ),
+				PPW_Constants::SHORTCODE_BELOW_PASSWORD_INPUT => apply_filters( 'ppw_pcp_below_password_field', '', $attrs ),
+				PPW_Constants::SHORT_CODE_FORM_ERROR_MESSAGE  => '',
+				'[PPW_PAGE]'                                  => $number,
+				'[PPW_CHECKBOX]'                              => $checkbox,
+				'[PPW_BUTTON_LOADING]'                        => esc_attr_x( $attrs['loading'], PPW_Constants::CONTEXT_PCP_PASSWORD_FORM, 'password-protect-page' ),
 			);
 			// phpcs:enable
 

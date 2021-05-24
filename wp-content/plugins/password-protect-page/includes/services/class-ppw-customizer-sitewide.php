@@ -93,7 +93,7 @@ if ( ! class_exists( 'PPW_Customizer_Sitewide' ) ) {
 
 			$wp_customize->add_panel( 'ppwp_sitewide',
 				array(
-					'priority'       => 999,
+					'priority'       => 1005,
 					'capability'     => 'edit_theme_options',
 					'theme_supports' => '',
 					'title'          => __( 'PPWP Sitewide Login Form', 'password-protect-page' ),

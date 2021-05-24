@@ -102,7 +102,7 @@
     z-index: 5;
 }
 .uabb-creative-menu-mobile-toggle.text {
-	width: 100%;
+	width: auto;
 	text-align: center;
 }
 .uabb-creative-menu-mobile-toggle.hamburger .uabb-creative-menu-mobile-toggle-label,

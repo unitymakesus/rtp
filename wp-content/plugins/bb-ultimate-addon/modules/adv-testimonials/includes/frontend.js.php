@@ -81,7 +81,7 @@ if ( 'slider' === $settings->tetimonial_layout ) {
 		}
 	});
 
-	jQuery(window).load( function() {
+	jQuery(window).on('load', function() {
 		testimonial_<?php echo esc_attr( $id ); ?>.reloadSlider();
 	});
 	<?php
@@ -105,7 +105,7 @@ if ( 'slider' === $settings->tetimonial_layout ) {
 			testimonial_<?php echo esc_attr( $id ); ?>();
 		});
 
-		jQuery(window).load( function() {
+		jQuery(window).on('load', function() {
 			testimonial_<?php echo esc_attr( $id ); ?>();
 		});
 

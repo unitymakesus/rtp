@@ -1,12 +1,13 @@
 # User Switching
 
-Stable tag: 1.5.6  
+Stable tag: 1.5.7  
 Requires at least: 3.7  
-Tested up to: 5.5  
+Tested up to: 5.7  
 Requires PHP: 5.3  
 License: GPL v2 or later  
 Tags: users, profiles, user switching, fast user switching, multisite, buddypress, bbpress, become, user management, developer  
 Contributors: johnbillion  
+Donate link: https://github.com/sponsors/johnbillion
 
 ![](.wordpress-org/banner-1544x500.png)
 
@@ -44,6 +45,13 @@ This plugin allows you to quickly swap between user accounts in WordPress at the
  3. You can switch back to your originating account via the *Switch back* link on each dashboard screen or in your profile menu in the WordPress toolbar.
 
 See the [FAQ](https://wordpress.org/plugins/user-switching/faq/) for information about the *Switch Off* feature.
+
+### Other Plugins
+
+I maintain several other plugins for developers. Check them out:
+
+* [Query Monitor](https://wordpress.org/plugins/query-monitor/) is the developer tools panel for WordPress
+* [WP Crontrol](https://wordpress.org/plugins/wp-crontrol/) lets you view and control what's happening in the WP-Cron system
 
 ### Privacy Statement
 
@@ -97,7 +105,7 @@ Yes, and you'll also be able to switch users from member profile screens.
 
 ### Does this plugin work with WooCommerce?
 
-Yes, but for maximum compatibility you should use WooCommerce version 3.6 or later.
+Yes. For maximum compatibility you should use WooCommerce version 3.6 or later.
 
 ### Does this plugin work if my site is using a two-factor authentication plugin?
 
@@ -137,8 +145,21 @@ Yes. Use the `user_switching::maybe_switch_url()` method for this. It takes care
         if ( $url ) {
             printf(
                 '<a href="%1$s">Switch to %2$s</a>',
-                $url,
-                $target_user->display_name
+                esc_url( $url ),
+                esc_html( $target_user->display_name )
+            );
+        }
+    }
+
+This link also works for switching back to the original user, but if you want an explicit link for this you can use the following code:
+
+    if ( method_exists( 'user_switching', 'get_old_user' ) ) {
+        $old_user = user_switching::get_old_user();
+        if ( $old_user ) {
+            printf(
+                '<a href="%1$s">Switch back to %2$s</a>',
+                esc_url( user_switching::switch_back_url( $old_user ) ),
+                esc_html( $old_user->display_name )
             );
         }
     }
@@ -229,7 +250,17 @@ In addition, User Switching respects the following filters from WordPress core w
 * `login_redirect` when switching to another user.
 * `logout_redirect` when switching off.
 
+### Do you accept donations?
+
+[I am accepting sponsorships via the GitHub Sponsors program](https://johnblackbourn.com/donations/) and any support you can give will help me maintain this plugin and keep it free for everyone.
+
 ## Changelog ##
+
+### 1.5.7 ###
+
+* Fix some issues that could lead to PHP errors given a malformed cookie.
+* Fix documentation.
+
 
 ### 1.5.6 ###
 
@@ -308,11 +339,6 @@ In addition, User Switching respects the following filters from WordPress core w
 * Switch to safe redirects for extra paranoid hardening.
 * Docblock improvements.
 * Coding standards improvements.
-
-### 0.6.1 ###
-
-- Slovak translation by Max Samael.
-
 
 ### 0.6 ###
 

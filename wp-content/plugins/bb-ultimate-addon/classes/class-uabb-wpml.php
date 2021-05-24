@@ -83,6 +83,11 @@ if ( ! class_exists( 'UABB_WPML_Translatable' ) ) {
 						'type'        => __( 'Heading : Separator Text', 'uabb' ),
 						'editor_type' => 'LINE',
 					),
+					array(
+						'field'       => 'link',
+						'type'        => __( 'Link', 'uabb' ),
+						'editor_type' => 'LINK',
+					),
 				),
 			);
 
@@ -1305,6 +1310,18 @@ if ( ! class_exists( 'UABB_WPML_Translatable' ) ) {
 						'field'       => 'no_results_message',
 						'type'        => __( 'No Results Message', 'uabb' ),
 						'editor_type' => 'VISUAL',
+					),
+				),
+			);
+
+			// Table of Contents Module.
+			$form['uabb-table-of-contents'] = array(
+				'conditions' => array( 'type' => 'uabb-table-of-contents' ),
+				'fields'     => array(
+					array(
+						'field'       => 'heading_title',
+						'type'        => __( 'Table of Contents: Title Text', 'uabb' ),
+						'editor_type' => 'LINE',
 					),
 				),
 			);

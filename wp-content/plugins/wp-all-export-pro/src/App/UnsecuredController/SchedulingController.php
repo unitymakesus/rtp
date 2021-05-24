@@ -154,6 +154,14 @@ class SchedulingController extends BaseController
         ) {
             die(\__('The User Export Add-On Pro is required to run this export. You can download the add-on here: <a href="http://www.wpallimport.com/portal/" target="_blank">http://www.wpallimport.com/portal/</a>', \PMXE_Plugin::LANGUAGE_DOMAIN));
         }
+
+        if (
+            (((strpos($cpt[0], 'custom_') === 0)) && !class_exists('GF_Export_Add_On'))
+            ||
+            ($export->options['export_type'] == 'advanced' && $export->options['wp_query_selector'] == 'wp_user_query' && !$addons->isUserAddonActive())
+        ) {
+            die(\__('The Gravity Forms Export Add-On Pro is required to run this export. You can download the add-on here: <a href="http://www.wpallimport.com/portal/" target="_blank">http://www.wpallimport.com/portal/</a>', \PMXE_Plugin::LANGUAGE_DOMAIN));
+        }
     }
 
 }

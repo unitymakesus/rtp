@@ -759,7 +759,7 @@ class UABBVideo extends FLBuilderModule {
 			}
 		}
 		if ( 'vimeo' === $this->settings->video_type ) {
-			$vimeo_options = array( 'autoplay', 'loop', 'title', 'portrait', 'byline' );
+			$vimeo_options = array( 'autoplay', 'loop', 'title', 'portrait', 'byline', 'dnt' );
 
 			foreach ( $vimeo_options as $option ) {
 				if ( 'autoplay' === $option ) {
@@ -782,6 +782,10 @@ class UABBVideo extends FLBuilderModule {
 				}
 				if ( 'byline' === $option ) {
 					$value             = ( 'yes' === $this->settings->vimeo_byline ) ? '1' : '0';
+					$params[ $option ] = $value;
+				}
+				if ( 'dnt' === $option ) {
+					$value             = ( 'yes' === $this->settings->vimeo_dnt_track ) ? '1' : '0';
 					$params[ $option ] = $value;
 				}
 			}

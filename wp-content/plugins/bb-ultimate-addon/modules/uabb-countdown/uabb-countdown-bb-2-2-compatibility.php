@@ -14,7 +14,7 @@ FLBuilder::register_module(
 		'general'         => array( // Tab.
 			'title'    => __( 'General', 'uabb' ), // Tab title.
 			'sections' => array( // Tab Sections.
-				'general' => array( // Section.
+				'general'      => array( // Section.
 					'title'  => '', // Section Title.
 					'fields' => array( // Section Fields.
 						'timer_type'             => array(
@@ -94,257 +94,7 @@ FLBuilder::register_module(
 						),
 					),
 				),
-				'message' => array(
-					'title'  => __( 'Expiry Message Settings', 'uabb' ),
-					'fields' => array(
-						'message_typo'  => array(
-							'type'       => 'typography',
-							'label'      => __( 'Typography', 'uabb' ),
-							'responsive' => true,
-							'preview'    => array(
-								'type'      => 'css',
-								'selector'  => '.uabb-countdown-expire-message',
-								'important' => true,
-							),
-						),
-						'message_color' => array(
-							'type'        => 'color',
-							'connections' => array( 'color' ),
-							'label'       => __( 'Choose Color', 'uabb' ),
-							'default'     => '',
-							'show_alpha'  => true,
-							'show_reset'  => true,
-							'preview'     => array(
-								'type'      => 'css',
-								'selector'  => '.uabb-countdown-expire-message',
-								'property'  => 'color',
-								'important' => true,
-							),
-						),
-					),
-				),
-			),
-		),
-		'style'           => array( // Tab.
-			'title'    => __( 'Styling', 'uabb' ), // Tab title.
-			'sections' => array( // Tab Sections.
-				'align_section' => array( // Section.
-					'title'  => '', // Section Title.
-					'fields' => array( // Section Fields.
-						'counter_alignment'  => array(
-							'type'    => 'align',
-							'label'   => __( 'Overall Alignment', 'uabb' ),
-							'default' => 'center',
-							'preview' => array(
-								'type'      => 'css',
-								'property'  => 'text-align',
-								'selector'  => '.uabb-countdown-fixed-timer, .uabb-countdown-evergreen-timer',
-								'important' => true,
-							),
-						),
-						'space_between_unit' => array(
-							'type'        => 'unit',
-							'label'       => __( 'Space Between Timer Unit & Digit', 'uabb' ),
-							'placeholder' => '10',
-							'units'       => array( 'px' ),
-							'slider'      => array(
-								'px' => array(
-									'min'  => 0,
-									'max'  => 1000,
-									'step' => 10,
-								),
-							),
-						),
-						'timer_out_spacing'  => array(
-							'type'        => 'unit',
-							'placeholder' => '10',
-							'units'       => array( 'px' ),
-							'slider'      => array(
-								'px' => array(
-									'min'  => 0,
-									'max'  => 1000,
-									'step' => 10,
-								),
-							),
-							'label'       => __( 'Space Between Elements', 'uabb' ),
-							'help'        => __( 'This option controls the left-right spacing of each Countdown Element.', 'uabb' ),
-							'class'       => '',
-						),
-					),
-				),
-				'style'         => array( // Section.
-					'title'  => __( 'Timer Digit Styling', 'uabb' ), // Section Title.
-					'fields' => array( // Section Fields.
-						'timer_style'            => array(
-							'type'    => 'select',
-							'label'   => __( 'Digit Area Shape', 'uabb' ),
-							'default' => 'normal',
-							'class'   => '',
-							'options' => array(
-								'normal' => __( 'Normal', 'uabb' ),
-								'circle' => __( 'Circle', 'uabb' ),
-								'square' => __( 'Square', 'uabb' ),
-								'custom' => __( 'Custom', 'uabb' ),
-							),
-							'toggle'  => array(
-								'normal' => array(
-									'fields' => array( 'normal_options' ),
-								),
-								'circle' => array(
-									'fields' => array( 'digit_area_width', 'digit_border_color', 'timer_background_color', 'timer_background_color_opc', 'digit_area_width_desk', 'digit_area_width_med', 'digit_area_width_small', 'digit_border_width', 'digit_border_style', 'unit_position' ),
-								),
-								'square' => array(
-									'fields' => array( 'digit_area_width', 'digit_border_color', 'timer_background_color', 'timer_background_color_opc', 'digit_area_width_desk', 'digit_area_width_med', 'digit_area_width_small', 'digit_border_width', 'digit_border_style', 'unit_position' ),
-								),
-								'custom' => array(
-									'fields' => array( 'digit_area_width', 'digit_border_color', 'digit_border_radius', 'timer_background_color', 'timer_background_color_opc', 'digit_area_width_desk', 'digit_area_width_med', 'digit_area_width_small', 'digit_border_width', 'digit_border_style', 'unit_position' ),
-								),
-							),
-						),
-						'timer_background_color' => array(
-							'type'        => 'color',
-							'connections' => array( 'color' ),
-							'label'       => __( 'Digit Background Color', 'uabb' ),
-							'default'     => '',
-							'show_alpha'  => true,
-							'show_reset'  => true,
-							'preview'     => array(
-								'type'      => 'css',
-								'property'  => 'background',
-								'selector'  => '.uabb-countdown-digit-wrapper',
-								'important' => true,
-							),
-						),
-						'digit_area_width'       => array(
-							'type'        => 'unit',
-							'units'       => array( 'px' ),
-							'placeholder' => '100',
-							'label'       => __( 'Digit Area Width', 'uabb' ),
-							'class'       => '',
-							'slider'      => array(
-								'px' => array(
-									'min'  => 0,
-									'max'  => 1000,
-									'step' => 10,
-								),
-							),
-						),
-						'digit_border_radius'    => array(
-							'type'   => 'unit',
-							'label'  => __( 'Digit Border Radius', 'uabb' ),
-							'class'  => '',
-							'units'  => array( 'px' ),
-							'slider' => array(
-								'px' => array(
-									'min'  => 0,
-									'max'  => 1000,
-									'step' => 10,
-								),
-							),
-						),
-						'digit_border_style'     => array(
-							'type'        => 'select',
-							'label'       => __( 'Digit Border Style', 'uabb' ),
-							'description' => '',
-							'default'     => 'solid',
-							'options'     => array(
-								'solid'  => __( 'Solid', 'uabb' ),
-								'dashed' => __( 'Dashed', 'uabb' ),
-								'dotted' => __( 'Dotted', 'uabb' ),
-							),
-						),
-						'digit_border_width'     => array(
-							'type'   => 'unit',
-							'label'  => __( 'Digit Border Width', 'uabb' ),
-							'class'  => '',
-							'units'  => array( 'px' ),
-							'slider' => array(
-								'px' => array(
-									'min'  => 0,
-									'max'  => 1000,
-									'step' => 10,
-								),
-							),
-						),
-						'digit_border_color'     => array(
-							'type'        => 'color',
-							'connections' => array( 'color' ),
-							'label'       => __( 'Digit Border Color', 'uabb' ),
-							'default'     => '',
-							'show_reset'  => true,
-							'show_alpha'  => true,
-						),
-						'count_animation'        => array(
-							'type'    => 'select',
-							'label'   => __( 'On Count Animation', 'uabb' ),
-							'default' => 'none',
-							'class'   => '',
-							'options' => array(
-								'none'   => __( 'None', 'uabb' ),
-								'flash'  => __( 'Flash', 'uabb' ),
-								'shake'  => __( 'Shake', 'uabb' ),
-								'bounce' => __( 'Bounce', 'uabb' ),
-								'pulse'  => __( 'Pulse', 'uabb' ),
-							),
-						),
-					),
-				),
-				'unit_style'    => array( // Section.
-					'title'  => __( 'Timer Unit Styling', 'uabb' ), // Section Title.
-					'fields' => array( // Section Fields.
-						'unit_position'   => array(
-							'type'    => 'select',
-							'label'   => __( 'Timer Unit Position', 'uabb' ),
-							'default' => 'outside',
-							'class'   => '',
-							'options' => array(
-								'inside'  => __( 'Inside Digit Area', 'uabb' ),
-								'outside' => __( 'Outside Digit Area', 'uabb' ),
-							),
-							'toggle'  => array(
-								'inside'  => array(
-									'fields' => array( 'inside_options' ),
-								),
-								'outside' => array(
-									'fields' => array( 'outside_options' ),
-								),
-							),
-						),
-						'inside_options'  => array(
-							'type'    => 'select',
-							'label'   => __( 'Select Position', 'uabb' ),
-							'default' => 'in_below',
-							'class'   => '',
-							'options' => array(
-								'in_below' => __( 'Below Digit', 'uabb' ),
-								'in_above' => __( 'Above Digit', 'uabb' ),
-							),
-						),
-						'outside_options' => array(
-							'type'    => 'select',
-							'label'   => __( 'Select Position', 'uabb' ),
-							'default' => 'in_below',
-							'class'   => '',
-							'options' => array(
-								'out_below' => __( 'Below Digit', 'uabb' ),
-								'out_above' => __( 'Above Digit', 'uabb' ),
-								'out_right' => __( 'Right Side of Digit', 'uabb' ),
-								'out_left'  => __( 'Left Side of Digit', 'uabb' ),
-							),
-						),
-						'normal_options'  => array(
-							'type'    => 'select',
-							'label'   => __( 'Select Position', 'uabb' ),
-							'default' => 'normal_below',
-							'class'   => '',
-							'options' => array(
-								'normal_below' => __( 'Below Digit', 'uabb' ),
-								'normal_above' => __( 'Above Digit', 'uabb' ),
-							),
-						),
-					),
-				),
-				'timer_string'  => array( // Section.
+				'timer_string' => array( // Section.
 					'title'  => __( 'Timer Strings', 'uabb' ), // Section Title.
 					'fields' => array( // Section Fields.
 						'year_string'           => array(
@@ -553,6 +303,344 @@ FLBuilder::register_module(
 					),
 				),
 			),
+
+		),
+		'style'           => array( // Tab.
+			'title'    => __( 'Styling', 'uabb' ), // Tab title.
+			'sections' => array( // Tab Sections.
+				'align_section'   => array( // Section.
+					'title'  => '', // Section Title.
+					'fields' => array( // Section Fields.
+						'counter_alignment'  => array(
+							'type'    => 'align',
+							'label'   => __( 'Overall Alignment', 'uabb' ),
+							'default' => 'center',
+							'preview' => array(
+								'type'      => 'css',
+								'property'  => 'text-align',
+								'selector'  => '.uabb-countdown-fixed-timer, .uabb-countdown-evergreen-timer',
+								'important' => true,
+							),
+						),
+						'space_between_unit' => array(
+							'type'        => 'unit',
+							'label'       => __( 'Space Between Timer Unit & Digit', 'uabb' ),
+							'placeholder' => '10',
+							'units'       => array( 'px' ),
+							'slider'      => array(
+								'px' => array(
+									'min'  => 0,
+									'max'  => 1000,
+									'step' => 10,
+								),
+							),
+						),
+						'timer_out_spacing'  => array(
+							'type'        => 'unit',
+							'placeholder' => '30',
+							'default'     => '30',
+							'units'       => array( 'px' ),
+							'slider'      => array(
+								'px' => array(
+									'min'  => 0,
+									'max'  => 1000,
+									'step' => 10,
+								),
+							),
+							'label'       => __( 'Space Between Elements', 'uabb' ),
+							'help'        => __( 'This option controls the left-right spacing of each Countdown Element.', 'uabb' ),
+							'class'       => '',
+						),
+					),
+				),
+				'separator_style' => array(
+					'title'  => __( 'Separator', 'uabb' ),
+					'fields' => array(
+						'show_separator'  => array(
+							'type'    => 'select',
+							'label'   => __( 'Show separator between blocks', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'yes' => __( 'Yes', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
+							),
+							'toggle'  => array(
+								'yes' => array(
+									'fields' => array( 'separator_type', 'separator_color', 'hide_separator' ),
+								),
+							),
+						),
+						'separator_type'  => array(
+							'type'    => 'select',
+							'label'   => __( 'Separator Type', 'uabb' ),
+							'default' => 'line',
+							'options' => array(
+								'colon' => __( 'Colon', 'uabb' ),
+								'line'  => __( 'Line', 'uabb' ),
+							),
+							'toggle'  => array(
+								'colon' => array(
+									'fields' => array( 'separator_size' ),
+								),
+							),
+						),
+						'separator_color' => array(
+							'type'        => 'color',
+							'label'       => __( 'Separator Color', 'uabb' ),
+							'show_reset'  => true,
+							'show_alpha'  => true,
+							'connections' => array( 'color' ),
+						),
+						'separator_size'  => array(
+							'type'    => 'unit',
+							'label'   => __( 'Separator Size', 'uabb' ),
+							'default' => '35',
+							'units'   => array( 'px' ),
+							'slider'  => true,
+						),
+						'hide_separator'  => array(
+							'type'    => 'select',
+							'label'   => __( 'Hide on mobile', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'yes' => __( 'Yes', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
+							),
+						),
+					),
+				),
+				'style'           => array( // Section.
+					'title'  => __( 'Timer Digit Styling', 'uabb' ), // Section Title.
+					'fields' => array( // Section Fields.
+						'timer_style'            => array(
+							'type'    => 'select',
+							'label'   => __( 'Digit Area Shape', 'uabb' ),
+							'default' => 'normal',
+							'class'   => '',
+							'options' => array(
+								'normal' => __( 'Normal', 'uabb' ),
+								'circle' => __( 'Circle', 'uabb' ),
+								'square' => __( 'Square', 'uabb' ),
+								'custom' => __( 'Custom', 'uabb' ),
+							),
+							'toggle'  => array(
+								'normal' => array(
+									'fields' => array( 'normal_options' ),
+								),
+								'circle' => array(
+									'fields'   => array( 'digit_area_width', 'digit_border_color', 'timer_background_color', 'timer_background_color_opc', 'digit_area_width_desk', 'digit_area_width_med', 'digit_area_width_small', 'digit_border_width', 'digit_border_style', 'unit_position' ),
+									'sections' => array( 'box_shadow' ),
+								),
+								'square' => array(
+									'fields'   => array( 'digit_area_width', 'digit_border_color', 'timer_background_color', 'timer_background_color_opc', 'digit_area_width_desk', 'digit_area_width_med', 'digit_area_width_small', 'digit_border_width', 'digit_border_style', 'unit_position' ),
+									'sections' => array( 'box_shadow' ),
+								),
+								'custom' => array(
+									'fields'   => array( 'digit_area_width', 'digit_border_color', 'digit_border_radius', 'timer_background_color', 'timer_background_color_opc', 'digit_area_width_desk', 'digit_area_width_med', 'digit_area_width_small', 'digit_border_width', 'digit_border_style', 'unit_position' ),
+									'sections' => array( 'box_shadow' ),
+								),
+							),
+						),
+						'timer_background_color' => array(
+							'type'        => 'color',
+							'connections' => array( 'color' ),
+							'label'       => __( 'Digit Background Color', 'uabb' ),
+							'default'     => '',
+							'show_alpha'  => true,
+							'show_reset'  => true,
+							'preview'     => array(
+								'type'      => 'css',
+								'property'  => 'background',
+								'selector'  => '.uabb-countdown-digit-wrapper',
+								'important' => true,
+							),
+						),
+						'digit_area_width'       => array(
+							'type'        => 'unit',
+							'units'       => array( 'px' ),
+							'placeholder' => '100',
+							'label'       => __( 'Digit Area Width', 'uabb' ),
+							'class'       => '',
+							'slider'      => array(
+								'px' => array(
+									'min'  => 0,
+									'max'  => 1000,
+									'step' => 10,
+								),
+							),
+						),
+						'digit_border_radius'    => array(
+							'type'   => 'unit',
+							'label'  => __( 'Digit Border Radius', 'uabb' ),
+							'class'  => '',
+							'units'  => array( 'px' ),
+							'slider' => array(
+								'px' => array(
+									'min'  => 0,
+									'max'  => 1000,
+									'step' => 10,
+								),
+							),
+						),
+						'digit_border_style'     => array(
+							'type'        => 'select',
+							'label'       => __( 'Digit Border Style', 'uabb' ),
+							'description' => '',
+							'default'     => 'solid',
+							'options'     => array(
+								'solid'  => __( 'Solid', 'uabb' ),
+								'dashed' => __( 'Dashed', 'uabb' ),
+								'dotted' => __( 'Dotted', 'uabb' ),
+							),
+						),
+						'digit_border_width'     => array(
+							'type'   => 'unit',
+							'label'  => __( 'Digit Border Width', 'uabb' ),
+							'class'  => '',
+							'units'  => array( 'px' ),
+							'slider' => array(
+								'px' => array(
+									'min'  => 0,
+									'max'  => 1000,
+									'step' => 10,
+								),
+							),
+						),
+						'digit_border_color'     => array(
+							'type'        => 'color',
+							'connections' => array( 'color' ),
+							'label'       => __( 'Digit Border Color', 'uabb' ),
+							'default'     => '',
+							'show_reset'  => true,
+							'show_alpha'  => true,
+						),
+						'count_animation'        => array(
+							'type'    => 'select',
+							'label'   => __( 'On Count Animation', 'uabb' ),
+							'default' => 'none',
+							'class'   => '',
+							'options' => array(
+								'none'   => __( 'None', 'uabb' ),
+								'flash'  => __( 'Flash', 'uabb' ),
+								'shake'  => __( 'Shake', 'uabb' ),
+								'bounce' => __( 'Bounce', 'uabb' ),
+								'pulse'  => __( 'Pulse', 'uabb' ),
+							),
+						),
+					),
+				),
+				'box_shadow'      => array(
+					'title'  => __( 'Timer Box Shadow', 'uabb' ),
+					'fields' => array(
+						'counter_drop_shadow'       => array(
+							'type'    => 'select',
+							'label'   => __( 'Enable Box Shadow', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'yes' => __( 'Yes', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
+							),
+							'help'    => 'This option is to set shadows for the individual countdown item',
+							'toggle'  => array(
+								'yes' => array(
+									'fields'   => array( 'counter_shadow_color_hor', 'counter_shadow_color_ver', 'counter_shadow_color_blur', 'counter_shadow_color_spr', 'counter_shadow_color', 'counter_shadow_color_opc' ),
+									'sections' => array( 'counter_drop_shadow_responsive' ),
+								),
+							),
+						),
+						'counter_shadow_color_hor'  => array(
+							'type'        => 'text',
+							'label'       => __( 'Horizontal Length', 'uabb' ),
+							'default'     => '0',
+							'size'        => '5',
+							'description' => 'px',
+						),
+						'counter_shadow_color_ver'  => array(
+							'type'        => 'text',
+							'label'       => __( 'Vertical Length', 'uabb' ),
+							'default'     => '0',
+							'size'        => '5',
+							'description' => 'px',
+						),
+						'counter_shadow_color_blur' => array(
+							'type'        => 'text',
+							'label'       => __( 'Blur Radius', 'uabb' ),
+							'default'     => '7',
+							'size'        => '5',
+							'description' => 'px',
+						),
+						'counter_shadow_color_spr'  => array(
+							'type'        => 'text',
+							'label'       => __( 'Spread Radius', 'uabb' ),
+							'default'     => '0',
+							'size'        => '5',
+							'description' => 'px',
+						),
+						'counter_shadow_color'      => array(
+							'type'       => 'color',
+							'label'      => __( 'Shadow Color', 'uabb' ),
+							'default'    => 'rgba(168,168,168,0.5)',
+							'show_reset' => true,
+							'show_alpha' => true,
+						),
+					),
+				),
+				'unit_style'      => array( // Section.
+					'title'  => __( 'Timer Unit Styling', 'uabb' ), // Section Title.
+					'fields' => array( // Section Fields.
+						'unit_position'   => array(
+							'type'    => 'select',
+							'label'   => __( 'Timer Unit Position', 'uabb' ),
+							'default' => 'outside',
+							'class'   => '',
+							'options' => array(
+								'inside'  => __( 'Inside Digit Area', 'uabb' ),
+								'outside' => __( 'Outside Digit Area', 'uabb' ),
+							),
+							'toggle'  => array(
+								'inside'  => array(
+									'fields' => array( 'inside_options' ),
+								),
+								'outside' => array(
+									'fields' => array( 'outside_options' ),
+								),
+							),
+						),
+						'inside_options'  => array(
+							'type'    => 'select',
+							'label'   => __( 'Select Position', 'uabb' ),
+							'default' => 'in_below',
+							'class'   => '',
+							'options' => array(
+								'in_below' => __( 'Below Digit', 'uabb' ),
+								'in_above' => __( 'Above Digit', 'uabb' ),
+							),
+						),
+						'outside_options' => array(
+							'type'    => 'select',
+							'label'   => __( 'Select Position', 'uabb' ),
+							'default' => 'in_below',
+							'class'   => '',
+							'options' => array(
+								'out_below' => __( 'Below Digit', 'uabb' ),
+								'out_above' => __( 'Above Digit', 'uabb' ),
+								'out_right' => __( 'Right Side of Digit', 'uabb' ),
+								'out_left'  => __( 'Left Side of Digit', 'uabb' ),
+							),
+						),
+						'normal_options'  => array(
+							'type'    => 'select',
+							'label'   => __( 'Select Position', 'uabb' ),
+							'default' => 'normal_below',
+							'class'   => '',
+							'options' => array(
+								'normal_below' => __( 'Below Digit', 'uabb' ),
+								'normal_above' => __( 'Above Digit', 'uabb' ),
+							),
+						),
+					),
+				),
+			),
 		),
 		'countdown_style' => array( // Tab.
 			'title'    => __( 'Typography', 'uabb' ), // Tab title.
@@ -639,6 +727,35 @@ FLBuilder::register_module(
 							'preview'    => array(
 								'type'      => 'css',
 								'selector'  => '.uabb-count-down-unit',
+								'property'  => 'color',
+								'important' => true,
+							),
+						),
+					),
+				),
+				'message'          => array(
+					'title'  => __( 'Expiry Message Settings', 'uabb' ),
+					'fields' => array(
+						'message_typo'  => array(
+							'type'       => 'typography',
+							'label'      => __( 'Typography', 'uabb' ),
+							'responsive' => true,
+							'preview'    => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-countdown-expire-message',
+								'important' => true,
+							),
+						),
+						'message_color' => array(
+							'type'        => 'color',
+							'connections' => array( 'color' ),
+							'label'       => __( 'Choose Color', 'uabb' ),
+							'default'     => '',
+							'show_alpha'  => true,
+							'show_reset'  => true,
+							'preview'     => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-countdown-expire-message',
 								'property'  => 'color',
 								'important' => true,
 							),

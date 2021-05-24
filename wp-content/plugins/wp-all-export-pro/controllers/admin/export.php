@@ -96,6 +96,7 @@ class PMXE_Admin_Export extends PMXE_Controller_Admin
             'wp_query_selector' => 'wp_query',
             'auto_generate' => 0,
             'taxonomy_to_export' => '',
+            'sub_post_type_to_export' => '',
             'created_at_version' => PMXE_VERSION
         );
 
@@ -135,6 +136,7 @@ class PMXE_Admin_Export extends PMXE_Controller_Admin
             PMXE_Plugin::$session->set('product_matching_mode', $post['product_matching_mode']);
             PMXE_Plugin::$session->set('wp_query_selector', $post['wp_query_selector']);
             PMXE_Plugin::$session->set('taxonomy_to_export', $post['taxonomy_to_export']);
+            PMXE_Plugin::$session->set('sub_post_type_to_export', $post['sub_post_type_to_export']);
             PMXE_Plugin::$session->set('created_at_version', $post['created_at_version']);
 
             if (!empty($post['auto_generate'])) {
@@ -207,6 +209,8 @@ class PMXE_Admin_Export extends PMXE_Controller_Admin
             $this->data['dismiss_warnings'] = get_option('wpae_dismiss_warnings_' . $this->data['export']->id, 0);
         }
 
+
+
         $max_input_vars = @ini_get('max_input_vars');
 
         if (ctype_digit($max_input_vars) && count($_POST, COUNT_RECURSIVE) >= $max_input_vars) {
@@ -220,6 +224,7 @@ class PMXE_Admin_Export extends PMXE_Controller_Admin
         PMXE_Plugin::$session->set('is_loaded_template', '');
 
         $this->data['engine'] = null;
+
 
         XmlExportEngine::$exportQuery = PMXE_Plugin::$session->get('exportQuery');
 
@@ -515,7 +520,6 @@ class PMXE_Admin_Export extends PMXE_Controller_Admin
                 'options' => PMXE_Plugin::$session->get_clear_session_data(),
                 'friendly_name' => PMXE_Plugin::$session->friendly_name,
                 'scheduled' => (PMXE_Plugin::$session->is_scheduled) ? PMXE_Plugin::$session->scheduled_period : '',
-                //'registered_on' => date('Y-m-d H:i:s'),
                 'last_activity' => date('Y-m-d H:i:s')
             );
 
@@ -566,6 +570,11 @@ class PMXE_Admin_Export extends PMXE_Controller_Admin
                     return $friendly_name;
                 }
             } else {
+                $is_rapid_add_on_export = PMXE_Helper::is_rapid_export_addon($post_types);
+                if($is_rapid_add_on_export) {
+                    return 'Gravity Forms Entries Export - ' . date("Y F d H:i");
+                }
+
                 $post_type_details = get_post_type_object(array_shift($post_types));
                 $friendly_name = $post_type_details->labels->name . ' Export - ' . date("Y F d H:i");
                 return $friendly_name;

@@ -237,6 +237,19 @@ if ( 'left' === $settings->blog_image_position || 'right' === $settings->blog_im
 	}
 }
 
+if ( 'custom' === $settings->featured_image_size ) {
+	?>
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-blog-post-inner-wrap .uabb-post-thumbnail.uabb-crop-thumbnail img {
+	width: <?php echo esc_attr( $settings->featured_image_size_width ); ?>px;
+
+	}
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-blog-post-inner-wrap .uabb-post-thumbnail.uabb-crop-thumbnail img {
+		height: <?php echo esc_attr( $settings->featured_image_size_height ); ?>px;
+
+	}	
+	<?php
+}
+
 if ( 'top' !== $settings->blog_image_position && 'background' !== $settings->blog_image_position ) {
 	?>
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-blog-posts .uabb-blog-post-inner-wrap {
@@ -567,7 +580,8 @@ if ( '' !== $settings->meta_color || '' !== $settings->meta_hover_color ) {
 		color: <?php echo esc_attr( $settings->meta_color ); ?>;
 	}
 
-	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-blog-post-content .uabb-post-meta a:hover {
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-blog-post-content .uabb-post-meta a:hover,
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-blog-post-element-link:hover ~ .uabb-blog-posts-shadow .uabb-blog-post-content .uabb-post-meta span a {
 		color: <?php echo esc_attr( $settings->meta_hover_color ); ?>;
 	}
 	<?php

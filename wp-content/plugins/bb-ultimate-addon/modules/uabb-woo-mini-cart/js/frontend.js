@@ -61,6 +61,8 @@ var UABBWooMiniCart;
 			
 					modal_open.removeClass( 'uabb-cart-modal-wrap-close' );
 					modal_main.removeClass( 'uabb-cart-modal-close' );
+					self.node_module.find( '.uabb-overlay' ).css( 'visibility', 'visible' );
+					self.node_module.find( '.uabb-overlay' ).css( 'opacity', '0' );
 			
 					modal_close.on( 'click', function(e) {
 			
@@ -77,6 +79,8 @@ var UABBWooMiniCart;
 			
 					offcanvas_open.removeClass( 'uabb-cart-off-canvas-wrap-close' );
 					offcanvas_main.removeClass( 'uabb-cart-off-canvas-close' );
+					self.node_module.find( '.uabb-overlay' ).css( 'visibility', 'visible' );
+					self.node_module.find( '.uabb-overlay' ).css( 'opacity', '0' );
 
 					offcanvas_close.on( 'click', function(e) {
 			

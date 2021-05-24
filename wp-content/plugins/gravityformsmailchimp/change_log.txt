@@ -1,3 +1,8 @@
+### 4.9 | 2021-04-28
+- Fixed an issue where conditional logic is not correctly identifying matching selections when forms contain a multi-select field.
+- Fixed an issue where the add-on icon is missing on the form settings screen in Gravity Forms 2.5.
+
+
 ### 4.8 | 2020-09-09
 - Added support for Gravity Forms 2.5.
 - Fixed birthday merge fields no longer being sent in the correct format expected by the Mailchimp API.

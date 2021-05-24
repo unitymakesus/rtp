@@ -475,16 +475,20 @@ class UABBWooCategoriesModule extends FLBuilderModule {
 	 * @param object $category Category object.
 	 */
 	public function template_loop_category_title( $category ) {
-		$output          = '<div class="uabb-category__title-wrap">';
-			$output     .= '<h2 class="woocommerce-loop-category__title">';
-				$output .= esc_html( $category->name );
-			$output     .= '</h2>';
+		$output             = '<div class="uabb-category__title-wrap">';
+			$output        .= '<h2 class="woocommerce-loop-category__title">';
+				$output    .= esc_html( $category->name );
+			$output        .= '</h2>';
+			$single_product = apply_filters( 'uabb_woo_category_single_product_string', 'Product' );
+			$mult_products  = apply_filters( 'uabb_woo_category_multiple_product_string', 'Products' );
 
 		if ( $category->count > 0 ) {
 				$output .= sprintf( // WPCS: XSS OK.
 					/* translators: 1: number of products */
-					_nx( '<mark class="uabb-count">%1$s Product</mark>', '<mark class="uabb-count">%1$s Products</mark>', $category->count, 'product categories', 'uabb' ),
-					number_format_i18n( $category->count )
+					_nx( '<mark class="uabb-count">%1$s %2$s</mark>', '<mark class="uabb-count">%1$s %3$s</mark>', $category->count, 'product categories', 'uabb' ), // phpcs:ignore WordPress.WP.I18n.MismatchedPlaceholders, WordPress.WP.I18n.NoHtmlWrappedStrings
+					number_format_i18n( $category->count ),
+					$single_product,
+					$mult_products
 				);
 		}
 		$output .= '</div>';

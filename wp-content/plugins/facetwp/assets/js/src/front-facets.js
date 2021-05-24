@@ -39,22 +39,22 @@
             var facet_name = $facet.attr('data-name');
 
             var endpoint = ('wp' === FWP.template) ? document.URL : FWP_JSON.ajaxurl;
+            var options = FWP.settings[facet_name];
+            options.data = () => {
+                return $.post(endpoint, {
+                    action: 'facetwp_autocomplete_load',
+                    facet_name: facet_name,
+                    query: el.value,
+                    data: FWP.buildPostData()
+                }, {
+                    done: (resp) => {
+                        this.fcomplete.render(resp);
+                    }
+                });
+            };
+            options.onSelect = () => FWP.autoload();
 
-            fComplete(el, {
-                data: () => {
-                    return $.post(endpoint, {
-                        action: 'facetwp_autocomplete_load',
-                        facet_name: facet_name,
-                        query: el.value,
-                        data: FWP.buildPostData()
-                    }, {
-                        done: (resp) => {
-                            this.fcomplete.render(resp);
-                        }
-                    });
-                },
-                onSelect: () => FWP.autoload()
-            });
+            fComplete(el, options);
         });
     });
 
@@ -62,6 +62,10 @@
         if (13 === e.which && ! FWP.is_refresh) {
             FWP.autoload();
         }
+    });
+
+    $().on('click', '.facetwp-autocomplete-update', function() {
+        FWP.autoload();
     });
 
     /* ======== Checkboxes ======== */
@@ -80,13 +84,15 @@
         var choices = [];
         $.each(params.selected_values, function(val) {
             var $item = params.el.find('.facetwp-checkbox[data-value="' + val + '"]');
-            var choice = $($item.html());
-            choice.find('.facetwp-counter').remove();
-            choice.find('.facetwp-expand').remove();
-            choices.push({
-                value: val,
-                label: choice.text()
-            });
+            if ($item.len()) {
+                var choice = $($item.html());
+                choice.find('.facetwp-counter').remove();
+                choice.find('.facetwp-expand').remove();
+                choices.push({
+                    value: val,
+                    label: choice.text()
+                });
+            }
         });
         return choices;
     });
@@ -181,12 +187,14 @@
         var choices = [];
         $.each(params.selected_values, function(val) {
             var $item = params.el.find('.facetwp-radio[data-value="' + val + '"]');
-            var choice = $($item.html());
-            choice.find('.facetwp-counter').remove();
-            choices.push({
-                value: val,
-                label: choice.text()
-            });
+            if ($item.len()) {
+                var choice = $($item.html());
+                choice.find('.facetwp-counter').remove();
+                choices.push({
+                    value: val,
+                    label: choice.text()
+                });
+            }
         });
         return choices;
     });
@@ -289,12 +297,19 @@
     });
 
     FWP.hooks.addFilter('facetwp/selections/dropdown', function(output, params) {
-        var dropdown = params.el.find('.facetwp-dropdown').nodes[0];
-        var text = dropdown.options[dropdown.selectedIndex].text;
-        return text.replace(/\(\d+\)$/, '');
+        var $item = params.el.find('.facetwp-dropdown');
+        if ($item.len()) {
+            var dd = $item.nodes[0];
+            var text = dd.options[dd.selectedIndex].text;
+            return text.replace(/\(\d+\)$/, '');
+        }
+        return '';
     });
 
-    $().on('change', '.facetwp-type-dropdown select', function() {
+    // Use jQuery if available for select2
+    var $f = ('function' === typeof jQuery) ? jQuery : fUtil;
+
+    $f(document).on('change', '.facetwp-type-dropdown select', function() {
         var $facet = $(this).closest('.facetwp-facet');
         var facet_name = $facet.attr('data-name');
 
@@ -317,11 +332,13 @@
     FWP.hooks.addFilter('facetwp/selections/fselect', function(output, params) {
         var choices = [];
         $.each(params.selected_values, (val) => {
-            var choice = params.el.find('option[value="' + val + '"]').text();
-            choices.push({
-                value: val,
-                label: choice
-            });
+            var $item = params.el.find('option[value="' + val + '"]');
+            if ($item.len()) {
+                choices.push({
+                    value: val,
+                    label: $item.text()
+                });
+            }
         });
         return choices;
     });
@@ -380,7 +397,8 @@
     });
 
     FWP.hooks.addFilter('facetwp/selections/hierarchy', function(output, params) {
-        return params.el.find('.facetwp-link.checked').text();
+        var $item = params.el.find('.facetwp-link.checked');
+        return $item.len() ? $item.text() : '';
     });
 
     $().on('click', '.facetwp-type-hierarchy .facetwp-link', function() {
@@ -572,14 +590,17 @@
         }
     });
 
-    $().on('click focusout', function(e) {
+    var hideDropdown = function(e) {
         var $el = $(e.target);
         var $wrap = $el.closest('.facetwp-input-wrap');
 
         if ($wrap.len() < 1 || $el.hasClass('f-reset')) {
             $('.location-results').addClass('facetwp-hidden');
         }
-    });
+    };
+
+    $().on('click', hideDropdown);
+    $().on('focusout', hideDropdown);
 
     $().on('focusin', '.facetwp-location', function() {
         var $facet = $(this).closest('.facetwp-facet');
@@ -706,7 +727,8 @@
     });
 
     FWP.hooks.addFilter('facetwp/selections/slider', function(output, params) {
-        return params.el.find('.facetwp-slider-label').text();
+        var $item = params.el.find('.facetwp-slider-label');
+        return $item.len() ? $item.text() : '';
     });
 
     $().on('facetwp-loaded', function() {

@@ -10,6 +10,19 @@ if (!empty($bundle_path)) {
 }
 
 $isImportAllowedSpecification = new \Wpae\App\Specification\IsImportAllowed();
+
+$cpt = $update_previous->options['cpt'];
+if(is_array($cpt)) {
+    $cpt = $cpt[0];
+}
+
+$is_rapid_addon_export = true;
+
+if(strpos($cpt, 'custom_') !== 0)
+{
+    $is_rapid_addon_export = false;
+}
+
 if(current_user_can(PMXE_Plugin::$capabilities)) {
     ?>
     <div id="export_finished" style="padding-top: 10px;">
@@ -61,7 +74,7 @@ if(current_user_can(PMXE_Plugin::$capabilities)) {
                             <button class="button button-primary button-hero wpallexport-large-button download_data"
                                     rel="<?php echo add_query_arg(array('page' => 'pmxe-admin-manage', 'id' => $update_previous->id, 'action' => 'split_bundle', '_wpnonce' => wp_create_nonce('_wpnonce-download_split_bundle')), $this->baseUrl); ?>"><?php printf(__('Split %ss', 'wp_all_export_plugin'), strtoupper(wp_all_export_get_export_format($update_previous->options))); ?></button>
                         <?php endif; ?>
-                        <?php if (PMXE_Export_Record::is_bundle_supported($update_previous->options)): ?>
+                        <?php if (PMXE_Export_Record::is_bundle_supported($update_previous->options) && !$is_rapid_addon_export): ?>
                             <button class="button button-primary button-hero wpallexport-large-button download_data"
                                     rel="<?php echo add_query_arg(array('page' => 'pmxe-admin-manage', 'id' => $update_previous->id, 'action' => 'bundle', '_wpnonce' => wp_create_nonce('_wpnonce-download_bundle')), $this->baseUrl); ?>"><?php _e('Bundle', 'wp_all_export_plugin'); ?></button>
                         <?php endif; ?>
@@ -77,7 +90,7 @@ if(current_user_can(PMXE_Plugin::$capabilities)) {
                         </div>
                     <?php endif; ?>
                     <div style="margin-top:30px;">
-                        <h3 style="margin-bottom: 0; margin-top: -10px;"><?php echo _e("Public URL", 'wp_all_export_plugin'); ?></h3>
+                        <h3 style="margin-bottom: 0; margin-top: -10px;"><?php echo _e("Secure URL", 'wp_all_export_plugin'); ?></h3>
                         <a href="<?php echo $urlToExport; ?>" <?php if (php_sapi_name() != 'cli-server') { ?> target="_blank" <?php } ?>
                            class="feed-url" style="margin-bottom: 0; font-size: 16px;"><?php echo $urlToExport; ?></a>
                         <p style="margin-top: 0;">
@@ -109,21 +122,27 @@ if(current_user_can(PMXE_Plugin::$capabilities)) {
                 <?php if ($isImportAllowedSpecification->isSatisfied($update_previous)): ?>
 
                     <div class="tab-content normal-tab" id="tab4-content">
-                        <p>
-                            <?php _e("After you've downloaded your data, edit it however you like.", 'wp_all_export_plugin'); ?>
-                            <br/>
-                            <?php _e("Then, click below to import the data with WP All Import without having to set anything up.", 'wp_all_export_plugin'); ?>
-                        </p>
-                        <p>
-                            <button class="button button-primary button-hero wpallexport-large-button download_data"
-                                    rel="<?php echo add_query_arg(array('page' => 'pmxe-admin-manage', 'action' => 'download', 'id' => $update_previous->id, '_wpnonce' => wp_create_nonce('_wpnonce-download_feed')), $this->baseUrl); ?>"><?php _e('Download', 'wp_all_export_plugin'); ?><?php echo strtoupper(wp_all_export_get_export_format($update_previous->options)); ?></button>
+                        <?php if(!$is_rapid_addon_export) { ?>
+                            <p>
+                                <?php _e("After you've downloaded your data, edit it however you like.", 'wp_all_export_plugin'); ?>
+                                <br/>
+                                <?php _e("Then, click below to import the data with WP All Import without having to set anything up.", 'wp_all_export_plugin'); ?>
+                            </p>
+                            <p>
+                                <button class="button button-primary button-hero wpallexport-large-button download_data"
+                                        rel="<?php echo add_query_arg(array('page' => 'pmxe-admin-manage', 'action' => 'download', 'id' => $update_previous->id, '_wpnonce' => wp_create_nonce('_wpnonce-download_feed')), $this->baseUrl); ?>"><?php _e('Download', 'wp_all_export_plugin'); ?> <?php echo strtoupper(wp_all_export_get_export_format($update_previous->options)); ?></button>
 
-                            <button class="button button-primary button-hero wpallexport-large-button download_data"
-                                    rel="<?php echo add_query_arg(array('page' => 'pmxi-admin-import', 'id' => $update_previous->options['import_id'], 'deligate' => 'wpallexport'), remove_query_arg('page', $this->baseUrl)); ?>"><?php _e('Import with WP All Import', 'wp_all_export_plugin'); ?></button>
-                        </p>
-                        <p>
-                            <?php _e("You can also start the import by clicking 'Import with WP All Import' on the Manage Exports page.", 'wp_all_export_plugin'); ?>
-                        </p>
+                                <button class="button button-primary button-hero wpallexport-large-button download_data"
+                                        rel="<?php echo add_query_arg(array('page' => 'pmxi-admin-import', 'id' => $update_previous->options['import_id'], 'deligate' => 'wpallexport'), remove_query_arg('page', $this->baseUrl)); ?>"><?php _e('Import with WP All Import', 'wp_all_export_plugin'); ?></button>
+                            </p>
+                            <p>
+                                <?php _e("You can also start the import by clicking 'Import with WP All Import' on the Manage Exports page.", 'wp_all_export_plugin'); ?>
+                            </p>
+                        <?php } else { ?>
+                            <p>
+                                The Gravity Forms Export Add-On doesn't support Export, Edit, Import.
+                            </p>
+                        <?php } ?>
                     </div>
                 <?php endif; ?>
             </div>

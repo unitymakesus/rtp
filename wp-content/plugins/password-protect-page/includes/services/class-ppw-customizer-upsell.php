@@ -47,7 +47,7 @@ if ( ! class_exists( 'PPW_Customizer_Upsell' ) ) {
                         'ppwp_text'		=> __( 'More options available in PPWP Pro', 'password-protect-page' ),
 						'ppwp_url'		=> esc_url( 'https://passwordprotectwp.com/features/lite-vs-pro-version/#sitewide-customizer' ),
 						'capability'	=> 'edit_theme_options',
-						'priority'		=> 1000,
+						'priority'		=> 1015,
 						'type'			=> 'ppwp-upsell-section',
                     )
                 )

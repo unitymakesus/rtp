@@ -31,7 +31,7 @@
     justify-content: center;
     -webkit-box-align: center;
     -ms-flex-align: center;
-    align-items: center;    
+    align-holdings: center;    
     -webkit-box-orient: vertical;    
     -webkit-box-direction: normal;    
     -ms-flex-direction: column;    
@@ -155,4 +155,48 @@
     0%, 100% {-webkit-transform: translateX(0);transform: translateX(0);} 
     10%, 30%, 50%, 70%, 90% {-webkit-transform: translateX(-30px);transform: translateX(-30px);} 
     20%, 40%, 60%, 80% {-webkit-transform: translateX(30px);transform: translateX(30px);} 
+}
+
+/* Timer separator */
+.uabb-countdown.uabb-countdown-separator-line .uabb-countdown-holding {
+	position: relative;
+	padding: 0;
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.uabb-countdown.uabb-countdown-separator-colon .uabb-countdown-digit-wrapper {
+    position: relative;
+}
+
+.uabb-countdown.uabb-countdown-separator-colon .uabb-countdown-holding .uabb-countdown-digit-wrapper:after {
+	content: ':';
+	display: inline-block;
+	font-size: 30px;
+	position: absolute;
+	right: -5px;
+	top: 50%;
+	z-index: 10;
+	-webkit-transform: translateY(-50%);
+	   -moz-transform: translateY(-50%);
+			transform: translateY(-50%);
+}
+.uabb-countdown.uabb-countdown-separator-line .uabb-countdown-holding:after {
+	content: '';
+	display: inline-block;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	z-index: 10;
+	border-right: 1px solid #ccc;
+}
+.uabb-countdown.uabb-countdown-separator-colon .uabb-countdown-holding:last-child .uabb-countdown-digit-wrapper:after,
+.uabb-countdown.uabb-countdown-separator-line .uabb-countdown-holding:last-child:after {
+	content: none;
+}
+@media (max-width: 600px) {
+    .uabb-hide-seprator-yes .uabb-countdown.uabb-countdown-separator-line .uabb-countdown-holding:after,
+    .uabb-hide-seprator-yes .uabb-countdown.uabb-countdown-separator-colon .uabb-countdown-digit-wrapper:after {
+    display: none !important;
+    }
 }

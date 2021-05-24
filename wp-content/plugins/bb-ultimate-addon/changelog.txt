@@ -1,3 +1,51 @@
+Version 1.30.5, Monday, 24th May 2021
+- Improvement: Advanced Testimonials - Added responsive support for Image/Icon Size.
+- Improvement: Dual Button - Changes in settings UI.
+- Improvement: Heading: Added WPML support to the Link field.
+- Improvement: Advanced Menu - Added Menu Label Typography option for Responsive Navigation.
+- Improvement: Modal Popup - Added field connection support for color fields.
+- Improvement: Photo gallery - Added filter to modify Filterable tabs
+- Fixed: Conflict between Image Carousel and Business Reviews Carousel layout.
+- Fixed: Advanced Posts - Custom Size option for Featured Image not working as expected.
+- Fixed: Advanced Posts - Accessibility errors with Carousel layout.
+- Fixed: Advanced Menu - CLS issue with Responsive Below Row layout.
+- Fixed: Advanced Testimonials - Spacing not working in between paragraph as expected.
+- Fixed: Woo-Mini Cart - Close Cart on Overlay Click functionality is not working in Modal & Off-Canvas Cart Style.
+- Fixed: Woo-Mini Cart - Badge Position & Color changes after publishing.
+
+Version 1.30.4, Wednesday, 28th April 2021
+- Improvement: Advanced Tabs - Added Title Description option.
+- Improvement: Advanced Tabs - Added right position for vertical Tab layout.
+- Improvement: Advanced Menu - Added Styling option for Responsive Navigation.
+- Improvement: Dual Button - Added RTL support.
+- Fixed: User Registration Form - Not working on multisite.
+- Fixed: User Registration Form – Phone field data not saved in a user profile.
+- Fixed: Advanced Menu - When Collapse Menu is Yes for responsive, the menu is expanded for some time while loading.
+- Fixed: Table of Contents - Module is expanded for some time while loading when set to Keep Collapsed Initially.
+- Deprecated - Caldera Forms Styler - Revoked support for new users.
+
+Version 1.30.3 Tuesday, 30th March 2021
+- Improvement: Advanced Posts: Added option for Default WordPress Format in Date Format setting.
+- Improvement: Advanced Posts: Added option to link Complete Box in CTA setting.
+- Improvement: Countdown – Added separator option.
+- Improvement: Countdown – Added Box shadow option.
+- Improvement: Table of Contents - Added WPML support.
+- Improvement: Video Gallery - Added `Do not Track` option for Vimeo for GDPR compliance.
+- Improvement: Woo-Categories: Added filters to change Product count strings.
+- Fixed: Advanced Menu - Desktop menu disappears when Collapse Menu setting is enabled.
+- Fixed: Fancy Text - JS error when double quotes are used in Fancy Text.
+- Fixed: Flip Box - Both sides are shown on hover when Overall Vertical Alignment is set to No.
+- Fixed: Woo-Products - Page doesn't scroll to top of module when visited to next page in Pagination.
+
+Version 1.30.2 Monday, 8th March 2021
+- Improvement: Added Compatibility with WordPress 5.7
+- Improvement: Video - Add `Do not Track` option for Vimeo for GDPR compliance.
+- Fixed: Heading - Typography settings not working when a link is added.
+- Fixed: Photo Gallery - Display order not maintained with pagination.
+
+Version 1.30.1 Friday, 26th February 2021
+- Fixed: Video - Not able to play the video with YouTube and Vimeo option.
+
 Version 1.30.0 Tuesday, 23rd February 2021
 - New: Introduced Search module
 - Improvement: Particle Backgrounds - Replaced particles.js with tsParticles for better performance

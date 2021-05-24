@@ -35,7 +35,7 @@ $functions_content = file_get_contents($functions);
                         <input type="button" class="button-primary wp_all_export_save_functions" value="<?php _e("Save Functions", 'wp_all_export_plugin'); ?>"/>
                         <div class="wp_all_export_functions_preloader"></div>
                     </div>
-                    <div class="input wp_all_export_saving_status" style="display:inline-block;"></div>
+                    <div class="input wp_all_export_saving_status"></div>
                 </div>
             </div>
         </div>

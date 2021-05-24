@@ -3,8 +3,8 @@ Contributors: shinephp
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=vladimir%40shinephp%2ecom&lc=RU&item_name=ShinePHP%2ecom&item_number=User%20Role%20Editor%20WordPress%20plugin&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: user, role, editor, security, access, permission, capability
 Requires at least: 4.0
-Tested up to: 5.7
-Stable tag: 4.58.3
+Tested up to: 5.7.1
+Stable tag: 4.59.1
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -80,8 +80,20 @@ https://translate.wordpress.org/projects/wp-plugins/user-role-editor/
 
 
 == Changelog =
+= [4.59.1] 11.05.2021 =
+* New: Multisite: When update role at the main site with "Apply to all sites" option and PHP constant URE_MULTISITE_DIRECT_UPDATE === 1 (update roles directly in database, not via WordPress API), 
+*   URE overwrites all subsite roles with roles from the main site. It's possible now to leave selected role(s) for selected subsite(s) unchanged: add filter 'ure_network_update_leave_roles' and  
+*   return from it the array like this one - array( (int) blog_id => array('role_id1', 'role_id2', ... );
+* Update: "Other roles" section at user profile is available now only for users with 'promote_users' capability.
+* Update: Notice at the top of URE page about action result is not removed automatically after 7 seconds as earlier.
+* Update: 'ure_sort_wp_roles_list' filter accepts these values for the single input parameter: false - leave roles list as it is; true, 'id' - sort roles list by role ID; 'name' - sort roles by role name.
 
-= [4.58.3] 26.02.2021 =
+= [4.59] 05.04.2021 =
+* Update: PHP constant URE_WP_ADMIN_URL was replaced with direct 'admin_url()' call to respect the 'admin_url' filter applied by the get_admin_url() WordPress API function.
+* Update: Editing roles and capabilities granted to selected user ("Capabilities" link under user row at the "Users" list) executes 'add_user_role' or 'remove_user_role' actions only in case it really grants or revokes roles and/or capabilities.
+  Previous versions fully revoked and granted again all roles during user permissions update even in case roles list was not changed. It was leaded to the false execution of the mentioned add/remove role actions.
+
+= [4.58.3] 02.03.2021 =
 * Update: URE automatically adds custom taxonomies user capabilities to administrator role before opening "Users->User Role Editor" page.
 * Fix: Role changes were not saved with option "Confirm role update" switched off.
 
@@ -99,17 +111,6 @@ https://translate.wordpress.org/projects/wp-plugins/user-role-editor/
 * Fix: "JQMIGRATE: jquery.fn.resize() event shorthand is deprecated" notice was fixed.
 * Fix: "JQMIGRATE: jQuery.fn.click() event shorthand is deprecated" notice was fixed.
 * Fix: "JQMIGRATE: Number-typed values are deprecated for jQuery.fn.css( (property name), value )" notice was fixed.
-
-= [4.57.1] 10.12.2020 =
-* Fix: Nextgen Gallery's user capabilities were not shown as granted after current role change via roles selection dropdown list.
-* Fix: PHP Warning:  The magic method __wakeup() must have public visibility. __wakeup() method was defined as private as a part of the Singleton design partern. Method was redefined as public but with exception inside to prevent its usage.
-* Update: jQuery [MultiSelect](http://multiple-select.wenzhixin.net.cn/) plugin  was updated to version 1.5.2
-
-= [4.57] 09.11.2020 =
-* Update: Marked as compatible with WordPress 5.6.
-* Update: " jQuery( document ).ready( handler ) " was replaced globally with " jQuery( handler ) " for compatibility with [jQuery 3.0](https://api.jquery.com/ready/) and WordPress 5.6.
-* Update: jQuery UI CSS was updated to version 1.12.1
-* Fix: "Grant Roles" button produced JavaScript error, if single user without any role granted (None) was selected.
 
 File changelog.txt contains the full list of changes.
 

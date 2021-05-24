@@ -45,9 +45,7 @@ if ( ! class_exists( 'PPW_API' ) ) {
 						$this,
 						'ppwp_get_master_passwords',
 					),
-					'permission_callback' => function () {
-						return current_user_can( 'edit_posts' );
-					},
+					'permission_callback' => array( $this, 'can_access' ),
 				)
 			);
 
@@ -60,9 +58,7 @@ if ( ! class_exists( 'PPW_API' ) ) {
 						$this,
 						'delete_password',
 					),
-					'permission_callback' => function () {
-						return current_user_can( 'edit_posts' );
-					},
+					'permission_callback' => array( $this, 'can_access' ),
 				)
 			);
 
@@ -75,9 +71,7 @@ if ( ! class_exists( 'PPW_API' ) ) {
 						$this,
 						'update_password',
 					),
-					'permission_callback' => function () {
-						return current_user_can( 'edit_posts' );
-					},
+					'permission_callback' => array( $this, 'can_access' ),
 				)
 			);
 
@@ -90,9 +84,7 @@ if ( ! class_exists( 'PPW_API' ) ) {
 						$this,
 						'change_status',
 					),
-					'permission_callback' => function () {
-						return current_user_can( 'edit_posts' );
-					},
+					'permission_callback' => array( $this, 'can_access' ),
 				)
 			);
 
@@ -105,9 +97,7 @@ if ( ! class_exists( 'PPW_API' ) ) {
 						$this,
 						'add_new_master_password',
 					),
-					'permission_callback' => function () {
-						return current_user_can( 'edit_posts' );
-					},
+					'permission_callback' => array( $this, 'can_access' ),
 				)
 			);
 
@@ -120,9 +110,7 @@ if ( ! class_exists( 'PPW_API' ) ) {
 						$this,
 						'bulk_delete_master_passwords',
 					),
-					'permission_callback' => function () {
-						return current_user_can( 'edit_posts' );
-					},
+					'permission_callback' => array( $this, 'can_access' ),
 				)
 			);
 
@@ -139,6 +127,10 @@ if ( ! class_exists( 'PPW_API' ) ) {
 					'show_in_index'       => false
 				)
 			);
+		}
+
+		public function can_access() {
+			return ppw_allow_manage_passwords();
 		}
 
 		/**
@@ -180,7 +172,7 @@ if ( ! class_exists( 'PPW_API' ) ) {
 		 * @throws Exception Exception.
 		 */
 		public function add_new_master_password( $request ) {
-			$password       = $request->get_param( 'password' );
+			$passwords      = $request->get_param( 'password' );
 			$usage_limit    = $request->get_param( 'usage_limit' );
 			$expired_dates  = $request->get_param( 'expired_dates' );
 			$role_type      = $request->get_param( 'role_type' );
@@ -190,34 +182,38 @@ if ( ! class_exists( 'PPW_API' ) ) {
 
 			$ppwp_repo = new PPW_Repository_Passwords();
 
-			$is_exist = $ppwp_repo->find_by_master_password( $password );
-
-			if ( $is_exist || '' === $password ) {
-				return wp_send_json(
-					array(
-						'result'  => array(),
-						'success' => false,
-					),
-					400
-				);
+			foreach ( $passwords as $password ) {
+				if ( $ppwp_repo->find_by_master_password( $password ) || '' === $password ) {
+					return wp_send_json(
+						array(
+							'result'  => array(),
+							'success' => false,
+						),
+						400
+					);
+				}
 			}
+
 			$roles = PPW_Constants::PPW_MASTER_GLOBAL;
 			if ( 'roles' === $role_type ) {
 				$roles = $roles_selected;
 			}
 
 			try {
-				$is_added = $ppwp_repo->add_new_password(
-					array(
-						'password'          => $password,
-						'created_time'      => time(),
-						'campaign_app_type' => $roles,
-						'usage_limit'       => $usage_limit ? $usage_limit : null,
-						'expired_date'      => $expired_dates ? $this->get_expired_time_stamp( $expired_dates ) : null,
-						'label'             => $label,
-						'post_types'        => $post_types,
-					)
-				);
+				$is_added = false;
+				foreach ( $passwords as $password ) {
+					$is_added = $ppwp_repo->add_new_password(
+						array(
+							'password'          => $password,
+							'created_time'      => time(),
+							'campaign_app_type' => $roles,
+							'usage_limit'       => $usage_limit ? $usage_limit : null,
+							'expired_date'      => $expired_dates ? $this->get_expired_time_stamp( $expired_dates ) : null,
+							'label'             => $label,
+							'post_types'        => $post_types,
+						)
+					);
+				}
 
 				if ( $is_added ) {
 					return wp_send_json(

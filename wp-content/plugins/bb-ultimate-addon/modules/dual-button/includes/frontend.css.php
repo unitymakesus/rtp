@@ -455,6 +455,15 @@ $settings->spacing_between_buttons = ( '' !== $settings->spacing_between_buttons
 			border-top-right-radius: <?php echo esc_attr( $settings->dual_button_radius ); ?>px;
 			border-bottom-right-radius: <?php echo esc_attr( $settings->dual_button_radius ); ?>px;
 		}
+
+		[dir='rtl'] .fl-node-<?php echo esc_attr( $id ); ?> .uabb-horizontal .uabb-btn.uabb-btn-one {
+			border-top-right-radius: <?php echo esc_attr( $settings->dual_button_radius ); ?>px;
+			border-bottom-right-radius: <?php echo esc_attr( $settings->dual_button_radius ); ?>px;
+		}
+		[dir='rtl'] .fl-node-<?php echo esc_attr( $id ); ?> .uabb-horizontal .uabb-btn.uabb-btn-two {
+			border-top-left-radius: <?php echo esc_attr( $settings->dual_button_radius ); ?>px;
+			border-bottom-left-radius: <?php echo esc_attr( $settings->dual_button_radius ); ?>px;
+		}
 	<?php } ?>
 		<?php if ( 'full' === $settings->dual_button_width_type || 'custom' === $settings->dual_button_width_type ) { ?>
 		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-dual-button .uabb-btn-horizontal {
@@ -1036,6 +1045,9 @@ if ( 'horizontal' === $settings->dual_button_type && 'no' === $settings->join_bu
 
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-dual-button-one {
 	margin-right: <?php echo esc_attr( $settings->spacing_between_buttons ); ?>px;
+}
+[dir='rtl'] .fl-node-<?php echo esc_attr( $id ); ?> .uabb-dual-button-one {
+	margin-left: <?php echo esc_attr( $settings->spacing_between_buttons ); ?>px;
 }
 	<?php if ( 'default' !== $settings->dual_button_style ) { ?>
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-horizontal .uabb-btn.uabb-btn-one,

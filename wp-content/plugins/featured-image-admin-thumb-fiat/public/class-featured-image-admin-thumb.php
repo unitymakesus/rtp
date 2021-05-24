@@ -29,7 +29,7 @@ class Featured_Image_Admin_Thumb {
 	 *
 	 * @var     string
 	 */
-	const VERSION = '1.4.3';
+	const VERSION = '1.6';
 
 	/**
 	 *

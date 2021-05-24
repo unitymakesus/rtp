@@ -52,7 +52,6 @@ function pmxe_pmxe_after_export($export_id, $export)
 			$filepath = wp_all_export_get_absolute_path($export->options['filepath']);
 		}
 
-		//TODO: Look into what is happening with this variable and what it is used for
 		$is_export_csv_headers = apply_filters('wp_all_export_is_csv_headers_enabled', true, $export->id);
 
         if ( isset($export->options['include_header_row']) ) {
@@ -271,8 +270,7 @@ function pmxe_pmxe_after_export($export_id, $export)
 		// convert CSV to XLS
 		if ( @file_exists($filepath) and $export->options['export_to'] == 'csv' && ! empty($export->options['export_to_sheet']) and $export->options['export_to_sheet'] != 'csv')
 		{			
-			
-			require_once PMXE_Plugin::ROOT_DIR . '/classes/PHPExcel/IOFactory.php';
+            require_once PMXE_Plugin::ROOT_DIR . '/classes/PHPExcel/IOFactory.php';
 
 			$objReader = PHPExcel_IOFactory::createReader('CSV');
 			// If the files uses a delimiter other than a comma (e.g. a tab), then tell the reader

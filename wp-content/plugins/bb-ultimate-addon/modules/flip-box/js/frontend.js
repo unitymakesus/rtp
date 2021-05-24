@@ -56,10 +56,12 @@ var UABBFlipBox;
 				$('.fl-node-' + id + ' .uabb-flip-box-outter').hover(function(event){
 					event.stopPropagation();
 					$(this).addClass('uabb-hover');
+                    $( this.nodeClass ).find('.uabb-face.uabb-front').css('opacity', '0');
 
 				}, function(event) {
 					event.stopPropagation();
 					$(this).removeClass('uabb-hover');
+                    $( this.nodeClass ).find('.uabb-face.uabb-front').css('opacity', '1');
 
 				});
 			}

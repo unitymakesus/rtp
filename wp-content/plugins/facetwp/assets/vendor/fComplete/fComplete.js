@@ -200,6 +200,8 @@ window.fComplete = (() => {
                 if (typeof input.fcomplete.settings.onSelect === 'function') {
                     input.fcomplete.settings.onSelect();
                 }
+
+                input.fcomplete.close();
             });
             that.on('keydown', '*', function(e) {
                 var wrap = this.closest('.fcomplete-wrap');

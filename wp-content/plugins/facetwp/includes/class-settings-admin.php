@@ -201,27 +201,10 @@ $false_value = isset( $atts['false_value'] ) ? $atts['false_value'] : 'no';
             if ( 'success' == $status ) {
                 $expiration = FWP()->helper->get_license_meta( 'expiration' );
                 $expiration = date( 'M j, Y', strtotime( $expiration ) );
-                $message = __( 'License active until', 'fwp' ) . ' ' . $expiration;
+                $message = __( 'Valid until', 'fwp' ) . ' ' . $expiration;
             }
             else {
                 $message = FWP()->helper->get_license_meta( 'message' );
-            }
-        }
-
-        return $message;
-
-
-        $message = __( 'Not yet activated', 'fwp' );
-        $activation = get_option( 'facetwp_activation' );
-
-        if ( ! empty( $activation ) ) {
-            $activation = json_decode( $activation );
-            if ( 'success' == $activation->status ) {
-                $message = __( 'License active', 'fwp' );
-                $message .= ' (' . __( 'expires', 'fwp' ) . ' ' . date( 'M j, Y', strtotime( $activation->expiration ) ) . ')';
-            }
-            else {
-                $message = $activation->message;
             }
         }
 
@@ -321,6 +304,7 @@ $false_value = isset( $atts['false_value'] ) ? $atts['false_value'] : 'no';
             'Query Arguments' => __( 'Query Arguments', 'fwp' ),
             'Saving' => __( 'Saving', 'fwp' ),
             'Indexing' => __( 'Indexing', 'fwp' ),
+            'The index table is empty' => __( 'The index table is empty', 'fwp' ),
             'Indexing complete' => __( 'Indexing complete', 'fwp' ),
             'Looking' => __( 'Looking', 'fwp' ),
             'Purging' => __( 'Purging', 'fwp' ),

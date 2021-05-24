@@ -282,7 +282,7 @@ class GFMailChimp extends GFFeedAddOn {
 	 */
 	public function get_menu_icon() {
 
-		return file_get_contents( $this->get_base_path() . '/images/menu-icon.svg' );
+		return $this->is_gravityforms_supported( '2.5-beta-4' ) ? 'gform-icon--mailchimp' : 'dashicons-admin-generic';
 
 	}
 
@@ -2025,40 +2025,41 @@ class GFMailChimp extends GFFeedAddOn {
 	 * @return bool
 	 */
 	public function is_category_condition_met( $category, $form, $entry ) {
-
-		if ( ! $category['enabled'] ) {
-
+		if ( ! rgar( $category, 'enabled' ) ) {
 			$this->log_debug( __METHOD__ . '(): Interest category not enabled. Returning false.' );
-
 			return false;
-
-		} else if ( $category['decision'] == 'always' ) {
-
-			$this->log_debug( __METHOD__ . '(): Interest category decision is always. Returning true.' );
-
-			return true;
-
 		}
 
-		$field = GFFormsModel::get_field( $form, $category['field'] );
+		if ( rgar( $category, 'decision' ) == 'always' ) {
+			$this->log_debug( __METHOD__ . '(): Interest category decision is always. Returning true.' );
+			return true;
+		}
+
+		$category_field = rgar( $category, 'field' );
+		$field          = GFFormsModel::get_field( $form, $category_field );
 
 		if ( ! is_object( $field ) ) {
-
-			$this->log_debug( __METHOD__ . "(): Field #{$category['field']} not found. Returning true." );
-
+			$this->log_debug( __METHOD__ . "(): Field #{$category_field} not found. Returning true." );
 			return true;
-
-		} else {
-
-			$field_value    = GFFormsModel::get_lead_field_value( $entry, $field );
-			$is_value_match = GFFormsModel::is_value_match( $field_value, $category['value'], $category['operator'] );
-
-			$this->log_debug( __METHOD__ . "(): Add to interest category if field #{$category['field']} value {$category['operator']} '{$category['value']}'. Is value match? " . var_export( $is_value_match, 1 ) );
-
-			return $is_value_match;
-
 		}
 
+		// Prepare values for field matching and log output.
+		$category_value    = rgar( $category, 'value' );
+		$category_operator = rgar( $category, 'operator' );
+		$rule              = array_merge( $category, array( 'fieldId' => $field->id ) );
+
+		// Check for the value match.
+		$is_value_match    = GFFormsModel::is_value_match(
+			GFFormsModel::get_lead_field_value( $entry, $field ),
+			$category_value,
+			$category_operator,
+			$field,
+			$rule
+		);
+
+		$this->log_debug( __METHOD__ . "(): Add to interest category if field #{$category_field} value {$category_operator} '{$category_value}'. Is value match? " . var_export( $is_value_match, 1 ) );
+
+		return $is_value_match;
 	}
 
 

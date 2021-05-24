@@ -220,7 +220,32 @@ class PPW_Public {
 	 * Register shortcodes
 	 */
 	public function register_shortcodes() {
+		$this->create_caps();
+
 		PPW_Shortcode::get_instance();
+	}
+
+	/**
+	 * Create PPWP Capabilities.
+	 */
+	public function create_caps() {
+		global $wp_roles;
+
+		if ( ! class_exists( 'WP_Roles' ) ) {
+			return;
+		}
+
+		if ( ! isset( $wp_roles ) ) {
+			$wp_roles = new WP_Roles(); // @codingStandardsIgnoreLine
+		}
+
+		$capabilities = array(
+			'ppwp_manage_options'
+		);
+
+		foreach ( $capabilities as $cap ) {
+			$wp_roles->add_cap( 'administrator', $cap );
+		}
 	}
 
 	/**

@@ -123,7 +123,7 @@ if ( isset( $settings->info_window_text ) ) {
 
 	});
 
-	jQuery(window).load( function() {
+	jQuery(window).on('load', function() {
 		new UABBGoogleMaps( args );
 	});
 

@@ -155,9 +155,9 @@ class PPW_Category_Service {
 
 	/**
 	 * Get protected categories if user turn on Option.
-	 * 
+	 *
 	 * @param integer $post_id Post ID.
-	 * 
+	 *
 	 * @return array Empty if user turn off option or post ID not include protected categories.
 	 */
 	public function get_protected_categories( $post_id ) {
@@ -257,6 +257,7 @@ class PPW_Category_Service {
 		}
 
 		$expire = apply_filters( 'ppw_cookie_expire', $expire );
+		$expire = apply_filters( 'ppwp_cookie_expiry', $expire );
 		return setcookie( $cookie_name . COOKIEHASH, $password_hashed, $expire, COOKIEPATH, COOKIE_DOMAIN, $secure );
 	}
 

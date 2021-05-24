@@ -280,7 +280,33 @@ if ( ! class_exists( 'PPW_Repository_Passwords' ) ) {
 			return $this->wpdb->get_results( $sql );
 		}
 
-		/**
+		/***
+		 * Get all custom categories's password
+		 * @param $taxonomy_type
+		 *
+		 * @return mixed
+		 */
+		public function get_all_custom_categories_password( $taxonomy_type ) {
+			$sql = $this->wpdb->prepare( "SELECT * FROM {$this->tbl_name} WHERE post_id = 0 AND campaign_app_type = %s", $taxonomy_type );
+
+			return $this->wpdb->get_results( $sql );
+		}
+
+		/***
+		 * Check password with custom category type.
+		 *
+		 * @param $password
+		 * @param $taxonomy
+		 *
+		 * @return mixed
+		 */
+		public function find_by_shared_custom_category_password( $password, $taxonomy_type ) {
+			$sql = $this->wpdb->prepare( "SELECT * FROM {$this->tbl_name} WHERE BINARY password = %s AND post_id = 0 AND campaign_app_type = %s", $password, $taxonomy_type );
+
+			return $this->wpdb->get_row( $sql );
+		}
+
+			/**
 		 * Get shared category password by password ID.
 		 *
 		 * @param int $password_id Password ID.
@@ -289,6 +315,19 @@ if ( ! class_exists( 'PPW_Repository_Passwords' ) ) {
 		 */
 		public function get_shared_category_password( $password_id ) {
 			$sql = $this->wpdb->prepare( "SELECT * FROM {$this->tbl_name} WHERE BINARY id = %d AND campaign_app_type = %s", $password_id, PPW_Category_Service::SHARED_CATEGORY_TYPE );
+
+			return $this->wpdb->get_row( $sql );
+		}
+
+		/**
+		 * Get shared category password by password ID.
+		 *
+		 * @param int $password_id Password ID.
+		 *
+		 * @return array|object|void|null Database query result in format specified by $output or null on failure
+		 */
+		public function get_shared_custom_category_password( $password_id, $taxonomy ) {
+			$sql = $this->wpdb->prepare( "SELECT * FROM {$this->tbl_name} WHERE id = %d AND campaign_app_type = %s", $password_id, $taxonomy );
 
 			return $this->wpdb->get_row( $sql );
 		}

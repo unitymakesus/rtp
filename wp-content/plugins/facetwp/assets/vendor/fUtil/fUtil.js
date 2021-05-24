@@ -343,7 +343,8 @@ window.fUtil = (() => {
 
         trigger(eventName, extraData) {
             this.each(node => node.dispatchEvent(new CustomEvent(eventName, {
-                detail: extraData
+                detail: extraData,
+                bubbles: true
             })));
             return this;
         }

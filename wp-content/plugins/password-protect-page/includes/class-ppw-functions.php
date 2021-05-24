@@ -210,6 +210,15 @@ function ppw_free_fix_serialize_data( $raw_data, $is_un_slashed = true ) {
 		return array();
 	}
 
+	if ( ! is_string( $raw_data ) ) {
+		if ( is_array( $raw_data ) ) {
+			return $raw_data;
+		}
+
+		return array();
+	}
+
+
 	$serialize_raw_data = @unserialize( $raw_data );
 	if ( false === $serialize_raw_data ) {
 		return $raw_data;
@@ -454,7 +463,7 @@ function ppw_free_valid_pcp_password( $shortcode, $password ) {
 		$default_args['message'] = wp_kses_post( $parsed_atts['error_msg'] );
 	}
 
-	return $default_args;
+	return apply_filters( 'ppw_validated_pcp_password', $default_args, $password, $parsed_atts, $shortcode );
 }
 
 /**
@@ -542,4 +551,28 @@ function ppw_get_pro_data_version() {
 	}
 
 	return false;
+}
+
+/**
+ * Get allowed capability.
+ *
+ * @return string
+ */
+function ppw_get_allowed_capability() {
+	if ( current_user_can( 'manage_options' ) ) {
+		return 'manage_options';
+	}
+
+	return 'ppwp_manage_options';
+}
+
+/**
+ * Allow user to display all PPWP option.
+ *
+ * @return bool
+ */
+function ppw_allow_manage_passwords() {
+	$capability = ppw_get_allowed_capability();
+
+	return current_user_can( $capability ) || current_user_can( 'edit_posts' );
 }

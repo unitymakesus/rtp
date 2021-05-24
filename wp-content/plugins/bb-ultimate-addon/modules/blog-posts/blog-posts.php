@@ -2132,8 +2132,17 @@ class BlogPostsModule extends FLBuilderModule {
 	 */
 	protected function render_date_section( $obj ) {
 
-		$show_date   = ( isset( $this->settings->show_date ) ) ? $this->settings->show_date : 'yes';
-		$date_format = ( isset( $this->settings->date_format ) ) ? $this->settings->date_format : 'M j, Y';
+		$show_date = ( isset( $this->settings->show_date ) ) ? $this->settings->show_date : 'yes';
+
+		if ( isset( $this->settings->date_format ) ) {
+			if ( 'default' === $this->settings->date_format ) {
+				$date_format = get_option( 'date_format' );
+			} else {
+				$date_format = $this->settings->date_format;
+			}
+		} else {
+			$date_format = 'M j, Y';
+		}
 
 		ob_start();
 

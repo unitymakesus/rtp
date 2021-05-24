@@ -17,6 +17,10 @@
   margin-bottom: 0;
 }
 
+.uabb-parent-wrapper-toc.uabb-toc-hidden #uabb-toc-togglecontents {
+  display: none;
+}
+
 .uabb-toc-content-heading {
   width: 100%;
   display: inline-block;
@@ -26,10 +30,6 @@
 .uabb-heading-block,
 .uabb-parent-wrapper-toc .uabb-module-content.uabb-separator-parent {
   text-align: left;
-}
-
-#uabb-toc-toggle {
-  display: none;
 }
 
 .toc-lists li:not(:last-child) {

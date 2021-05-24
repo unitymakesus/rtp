@@ -173,19 +173,14 @@ class FacetWP_Display
             $inline_scripts = ob_get_clean();
             $assets = apply_filters( 'facetwp_assets', $this->assets );
 
-            foreach ( $assets as $slug => $url ) {
-                $html = '<script src="{url}"></script>';
+            foreach ( $assets as $slug => $data ) {
+                $data = (array) $data;
+                $is_js = ( 'js' == substr( $slug, -2 ) );
+                $version = empty( $data[1] ) ? FACETWP_VERSION : $data[1];
+                $url = $data[0] . '?ver=' . $version;
 
-                if ( 'css' == substr( $slug, -3 ) ) {
-                    $html = '<link href="{url}" rel="stylesheet">';
-                }
-
-                if ( false !== strpos( $url, 'facetwp' ) ) {
-                    $url .= '?ver=' . FACETWP_VERSION;
-                }
-
+                $html = $is_js ? '<script src="{url}"></script>' : '<link href="{url}" rel="stylesheet">';
                 $html = apply_filters( 'facetwp_asset_html', $html, $url );
-
                 echo str_replace( '{url}', $url, $html ) . "\n";
             }
 

@@ -71,11 +71,11 @@ if ($update_previous->options['export_to'] == XmlExportEngine::EXPORT_TYPE_XML &
                             <div class="rad14"></div>
                         </div>
                         <div class="export_progress">
-							<span class="left_progress">
-								<span class="center_progress">
-									<span
+                            <span class="left_progress">
+                                <span class="center_progress">
+                                    <span
                                         class="percents_count">0</span>%</span> <?php printf(__("Export %ss", "wp_all_export_plugin"), ucwords(str_replace("_", " ", str_replace("shop", "", $child_export->export_post_type)))); ?></span>
-							<span class="right_progress"><?php _e('Exported', 'wp_all_export_plugin'); ?> <span
+                            <span class="right_progress"><?php _e('Exported', 'wp_all_export_plugin'); ?> <span
                                     class="created_count">0</span></span>
                         </div>
                     </div>
@@ -84,16 +84,16 @@ if ($update_previous->options['export_to'] == XmlExportEngine::EXPORT_TYPE_XML &
             }
             ?>
         </div>
-	    <span id="wpallexport-error-terminated" style="display: none;">
-			<div class="wpallexport-content-section" style="display:block; position: relative;">
-				<div class="wpallexport-notify-wrapper">
-					<div class="found_records terminated" style="background-position: 0 50% !important;">
-						<h3><?php _e('Your server terminated the export process', 'wp_all_export_plugin'); ?></h3>
-						<h4 style="width: 78%; line-height: 25px;"><?php _e("Ask your host to check your server's error log. They will be able to determine why your server is terminating the export process.", "wp_all_export_plugin"); ?></h4>
-					</div>
-				</div>
-			</div>
-		</span>
+        <span id="wpallexport-error-terminated" style="display: none;">
+            <div class="wpallexport-content-section" style="display:block; position: relative;">
+                <div class="wpallexport-notify-wrapper">
+                    <div class="found_records terminated" style="background-position: 0 50% !important;">
+                        <h3><?php _e('Your server terminated the export process', 'wp_all_export_plugin'); ?></h3>
+                        <h4 style="width: 78%; line-height: 25px;"><?php _e("Ask your host to check your server's error log. They will be able to determine why your server is terminating the export process.", "wp_all_export_plugin"); ?></h4>
+                    </div>
+                </div>
+            </div>
+        </span>
         <?php include ('success_page.php'); ?>
 
     </div>

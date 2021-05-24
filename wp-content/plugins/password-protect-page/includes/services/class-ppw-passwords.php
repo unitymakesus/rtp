@@ -99,6 +99,7 @@ if ( ! class_exists( 'PPW_Password_Services' ) ) {
 			}
 
 			$expire = apply_filters( 'ppw_cookie_expire', $expire );
+			$expire = apply_filters( 'ppwp_cookie_expiry', $expire );
 			return setcookie( $cookie_name . COOKIEHASH, $password_hashed, $expire, COOKIEPATH, COOKIE_DOMAIN, $secure );
 		}
 

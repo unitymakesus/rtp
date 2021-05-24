@@ -493,7 +493,6 @@ class PPW_Recaptcha {
 		.g-recaptcha {
 			transform:scale(0.9);
 			transform-origin:0 0;
-			margin-top: 10px;
 		}
 		<?php
 	}

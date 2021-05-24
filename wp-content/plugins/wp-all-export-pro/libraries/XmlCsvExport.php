@@ -107,7 +107,16 @@ final Class XmlCsvExport
                 $articles = apply_filters('wp_all_export_csv_rows', $articles, XmlExportEngine::$exportOptions, XmlExportEngine::$exportID);
                 if (!$preview) do_action('pmxe_exported_post', $term->term_id, XmlExportEngine::$exportRecord);
             }
-        } else { // exporting custom post types
+        } elseif (XmlExportEngine::$is_custom_addon_export) {
+
+            foreach (XmlExportEngine::$exportQuery->results as $record) {
+
+                $articles[] = XmlExportCustomRecord::prepare_data($record, XmlExportEngine::$exportOptions, false, $acfs, XmlExportEngine::$implode, $preview);
+                $articles = apply_filters('wp_all_export_csv_rows', $articles, XmlExportEngine::$exportOptions, XmlExportEngine::$exportID);
+                if (!$preview) do_action('pmxe_exported_post', $record->id, XmlExportEngine::$exportRecord);
+            }
+        }
+        else { // exporting custom post types
 
             // Get custom field snippets
             $snippets = array();
@@ -502,6 +511,38 @@ final Class XmlCsvExport
 
             }
         }
+        elseif (XmlExportEngine::$is_custom_addon_export) {
+
+            foreach (XmlExportEngine::$exportQuery->results as $record) {
+
+                $is_export_record = apply_filters('wp_all_export_xml_rows', true, $record, XmlExportEngine::$exportOptions, XmlExportEngine::$exportID);
+
+                if (!$is_export_record) continue;
+
+                if (!$is_custom_xml) {
+                    // add additional information before each node
+                    self::before_xml_node($xmlWriter, $record->id);
+                    $xmlWriter->startElement(self::$node_xml_tag);
+
+                    XmlExportCustomRecord::prepare_data($record, XmlExportEngine::$exportOptions, $xmlWriter, XmlExportEngine::$implode, $preview);
+
+                    $xmlWriter->closeElement(); // end post
+
+                    // add additional information after each node
+                    self::after_xml_node($xmlWriter, $record->id);
+                } else {
+                    $articles = array();
+                    $articles[] = XmlExportCustomRecord::prepare_data($record, XmlExportEngine::$exportOptions, $xmlWriter, XmlExportEngine::$implode, $preview);
+                    $articles = apply_filters('wp_all_export_csv_rows', $articles, XmlExportEngine::$exportOptions, XmlExportEngine::$exportID);
+
+                    $xmlWriter->writeArticle($articles);
+                }
+
+                if (!$preview) {
+                    do_action('pmxe_exported_post', $record->id, XmlExportEngine::$exportRecord);
+                }
+            }
+        }
         else {// exporting custom post types
             while (XmlExportEngine::$exportQuery->have_posts()) {
                 XmlExportEngine::$exportQuery->the_post();
@@ -515,6 +556,7 @@ final Class XmlCsvExport
                     // add additional information before each node
                     self::before_xml_node($xmlWriter, $record->ID);
                     $xmlWriter->startElement(self::$node_xml_tag);
+
                     XmlExportCpt::prepare_data($record, XmlExportEngine::$exportOptions, $xmlWriter, $acfs, $woo, $woo_order, XmlExportEngine::$implode, $preview);
 
                     $xmlWriter->closeElement(); // end post
@@ -611,6 +653,7 @@ final Class XmlCsvExport
                 $xml = (!$exported_by_cron) ? PMXE_XMLWriter::preprocess_xml($xml_header) . $xmlWriter->wpae_flush() : $xmlWriter->wpae_flush();
             }
 
+
             if (!$exported_by_cron) {
                 if (!$is_custom_xml) $xml = substr($xml, 0, (strlen(self::$main_xml_tag) + 4) * (-1));
 
@@ -657,6 +700,7 @@ final Class XmlCsvExport
                 PMXE_Plugin::$session->save_data();
 
             } else {
+
                 $xml = (!$is_custom_xml) ? substr(substr($xmlWriter->wpae_flush(), 41 + strlen(self::$main_xml_tag)), 0, (strlen(self::$main_xml_tag) + 4) * (-1)) : $xmlWriter->wpae_flush();
 
                 file_put_contents(PMXE_Plugin::$session->file, $xml, FILE_APPEND);
@@ -726,9 +770,6 @@ final Class XmlCsvExport
                     } while (!$is_added);
                 }
 
-//				if ( XmlExportEngine::$exportOptions['cc_label'][$ID] == 'product_type' and ! in_array('parent_id', $headers)) {
-//					$headers[] = 'parent_id';
-//				}
 
                 break;
         }

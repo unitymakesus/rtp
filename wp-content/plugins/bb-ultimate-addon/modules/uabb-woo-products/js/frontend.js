@@ -95,6 +95,10 @@ var key_array = new Array();
 
 					$scope.find( '.uabb-woo-loader' ).remove();
 
+					$('html, body').animate({
+						scrollTop: ( ( $scope.find( '.uabb-woocommerce' ).offset().top ) - 30 )
+					}, 'slow');
+
 					selector.replaceWith( data.data.html );
 					$scope.find( '.uabb-woocommerce-pagination' ).replaceWith( data.data.pagination );
 				}

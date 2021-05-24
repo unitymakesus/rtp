@@ -875,9 +875,9 @@ function sb_instagram_settings_page() {
 				<h3><?php _e( 'Configure', 'instagram-feed' ); ?></h3>
 
                 <div id="sbi_config">
-                    <a data-personal-basic-api="https://api.instagram.com/oauth/authorize?app_id=423965861585747&redirect_uri=https://api.smashballoon.com/v2/instagram-basic-display-redirect.php&response_type=code&scope=user_profile,user_media&state=<?php echo admin_url('admin.php?page=sb-instagram-feed'); ?>"
+                    <a data-personal-basic-api="https://api.instagram.com/oauth/authorize?client_id=423965861585747&redirect_uri=https://api.smashballoon.com/v2/instagram-basic-display-redirect.php&response_type=code&scope=user_profile,user_media&state=<?php echo admin_url('admin.php?page=sb-instagram-feed'); ?>"
                        data-new-api="https://www.facebook.com/dialog/oauth?client_id=254638078422287&redirect_uri=https://api.smashballoon.com/v2/instagram-graph-api-redirect.php&scope=manage_pages,instagram_basic,instagram_manage_insights,instagram_manage_comments&state=<?php echo admin_url('admin.php?page=sb-instagram-feed'); ?>"
-                       href="https://api.instagram.com/oauth/authorize?app_id=423965861585747&redirect_uri=https://api.smashballoon.com/v2/instagram-basic-display-redirect.php&response_type=code&scope=user_profile,user_media&state=<?php echo admin_url('admin.php?page=sb-instagram-feed'); ?>" class="sbi_admin_btn"><i class="fa fa-user-plus" aria-hidden="true" style="font-size: 20px;"></i>&nbsp; <?php _e('Connect an Instagram Account', 'instagram-feed' ); ?></a>
+                       href="https://api.instagram.com/oauth/authorize?client_id=423965861585747&redirect_uri=https://api.smashballoon.com/v2/instagram-basic-display-redirect.php&response_type=code&scope=user_profile,user_media&state=<?php echo admin_url('admin.php?page=sb-instagram-feed'); ?>" class="sbi_admin_btn"><i class="fa fa-user-plus" aria-hidden="true" style="font-size: 20px;"></i>&nbsp; <?php _e('Connect an Instagram Account', 'instagram-feed' ); ?></a>
                     <a href="https://smashballoon.com/instagram-feed/token/" target="_blank" style="position: relative; top: 14px; left: 15px;"><?php _e('Button not working?', 'instagram-feed'); ?></a>
                 </div>
 
@@ -969,7 +969,7 @@ function sb_instagram_settings_page() {
                                                 <span><?php echo esc_html( $message ); ?></span>
                                                 <a class="sbi_tooltip_link sbi_tooltip_outside" href="JavaScript:void(0);" style="position: relative; top: 2px;"><i class="fa fa-question-circle" aria-hidden="true"></i></a>
 
-                                                <a href="https://api.instagram.com/oauth/authorize?app_id=423965861585747&redirect_uri=https://api.smashballoon.com/v2/instagram-basic-display-redirect.php&response_type=code&scope=user_profile,user_media&state=<?php echo admin_url( 'admin.php?page=sb-instagram-feed' ); ?>" class="button button-secondary"><?php _e( 'Refresh now', 'instagram-feed' ); ?></a>
+                                                <a href="https://api.instagram.com/oauth/authorize?client_id=423965861585747&redirect_uri=https://api.smashballoon.com/v2/instagram-basic-display-redirect.php&response_type=code&scope=user_profile,user_media&state=<?php echo admin_url( 'admin.php?page=sb-instagram-feed' ); ?>" class="button button-secondary"><?php _e( 'Refresh now', 'instagram-feed' ); ?></a>
                                             </div>
                                             <p class="sbi_tooltip sbi-more-info" style="display: none; width: 100%; box-sizing: border-box;"><?php echo sprintf( __( 'This account is a "private" account on Instagram. It needs to be manually reconnected every 60 days. %sChange this account to be "public"%s to have access tokens that are automatically refreshed.', 'instagram-feed' ), '<a href="https://help.instagram.com/116024195217477/In" target="_blank">', '</a>' ); ?></p>
 										<?php endif; ?>

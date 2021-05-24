@@ -13,7 +13,8 @@ if ( 'type' === $settings->effect_type ) {
 	// Order of replacement.
 	$txt_order   = array( "\r\n", "\n", "\r", '<br/>', '<br>' );
 	$replace     = '|';
-	$str         = str_replace( $txt_order, $replace, $settings->fancy_text );
+	$fancy_text  = addslashes( $settings->fancy_text );
+	$str         = str_replace( $txt_order, $replace, $fancy_text );
 	$lines       = explode( '|', $str );
 	$count_lines = count( $lines );
 

@@ -213,6 +213,7 @@ class Password_Protect_Page {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/services/class-ppw-customizer.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/services/class-ppw-customizer-sitewide.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/services/class-ppw-customizer-upsell.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/services/class-ppw-customizer-pcp.php';
 
 		/**
 		 * The class responsible for defining all addons.
@@ -361,7 +362,7 @@ class Password_Protect_Page {
 		$this->loader->add_action( 'plugin_row_meta', $plugin_admin, 'register_plugins_links', 10, 2 );
 
 		PPW_Elementor::get_instance( $this->loader );
-
+		PPW_Customizer_PCP::get_instance()->register();
 	}
 
 	/**

@@ -1,12 +1,12 @@
 <?php return array (
   'root' => 
   array (
-    'pretty_version' => '2.10.1',
-    'version' => '2.10.1.0',
+    'pretty_version' => '2.11.0',
+    'version' => '2.11.0.0',
     'aliases' => 
     array (
     ),
-    'reference' => '49f02ac2996cce4035073b61de7baa606725fde2',
+    'reference' => 'f283440cc1d26330ae1ad5b87c48dd11198cadbb',
     'name' => 'impress-org/give',
   ),
   'versions' => 
@@ -45,12 +45,12 @@
     ),
     'impress-org/give' => 
     array (
-      'pretty_version' => '2.10.1',
-      'version' => '2.10.1.0',
+      'pretty_version' => '2.11.0',
+      'version' => '2.11.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '49f02ac2996cce4035073b61de7baa606725fde2',
+      'reference' => 'f283440cc1d26330ae1ad5b87c48dd11198cadbb',
     ),
     'kjohnson/format-object-list' => 
     array (

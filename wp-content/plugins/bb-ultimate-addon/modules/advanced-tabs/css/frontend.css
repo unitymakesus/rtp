@@ -355,8 +355,12 @@ div.uabb-tabs > nav {
 /* Vertical tab layout */
 /*****************************/
 
-.uabb-tabs-layout-vertical .uabb-tabs-nav {
+.uabb-tabs-layout-vertical.uabb-tab-position-left .uabb-tabs-nav {
     float: left;
+    width: 30%;
+}
+.uabb-tabs-layout-vertical.uabb-tab-position-right .uabb-tabs-nav {
+    float: right;
     width: 30%;
 }
 .uabb-tabs-layout-vertical .uabb-tabs-nav ul li {
@@ -387,4 +391,7 @@ div.uabb-tabs > nav {
 
 .uabb-tabs.uabb-tabs-layout-vertical.uabb-tabs-style-linebox > nav ul li {
     margin: 0 0.5em 0.5em 0;
+}
+.uabb-tabs .uabb-tab-nav .uabb-tab-description {
+    font-size: 12px;
 }

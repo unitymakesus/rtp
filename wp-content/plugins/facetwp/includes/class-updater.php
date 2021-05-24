@@ -48,7 +48,7 @@ class FacetWP_Updater
      * $args->slug = "facetwp-flyout"
      * plugin_path = "facetwp-flyout/facetwp-flyout.php"
      */
-    function plugins_api( $result = false, $action, $args ) {
+    function plugins_api( $result, $action, $args ) {
         if ( 'plugin_information' == $action ) {
             $slug = $args->slug;
             $to_check = $this->get_plugins_to_check();

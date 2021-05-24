@@ -501,7 +501,10 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 			}
 			/* Include Caldera Forms Styler */
 			if ( class_exists( 'Caldera_Forms' ) || class_exists( 'Caldera_Forms_Forms' ) ) {
-				$modules_array['uabb-caldera-form-styler'] = 'Caldera Forms Styler';
+				$forms = \Caldera_Forms_Forms::get_forms( true );
+				if ( ! empty( $forms ) ) {
+					$modules_array['uabb-caldera-form-styler'] = 'Caldera Forms Styler';
+				}
 			}
 			natcasesort( $modules_array );
 			return $modules_array;

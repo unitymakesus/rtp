@@ -371,6 +371,35 @@ class WpaeXmlProcessor
     }
 
     /**
+     * @param $snippet
+     * @param $functionName
+     * @return mixed
+     */
+    private function handleEmptyArgs($snippet, $functionName) {
+
+        $argsStr = preg_replace("%^".$functionName."\((.*)\)$%", "$1", $snippet);
+
+        $args_list = explode(',', $argsStr);
+
+        $new_args_list = [];
+
+        foreach ($args_list as $args_list_item) {
+
+            if ($args_list_item == '') {
+                $new_args_list[] = "\"\"";
+            } else {
+                $new_args_list[] = $args_list_item;
+            }
+            
+        }
+
+        $newArgsStr = implode(',', $new_args_list);
+
+        return str_replace($argsStr, $newArgsStr, $snippet);
+
+    }
+
+    /**
      * @param $xml
      *
      * @return mixed
@@ -474,6 +503,8 @@ class WpaeXmlProcessor
         $functionName = $this->sanitizeFunctionName($sanitizedSnippet);
 
         $this->checkIfFunctionExists($functionName);
+
+        $sanitizedSnippet = $this->handleEmptyArgs($sanitizedSnippet, $functionName);
 
         $argsStr = preg_replace("%^".$functionName."\((.*)\)$%", "$1", $sanitizedSnippet);
         preg_match_all("%(\"[^\"]*\")%", $argsStr, $matches);

@@ -47,9 +47,21 @@ FLBuilder::register_module(
 									'fields' => array( 'tab_style_width' ),
 								),
 								'vertical'   => array(
-									'fields'   => array( 'tab_border' ),
+									'fields'   => array( 'tab_border', 'tab_position' ),
 									'sections' => array( 'label_border' ),
 								),
+							),
+							'preview' => array(
+								'type' => 'refresh',
+							),
+						),
+						'tab_position'          => array(
+							'type'    => 'select',
+							'label'   => __( 'Tab Position', 'uabb' ),
+							'default' => 'left',
+							'options' => array(
+								'left'  => __( 'Left', 'uabb' ),
+								'right' => __( 'Right', 'uabb' ),
 							),
 							'preview' => array(
 								'type' => 'refresh',
@@ -423,6 +435,30 @@ FLBuilder::register_module(
 								),
 							),
 						),
+						'description_color'                => array(
+							'type'        => 'color',
+							'label'       => __( 'Description Color', 'uabb' ),
+							'default'     => '',
+							'show_reset'  => true,
+							'connections' => array( 'color' ),
+							'preview'     => array(
+								'type'     => 'css',
+								'selector' => '.uabb-tabs .uabb-tab-link .uabb-tab-description',
+								'property' => 'color',
+							),
+						),
+						'description_active_color'         => array(
+							'type'        => 'color',
+							'label'       => __( 'Description Active/Hover Color', 'uabb' ),
+							'default'     => '',
+							'show_reset'  => true,
+							'connections' => array( 'color' ),
+							'preview'     => array(
+								'type'     => 'css',
+								'selector' => '.uabb-tabs .uabb-tab-nav .uabb-tab-current .uabb-tab-description',
+								'property' => 'color',
+							),
+						),
 						'tab_border'                       => array(
 							'type'    => 'border',
 							'label'   => __( 'Border', 'uabb' ),
@@ -664,6 +700,21 @@ FLBuilder::register_module(
 						),
 					),
 				),
+				'des_typography'     => array(
+					'title'  => __( 'Tab Description', 'uabb' ),
+					'fields' => array(
+						'description_typography' => array(
+							'type'       => 'typography',
+							'label'      => __( 'Typography', 'uabb' ),
+							'responsive' => true,
+							'preview'    => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-tabs .uabb-tab-description',
+								'important' => true,
+							),
+						),
+					),
+				),
 				'content_typography' => array(
 					'title'  => __( 'Content', 'uabb' ),
 					'fields' => array(
@@ -698,13 +749,19 @@ FLBuilder::register_settings_form(
 					'general'      => array(
 						'title'  => '',
 						'fields' => array(
-							'label'    => array(
+							'label'       => array(
 								'type'        => 'text',
 								'default'     => __( 'Tab Title', 'uabb' ),
 								'label'       => __( 'Tab Title', 'uabb' ),
 								'connections' => array( 'string', 'html' ),
 							),
-							'tab_icon' => array(
+							'description' => array(
+								'type'        => 'textarea',
+								'label'       => __( 'Description', 'uabb' ),
+								'connections' => array( 'string', 'html', 'url' ),
+								'rows'        => 3,
+							),
+							'tab_icon'    => array(
 								'type'        => 'icon',
 								'label'       => __( 'Icon', 'uabb' ),
 								'default'     => 'ua-icon ua-icon-envelope',

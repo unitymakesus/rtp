@@ -11,6 +11,9 @@
 	var $submitBtn = {};
 	$inputs.each(function() {
 	  if ( 'Submit' !== this.name ) {
+		if ($(this).prop('type') === 'checkbox' && !$(this).prop('checked')) {
+		  return;
+		}
 		values[this.name] = $(this).val();
 	  } else {
 		$submitBtn = $(this);

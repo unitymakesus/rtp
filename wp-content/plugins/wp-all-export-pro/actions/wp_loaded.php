@@ -172,6 +172,12 @@ function pmxe_wp_loaded() {
                     die(\__('The User Export Add-On Pro is required to run this export. You can download the add-on here: <a href="http://www.wpallimport.com/portal/" target="_blank">http://www.wpallimport.com/portal/</a>', \PMXE_Plugin::LANGUAGE_DOMAIN));
                 }
 
+                $cpt_string = $cpt[0];
+
+                if(strpos($cpt_string, 'custom_') === 0 && !class_exists('GF_Export_Add_On')) {
+                    die('The Gravity Forms Add-On Pro is required for this export. You can download the add-on here: <a href="http://www.wpallimport.com/portal/" target="_blank">http://www.wpallimport.com/portal/</a>');
+                }
+
 				if ( ! $export->isEmpty() ){
 
 					switch ($_GET['action']) {

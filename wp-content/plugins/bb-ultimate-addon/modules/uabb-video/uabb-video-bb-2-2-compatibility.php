@@ -42,8 +42,8 @@ FLBuilder::register_module(
 									'sections' => array( 'wistia_option' ),
 								),
 								'hosted'  => array(
+									'fields'   => array( 'video_source', 'autoplay', 'loop', 'end', 'start', 'video', 'video_url' ),
 									'sections' => array( 'video_controls_section' ),
-									'fields'   => array( 'video_source', 'autoplay', 'loop', 'end', 'start' ),
 								),
 							),
 						),
@@ -203,7 +203,7 @@ FLBuilder::register_module(
 				'vimeo_option'           => array(
 					'title'  => __( 'Video option', 'uabb' ),
 					'fields' => array(
-						'vimeo_autoplay' => array(
+						'vimeo_autoplay'  => array(
 							'type'    => 'select',
 							'label'   => __( 'Autoplay', 'uabb' ),
 							'default' => 'no',
@@ -218,7 +218,7 @@ FLBuilder::register_module(
 							),
 							'help'    => __( 'Thumbnail will not display if AutoPlay mode is enabled.', 'uabb' ),
 						),
-						'vimeo_loop'     => array(
+						'vimeo_loop'      => array(
 							'type'    => 'select',
 							'label'   => __( 'Loop', 'uabb' ),
 							'default' => 'no',
@@ -228,7 +228,7 @@ FLBuilder::register_module(
 							),
 							'help'    => __( 'Choose a video to play continuously in a loop. The video will automatically start again after reaching the end.', 'uabb' ),
 						),
-						'vimeo_title'    => array(
+						'vimeo_title'     => array(
 							'type'    => 'select',
 							'label'   => __( 'Intro Title', 'uabb' ),
 							'default' => 'show',
@@ -238,7 +238,7 @@ FLBuilder::register_module(
 							),
 							'help'    => __( 'Displays title of the video.', 'uabb' ),
 						),
-						'vimeo_portrait' => array(
+						'vimeo_portrait'  => array(
 							'type'    => 'select',
 							'label'   => __( 'Intro Portrait', 'uabb' ),
 							'default' => 'show',
@@ -248,7 +248,7 @@ FLBuilder::register_module(
 							),
 							'help'    => __( 'Displays the author’s profile image.', 'uabb' ),
 						),
-						'vimeo_byline'   => array(
+						'vimeo_byline'    => array(
 							'type'    => 'select',
 							'label'   => __( 'Intro Byline', 'uabb' ),
 							'default' => 'show',
@@ -258,13 +258,23 @@ FLBuilder::register_module(
 							),
 							'help'    => __( 'Displays the author’s name of the video.', 'uabb' ),
 						),
-						'vimeo_color'    => array(
+						'vimeo_color'     => array(
 							'type'        => 'color',
 							'connections' => array( 'color' ),
 							'label'       => __( 'Controls Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
 							'show_alpha'  => true,
+						),
+						'vimeo_dnt_track' => array(
+							'type'    => 'select',
+							'label'   => __( 'Enable Do Not Track', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'yes' => __( 'Yes', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
+							),
+							'help'    => __( 'Enabling this option will block the player from tracking any session data, including all cookies and analytics. ', 'uabb' ),
 						),
 					),
 				),

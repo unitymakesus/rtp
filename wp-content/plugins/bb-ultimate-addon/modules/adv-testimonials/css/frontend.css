@@ -174,7 +174,12 @@
 .uabb-testimonial-info .uabb-testimonial-author-description * {
 	margin: 0 auto;
 }
-
+.uabb-testimonial-info .uabb-testimonial-author-description p {
+	margin-bottom: 15px;
+}
+.uabb-testimonial-info .uabb-testimonial-author-description p:last-of-type {
+	margin: 0 auto;
+}
 .uabb-testimonials-wrap .bx-prev i,
 .uabb-testimonials-wrap .bx-next i {
 	box-sizing: content-box;

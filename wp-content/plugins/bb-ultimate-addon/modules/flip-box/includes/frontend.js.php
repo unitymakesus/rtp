@@ -54,7 +54,7 @@
 		});
 	});
 
-	jQuery(window).load( function() {
+	jQuery(window).on('load', function() {
 		new UABBFlipBox( args );
 	});
 

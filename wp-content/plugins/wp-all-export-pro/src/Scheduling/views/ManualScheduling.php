@@ -1,5 +1,7 @@
-<?php $exportOptions = ( isset($post) ) ? $post : $schedulingExportOptions; ?>
-
+<?php
+$exportOptions = ( isset($post) ) ? $post : $schedulingExportOptions;
+$is_rapid_addon_export = PMXE_Helper::is_rapid_export_addon($exportOptions['cpt']);
+?>
 <div style="padding-top:11px">
     <label>
         <input type="radio" name="scheduling_enable"
@@ -26,12 +28,14 @@
             <?php echo site_url() . '/wp-load.php?security_token=' . substr(md5($cron_job_key . $export_id), 0, 16) . '&export_id=' . $export_id . '&action=get_data'; ?>
         </code>
         </p>
-        <p style="margin: 0 0 15px;">
-        <h5 style="margin-bottom: 10px; margin-top: 10px; font-size: 14px;"><?php _e('Bundle URL'); ?></h5>
-        <code style="padding: 10px; border: 1px solid #ccc; display: block; width: 90%;">
-            <?php echo site_url() . '/wp-load.php?security_token=' . substr(md5($cron_job_key . $export_id), 0, 16) . '&export_id=' . $export_id . '&action=get_bundle'; ?>
-        </code>
-        </p>
+        <?php if(!$is_rapid_addon_export) { ?>
+            <p style="margin: 0 0 15px;">
+            <h5 style="margin-bottom: 10px; margin-top: 10px; font-size: 14px;"><?php _e('Bundle URL'); ?></h5>
+            <code style="padding: 10px; border: 1px solid #ccc; display: block; width: 90%;">
+                <?php echo site_url() . '/wp-load.php?security_token=' . substr(md5($cron_job_key . $export_id), 0, 16) . '&export_id=' . $export_id . '&action=get_bundle'; ?>
+            </code>
+            </p>
+        <?php } ?>
         <p style="margin:0; padding-left: 0;"><?php _e('Read more about manual scheduling'); ?>: <a target="_blank"
                                                                                                     href="http://www.wpallimport.com/documentation/recurring/cron/">
                 http://www.wpallimport.com/documentation/recurring/cron/</a>

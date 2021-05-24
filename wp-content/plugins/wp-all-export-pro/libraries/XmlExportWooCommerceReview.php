@@ -474,6 +474,7 @@ if (!class_exists('XmlExportWooCommerceReview')) {
                         case 'user_id':
                             wp_all_export_write_article($article, $element_name, apply_filters('pmxe_user_id', pmxe_filter($review->user_id, $fieldSnipped), $review->comment_ID));
                             break;
+                        case 'cf':
                         case 'other':
                             if (!empty($fieldValue)) {
                                 $cur_meta_values = get_comment_meta($review->comment_ID, $fieldValue);

@@ -325,7 +325,7 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 				return $this->photos;
 			}
 
-			$this->current_photos = array_slice( $this->photos, $per_page, $per_page, true );
+			$this->current_photos = array_slice( $this->photos, 0, $per_page, true );
 
 			return $this->current_photos;
 		}
@@ -609,6 +609,7 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 				}
 			}
 		}
+		$cat_filter = apply_filters( 'uabb_photo_gallery_tabs', $cat_filter );
 		return $cat_filter;
 	}
 

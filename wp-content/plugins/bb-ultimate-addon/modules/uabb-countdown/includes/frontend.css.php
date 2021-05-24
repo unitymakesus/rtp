@@ -5,10 +5,55 @@
  *  @package UABB Countdown Module
  */
 
-$converted        = UABB_Compatibility::$uabb_migration;
-$version_bb_check = UABB_Compatibility::$version_bb_check;
+$converted                 = UABB_Compatibility::$uabb_migration;
+$version_bb_check          = UABB_Compatibility::$version_bb_check;
+$settings->separator_color = UABB_Helper::uabb_colorpicker( $settings, 'separator_color' );
 
-if ( isset( $settings->count_animation ) && 'flash' === $settings->count_animation ) { ?>
+$outter_spacing = ( isset( $settings->timer_out_spacing ) && ! empty( $settings->timer_out_spacing ) ) ? $settings->timer_out_spacing : '30';
+?>
+	<?php if ( 'yes' === $settings->show_separator ) { ?>
+		<?php if ( 'colon' === $settings->separator_type ) { ?>
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-countdown.uabb-countdown-separator-colon .uabb-countdown-digit-wrapper:after {
+			<?php
+			if ( isset( $settings->separator_size ) ) {
+				echo 'font-size:' . esc_attr( $settings->separator_size ) . 'px;';
+			}
+			?>
+			<?php if ( isset( $settings->separator_color ) ) { ?>
+				color: <?php echo esc_attr( $settings->separator_color ); ?>;
+			<?php } ?>
+			right: -<?php echo ( intval( $outter_spacing / 2 ) + 5 ); ?>px;
+			<?php if ( 'normal' === $settings->timer_style && $outter_spacing ) { ?>
+				right: -<?php echo ( intval( $outter_spacing / 2 ) ); ?>px;
+		<?php } ?>
+		}
+	<?php } ?>
+
+		<?php if ( 'line' === $settings->separator_type ) { ?>
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-countdown.uabb-countdown-separator-line .uabb-countdown-holding:after {
+			right: 0;
+			<?php if ( isset( $settings->separator_color ) ) { ?>
+				border-color: <?php echo esc_attr( $settings->separator_color ); ?>;
+			<?php } ?>
+		}
+			<?php if ( $outter_spacing ) { ?>
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-countdown.uabb-countdown-separator-line .uabb-countdown-holding {
+			padding-left: <?php echo esc_attr( ( $outter_spacing / 2 ) ); ?>px;
+			padding-right: <?php echo esc_attr( ( $outter_spacing / 2 ) ); ?>px;
+		}
+		<?php } ?>
+
+			<?php if ( 'normal' === $settings->timer_style && $outter_spacing ) { ?>
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-countdown.uabb-countdown-separator-line .uabb-countdown-holding {
+			padding-left: <?php echo esc_attr( $outter_spacing ); ?>px;
+			padding-right: <?php echo esc_attr( $outter_spacing ); ?>px;
+		}
+		<?php } ?>
+		<?php } ?>
+	<?php } ?>
+<?php
+if ( isset( $settings->count_animation ) && 'flash' === $settings->count_animation ) {
+	?>
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-count-down-digit {
 	-webkit-animation-name: flash; 
 	animation-name: flash;
@@ -17,6 +62,8 @@ if ( isset( $settings->count_animation ) && 'flash' === $settings->count_animati
 }
 	<?php
 }
+?>
+<?php
 if ( isset( $settings->count_animation ) && 'pulse' === $settings->count_animation ) {
 	?>
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-count-down-digit {
@@ -96,7 +143,7 @@ if ( isset( $settings->counter_alignment ) && 'center' === $settings->counter_al
 		if ( isset( $settings->timer_out_spacing ) && '' !== $settings->timer_out_spacing ) {
 			echo 'margin-left: ' . esc_attr( $settings->timer_out_spacing ) . 'px;';
 		} else {
-			echo 'margin-left: 10px;';
+			echo 'margin-left: 15px;';
 		}
 	}
 
@@ -104,7 +151,7 @@ if ( isset( $settings->counter_alignment ) && 'center' === $settings->counter_al
 		if ( isset( $settings->timer_out_spacing ) && '' !== $settings->timer_out_spacing ) {
 			echo 'margin-right: ' . esc_attr( $settings->timer_out_spacing ) . 'px;';
 		} else {
-			echo 'margin-right: 10px;';
+			echo 'margin-right: 15px;';
 		}
 	}
 
@@ -238,6 +285,16 @@ if ( isset( $settings->timer_style ) && 'square' === $settings->timer_style ) {
 	if ( isset( $settings->digit_area_width ) ) {
 		echo ( '' !== $settings->digit_area_width ) ? 'padding:' . esc_attr( $settings->digit_area_width / 4 ) . ';' : 'padding: ' . 100 / 4 . 'px;'; }
 	?>
+		<?php if ( isset( $settings->unit_position ) && 'default' === $settings->unit_position || 'outside' === $settings->unit_position ) { ?>
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	<?php } if ( isset( $settings->unit_position ) && 'inside' === $settings->unit_position ) { ?>
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+	<?php } ?>
 }
 	<?php
 }
@@ -358,8 +415,38 @@ if ( isset( $settings->timer_style ) && 'normal' === $settings->timer_style && i
 }
 	<?php
 }
+?>
+<?php
+// Counter Box Shadow CSS.
 
+if ( 'yes' === $settings->counter_drop_shadow ) {
+	?>
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-countdown-digit-wrapper {
+		-webkit-box-shadow: <?php echo esc_attr( $settings->counter_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->counter_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->counter_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->counter_shadow_color_spr ); ?>px <?php echo esc_attr( $settings->counter_shadow_color ); ?>;
+		-moz-box-shadow: <?php echo esc_attr( $settings->counter_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->counter_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->counter_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->counter_shadow_color_spr ); ?>px <?php echo esc_attr( $settings->counter_shadow_color ); ?>;
+		-o-box-shadow: <?php echo esc_attr( $settings->counter_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->counter_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->counter_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->counter_shadow_color_spr ); ?>px <?php echo esc_attr( $settings->counter_shadow_color ); ?>;
+		box-shadow: <?php echo esc_attr( $settings->counter_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->counter_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->counter_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->counter_shadow_color_spr ); ?>px <?php echo esc_attr( $settings->counter_shadow_color ); ?>;
+		<?php if ( isset( $settings->counter_shadow_hover_transition ) && 'yes' === $settings->counter_hover_shadow ) { ?>
+			-webkit-transition: -webkit-box-shadow <?php echo esc_attr( $settings->counter_shadow_hover_transition ); ?>ms ease-in-out, -webkit-transform <?php echo esc_attr( $settings->counter_shadow_hover_transition ); ?>ms ease-in-out;
+			-moz-transition: -moz-box-shadow <?php echo esc_attr( $settings->counter_shadow_hover_transition ); ?>ms ease-in-out, -moz-transform <?php echo esc_attr( $settings->counter_shadow_hover_transition ); ?>ms ease-in-out;
+			transition: box-shadow <?php echo esc_attr( $settings->counter_shadow_hover_transition ); ?>ms ease-in-out, transform <?php echo esc_attr( $settings->counter_shadow_hover_transition ); ?>ms ease-in-out;
+			will-change: box-shadow;
+		<?php } ?>
+		<?php
+		if ( isset( $settings->timer_style ) && 'circle' === $settings->timer_style ) {
+			?>
+		border-radius: 50%;
+			<?php
+		} elseif ( isset( $settings->timer_style ) && 'custom' === $settings->timer_style ) {
+			?>
+			<?php
+			echo ( '' !== $settings->digit_border_radius ) ? 'border-radius:' . esc_attr( $settings->digit_border_radius ) . 'px;' : 'border-radius:5px;';
+			?>
+		<?php } ?>
+		}
+<?php } ?>
 
+<?php
 /* Typography style Assign CSS for message after expires*/
 if ( isset( $settings->fixed_timer_action ) && 'msg' === $settings->fixed_timer_action ) {
 	?>

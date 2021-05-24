@@ -44,13 +44,17 @@ if ( ! class_exists('XmlExportEngine') ){
         public static $comment_export;
 		public static $woo_review_export = false;
         public static $taxonomy_export;
-
+        public static $custom_record_export;
 
 		public static $is_preview = false;
 
         public static $implode = ',';
 
-		private $post;
+        public static $is_bundle_available = true;
+        public static $is_filtering_available = true;
+
+
+        private $post;
 		private $_existing_meta_keys = array();
 		private $_existing_taxonomies = array();
 
@@ -218,6 +222,8 @@ if ( ! class_exists('XmlExportEngine') ){
 		public static $is_comment_export = false;
 		public static $is_taxonomy_export = false;
 		public static $is_woo_review_export = false;
+		public static $is_custom_addon_export = false;
+
 		public static $post_types    = array();
 		public static $exportOptions = array();
 		public static $exportQuery;
@@ -395,6 +401,12 @@ if ( ! class_exists('XmlExportEngine') ){
 
 				self::$is_taxonomy_export = ( in_array('taxonomies', self::$post_types) ) ? true : false;
 
+				if(count(self::$post_types) === 1) {
+                    if(strpos(self::$post_types[0], 'custom_') === 0 ) {
+                        self::$is_custom_addon_export = true;
+                    }
+                }
+
 			}
 			else
 			{				
@@ -457,6 +469,7 @@ if ( ! class_exists('XmlExportEngine') ){
 			self::$woo_order_export  = new XmlExportWooCommerceOrder(); 
 			self::$woo_coupon_export = new XmlExportWooCommerceCoupon();
 			self::$woo_review_export = new XmlExportWooCommerceReview();
+			self::$custom_record_export = new XmlExportCustomRecord();
 			do_action('pmxe_init_addons');
 
 		}	
@@ -522,6 +535,7 @@ if ( ! class_exists('XmlExportEngine') ){
 		public function init_available_data(){
 
 			global $wpdb;
+
 			$table_prefix = $wpdb->prefix;
 
 			// Prepare existing taxonomies
@@ -533,7 +547,7 @@ if ( ! class_exists('XmlExportEngine') ){
 			}	
 			if ( 'advanced' == $this->post['export_type'] && ! self::$is_user_export && ! self::$is_comment_export && ! self::$is_woo_review_export && ! self::$is_taxonomy_export )
 			{
-				$meta_keys = $wpdb->get_results("SELECT DISTINCT meta_key FROM {$table_prefix}postmeta WHERE {$table_prefix}postmeta.meta_key NOT LIKE '_edit%' LIMIT 1000");
+				$meta_keys = $wpdb->get_results("SELECT DISTINCT meta_key FROM {$table_prefix}postmeta WHERE {$table_prefix}postmeta.meta_key NOT LIKE '_edit%' AND {$table_prefix}postmeta.meta_key NOT LIKE '_oembed_%' LIMIT 1000");
 				if ( ! empty($meta_keys)){
 					$exclude_keys = array('_first_variation_attributes', '_is_first_variation_created');
 					foreach ($meta_keys as $meta_key) {
@@ -689,8 +703,8 @@ if ( ! class_exists('XmlExportEngine') ){
 			}
 
 			if ( ! self::$is_comment_export && ! self::$is_woo_review_export )
-			{							
-				self::$acf_export->get_fields_options( $fields, $field_keys );
+			{
+                self::$acf_export->get_fields_options( $fields, $field_keys );
 			}
 
 			$sort_fields = array();
@@ -846,7 +860,10 @@ if ( ! class_exists('XmlExportEngine') ){
 			if ( ! self::$is_comment_export && ! self::$is_woo_review_export )
 			{			
 				// Render Available ACF
-				self::$acf_export->render($i);
+                $disable_acf = apply_filters('wp_all_export_disable_acf', false);
+                if(!$disable_acf) {
+                    self::$acf_export->render($i);
+                }
 			}
 
 			return ob_get_clean();
@@ -1030,9 +1047,13 @@ if ( ! class_exists('XmlExportEngine') ){
 			}
 
 			if ( ! self::$is_comment_export && ! self::$is_woo_review_export )
-			{	
-				// Render Available ACF
-				self::$acf_export->render_filters();	
+			{
+                $disable_acf = apply_filters('wp_all_export_disable_acf', false);
+
+                if(!$disable_acf) {
+                    // Render Available ACF
+                    self::$acf_export->render_filters();
+                }
 			}
 
 		}		
@@ -1112,9 +1133,13 @@ if ( ! class_exists('XmlExportEngine') ){
 					}
 
 					if ( ! self::$is_comment_export && ! self::$is_woo_review_export )
-					{	
-						// Render Available ACF
-						self::$acf_export->render_new_field();	
+					{
+                        $disable_acf = apply_filters('wp_all_export_disable_acf', false);
+
+                        if(!$disable_acf) {
+                            // Render Available ACF
+                            self::$acf_export->render_new_field();
+                        }
 					}
 
 					?>

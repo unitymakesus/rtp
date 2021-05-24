@@ -33,6 +33,9 @@ $err_msg             = apply_filters( 'ppw_sitewide_error_message', esc_html__( 
 		<h1>
 			<a style="display: <?php echo $disable_logo ?>" title="<?php echo esc_attr__( 'This site is password protected by PPWP plugin', 'password-protect-page') ?>" class="ppw-swp-logo">Password Protect WordPress plugin</a>
 		</h1>
+		<?php
+		do_action( 'ppw_sitewide_above_password_form_container' );
+		?>
 		<form <?php echo $form_transparency ?> class="ppw-swp-form" action="<?php echo $form_action; ?>" method="post">
 			<?php do_action( 'ppw_sitewide_above_password_form' ); ?>
 			<label for="input_wp_protect_password"><?php echo $password_label ?></label>

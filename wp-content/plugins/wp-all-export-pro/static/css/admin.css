@@ -54,6 +54,19 @@
     font-weight: normal;
     margin: 5px 0;
 }
+.wpallexport-plugin .unable-to-connect {
+	color: #f2b03d;
+}
+
+.wpallexport-plugin .wpai-no-license,
+.wpallexport-plugin .wpai-license {
+	display: flex;
+}
+
+.wpallexport-plugin .connection-icon .help_scheduling {
+	margin: 0;
+	position: initial;
+}
 
 .wpallexport-plugin .code-block {
     border-radius: 2px 2px 2px 2px;
@@ -173,6 +186,9 @@
 	border: 4px dashed #bbb;	
 	margin-left: 0;
 	overflow: auto;	
+}
+.wpallexport-plugin .CodeMirror-wrap pre {
+    word-break: break-word;
 }
 .wpallexport-plugin .CodeMirror-line.pmxe-state-hover,
 .wpallexport-plugin .CodeMirror-line.pmxe-state-default{	
@@ -457,14 +473,28 @@
 	color: #000;
 	font-weight: bold;
 }
+
 .wpallexport-plugin .taxonomy_to_export_wrapper{
 	display: none;
 }
+
+.wpallexport-plugin .sub_post_type_to_export_wrapper{
+	display: none;
+}
+
 .wpallexport-plugin .wp-all-export-advanced-field-options-content{
 	padding: 14px 0;
 }
 .wpallexport-plugin .wp-all-export-additional-csv-options{
 	margin-left: 20px;
+}
+
+.wpallexport-plugin .wpallexport-footer {
+	display: flex;
+	justify-content: center;
+	margin-top: 40px;
+	margin-bottom: -20px;
+	clear: both;
 }
 /*--------------------------------------------------------------------------
 *
@@ -478,6 +508,7 @@
 	color: #ddd;
 	background-color: #ddd;
 	margin-bottom: 15px;
+	margin-top: 15px;
 }
 .wpallexport-plugin a:focus, 
 .wpallexport-plugin input:focus{ box-shadow: none; }
@@ -549,13 +580,34 @@
 	background: url('../img/continue.png') no-repeat 93% 50% #425f9a;
 	border: none;
 }
-.wpallexport-plugin .wpallexport-large-button:hover{
+.wpallexport-plugin .wpallexport-large-button:hover,
+.wpallexport-plugin .wpallexport-large-button:active,
+.wpallexport-plugin .wpallexport-large-button:focus{
 	background: url('../img/continue.png') no-repeat 93% 50% #425f9a;
 	border: none;
 	box-shadow: none;
 }
 
 /*@+ header */
+.wpallexport-plugin .wpallexport-title p{
+	font-size: 18px !important;
+	line-height: 16px;
+	color: #777;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+.wpallexport-plugin .wpallexport-title h2,
+.wpallexport-plugin .wpallexport-title h3{
+	font-size: 33px;
+	color: #425f9a;
+	font-weight: bold;
+	padding-top: 5px;
+	padding-right: 0;
+	margin-left: 2px;
+}
+.wpallexport-plugin .wpallexport-title h3{
+	margin: 5px 0;
+}
 .wpallexport-plugin .wpallexport-logo{
 	background: url('../img/logo.png');
 	width: 60px;
@@ -566,29 +618,17 @@
 .wpallexport-plugin .wpallexport-title{
 	float: left;
 }
-	.wpallexport-plugin .wpallexport-title p{
-		font-size: 18px !important;
-		line-height: 16px;
-		color: #777;
-		margin-top: 0;
-		margin-bottom: 0;
-	}
-	.wpallexport-plugin .wpallexport-title h2,
-	.wpallexport-plugin .wpallexport-title h3{
-		font-size: 33px;
-		color: #425f9a;
-		font-weight: bold;
-		padding-top: 5px;
-		padding-right: 0;
-		margin-left: 2px;
-	}	
-	.wpallexport-plugin .wpallexport-title h3{
-		margin: 5px 0;
-	}
+.wpallexport-plugin .wpallexport-title p{
+	font-size: 18px !important;
+	line-height: 16px;
+	color: #777;
+	margin-top: 0;
+	margin-bottom: 0;
+}
 .wpallexport-plugin .wpallexport-links{
 	float: right;
 	margin-right: 3px;
-	margin-top: 33px;	
+	margin-top: 20px;
 }
 .wpallexport-plugin .wpallexport-links a{
 	font-size: 12px;
@@ -796,9 +836,25 @@ a.wpallexport-import-to-format span.wpallexport-import-to-title {
 	color: #40acad;
 	text-decoration: none;
 }
-.wpallexport-plugin div.error{
-	clear: both;
+.wpallexport-plugin div.error,
+.wpallexport-plugin div.updated {
 	margin-top: 15px;
+}
+
+.wpallexport-plugin div.error.inline,
+.wpallexport-plugin div.updated.inline {
+	margin: 0;
+}
+
+.wpallexport-plugin div.error.license-status,
+.wpallexport-plugin div.updated.license-status {
+	margin: 0 0 0 2px;
+	display: inline-block;
+	text-transform: capitalize;
+	padding: 2px 10px;
+	height: 18px;
+	vertical-align: 1px;
+	line-height: 17px;
 }
 .wpallexport-plugin .wp-pointer-content ul,
 .wpallexport-plugin .wpallexport-pointer-content ul{
@@ -838,7 +894,7 @@ a.wpallexport-import-to-format span.wpallexport-import-to-title {
 	font-size: 12px;
 	/*height: 25px;*/
 	width: auto;
-	padding: 2px;
+	padding: 4px 25px 4px 6px;
 	color: #000;
 }
 .wpallexport-plugin .wpallexport-template input[type="text"],
@@ -1214,8 +1270,7 @@ a.wpallexport-import-to-format span.wpallexport-import-to-title {
 }
 	.wpallexport-plugin table.wpallexport-layout td {
 		vertical-align: top;
-		border: none;		
-		font-size: 12px !important;
+		border: none;
 	}
 	.wpallexport-plugin table.wpallexport-layout td.left {
 		/*min-width: 490px;*/
@@ -1345,6 +1400,13 @@ a.wpallexport-import-to-format span.wpallexport-import-to-title {
 	.wpallexport-plugin form.wpallexport-choose-file input[type="password"] {
 		width: 80px;
 		font-size: 12px;
+	}
+	.wpallexport-plugin form.wpallexport-choose-file .chosen-search input[type="text"] {
+		font-size: 15px;
+		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+		background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0xNS44NTMgMTYuNTZjLTEuNjgzIDEuNTE3LTMuOTExIDIuNDQtNi4zNTMgMi40NC01LjI0MyAwLTkuNS00LjI1Ny05LjUtOS41czQuMjU3LTkuNSA5LjUtOS41IDkuNSA0LjI1NyA5LjUgOS41YzAgMi40NDItLjkyMyA0LjY3LTIuNDQgNi4zNTNsNy40NCA3LjQ0LS43MDcuNzA3LTcuNDQtNy40NHptLTYuMzUzLTE1LjU2YzQuNjkxIDAgOC41IDMuODA5IDguNSA4LjVzLTMuODA5IDguNS04LjUgOC41LTguNS0zLjgwOS04LjUtOC41IDMuODA5LTguNSA4LjUtOC41eiIvPjwvc3ZnPg==') no-repeat right 5px top 50%;
+		background-size: auto;
+		background-size: 12px;
 	}
 	.wpallexport-plugin form.wpallexport-choose-file input.regular-text,
 	.wpallexport-plugin form.wpallexport-choose-file select.regular-text {
@@ -1581,7 +1643,8 @@ a.wpallexport-import-to-format span.wpallexport-import-to-title {
 .wpallexport-plugin #custom_type_selector, 
 .wpallexport-plugin #file_selector,
 .wpallexport-plugin #wp_query_selector,
-.wpallexport-plugin #taxonomy_to_export{
+.wpallexport-plugin #taxonomy_to_export,
+.wpallexport-plugin #sub_post_to_export{
 	margin: 0 auto;
 	margin-bottom: 20px;
 	text-align: left;
@@ -1601,13 +1664,15 @@ a.wpallexport-import-to-format span.wpallexport-import-to-title {
 .wpallexport-plugin #custom_type_selector .dd-options li,
 .wpallexport-plugin #file_selector .dd-options li,
 .wpallexport-plugin #wp_query_selector .dd-options li,
-.wpallexport-plugin #taxonomy_to_export .dd-options li{
+.wpallexport-plugin #taxonomy_to_export .dd-options li,
+.wpallexport-plugin #sub_post_to_export .dd-options li{
 	margin-bottom: 0;
 }
 .wpallexport-plugin #custom_type_selector .dd-options li .dd-option,
 .wpallexport-plugin #file_selector .dd-options li .dd-option,
 .wpallexport-plugin #wp_query_selector .dd-options li .dd-option,
-.wpallexport-plugin #taxonomy_to_export .dd-options li .dd-option{
+.wpallexport-plugin #taxonomy_to_export .dd-options li .dd-option,
+.wpallexport-plugin #sub_post_to_export .dd-options li .dd-option{
 	font-size: 18px;
 	color: #555;
 	border: none;
@@ -1624,7 +1689,9 @@ a.wpallexport-import-to-format span.wpallexport-import-to-title {
 	.wpallexport-plugin #wp_query_selector .dd-options li .dd-option:hover, 
 	.wpallexport-plugin #wp_query_selector .dd-options li .dd-option-selected,
 	.wpallexport-plugin #taxonomy_to_export .dd-options li .dd-option:hover,
-	.wpallexport-plugin #taxonomy_to_export .dd-options li .dd-option-selected{
+	.wpallexport-plugin #taxonomy_to_export .dd-options li .dd-option-selected,
+	.wpallexport-plugin #sub_post_to_export .dd-options li .dd-option:hover,
+	.wpallexport-plugin #sub_post_to_export .dd-options li .dd-option-selected{
 		background: #eee;
 		color: #555;
 	}
@@ -1636,7 +1703,8 @@ a.wpallexport-import-to-format span.wpallexport-import-to-title {
 .wpallexport-plugin #custom_type_selector .dd-select,
 .wpallexport-plugin #file_selector .dd-select,
 .wpallexport-plugin #wp_query_selector .dd-select,
-.wpallexport-plugin #taxonomy_to_export .dd-select{
+.wpallexport-plugin #taxonomy_to_export .dd-select,
+.wpallexport-plugin #sub_post_to_export .dd-select{
 	background: #fff !important;
 	padding: 10px 0;
 	/*margin-left: -5px;*/
@@ -1644,7 +1712,8 @@ a.wpallexport-import-to-format span.wpallexport-import-to-title {
 .wpallexport-plugin #custom_type_selector .dd-selected,
 .wpallexport-plugin #file_selector .dd-selected,
 .wpallexport-plugin #wp_query_selector .dd-selected,
-.wpallexport-plugin #taxonomy_to_export .dd-selected{
+.wpallexport-plugin #taxonomy_to_export .dd-selected,
+.wpallexport-plugin #sub_post_to_export .dd-selected{
 	color: #000;
 	font-weight: normal;
 	font-size: 18px;	
@@ -1652,14 +1721,16 @@ a.wpallexport-import-to-format span.wpallexport-import-to-title {
 	padding: 0 10px;
 	line-height: 24px;
 }
-.wpallexport-plugin .change_file #file_selector .dd-select,
-.wpallexport-plugin .change_file #wp_query_selector .dd-select,
-.wpallexport-plugin .change_file #taxonomy_to_export .dd-select{
-	padding: 5px 0 0;
-}
+	.wpallexport-plugin .change_file #file_selector .dd-select,
+	.wpallexport-plugin .change_file #wp_query_selector .dd-select,
+	.wpallexport-plugin .change_file #taxonomy_to_export .dd-select,
+	.wpallexport-plugin .change_file #sub_post_to_export .dd-select{
+		padding: 5px 0 0;
+	}
 	.wpallexport-plugin .change_file #file_selector .dd-options .dd-option,
 	.wpallexport-plugin .change_file #wp_query_selector .dd-options .dd-option,
-	.wpallexport-plugin .change_file #taxonomy_to_export .dd-options .dd-option{
+	.wpallexport-plugin .change_file #taxonomy_to_export .dd-options .dd-option,
+	.wpallexport-plugin .change_file #sub_post_to_export .dd-options .dd-option{
 		padding: 0 10px;
 	}
 .wpallexport-plugin .dd-options{
@@ -1852,6 +1923,17 @@ a.wpallexport-import-to-format span.wpallexport-import-to-title {
 .wpallexport-plugin .chosen-container-active.chosen-with-drop .chosen-single{
 	background: none;
 }
+.wpallexport-plugin .chosen-results .group-result,
+.wpallexport-plugin .chosen-results .active-result {
+	font-size: 15px;
+	line-height: 28px;
+}
+
+.wpallexport-plugin .chosen-results .active-result.highlighted {
+	background: #eee;
+	color: #555;
+}
+
 .wpallexport-plugin .wp_all_export_product_matching_mode{
 	margin-top: 25px;
 	margin-left: 10px;
@@ -1921,10 +2003,10 @@ a.wpallexport-import-to-format span.wpallexport-import-to-title {
 	color: #fff;
 	display: inline-block;
 	font-size: 14px;
-	height: 18px;
+	height: 21px;
 	margin: 0;
 	float: right;
-	padding: 12px 40px 10px 50px;
+	padding: 13px 40px 10px 50px;
 	text-decoration: none;
 	font-weight: bold;	
 	min-width: 60px;
@@ -1954,17 +2036,38 @@ a.wpallexport-import-to-format span.wpallexport-import-to-title {
 	width: 100% !important;
 }
 .wpallexport-plugin .wp_all_export_rule_inputs .chosen-container-single .chosen-single{
-	height: 41px;
+	height: 48px;
 	line-height: 38px;
-	font-size: 14px;
+	font-size: 15px;
 }
+.wpallexport-plugin .chosen-container-single .chosen-single span {
+	margin-top: 5px;
+	margin-left: 10px;
+	color: #777;
+}
+
+.wpallexport-plugin .googleMerchants .chosen-container-single .chosen-single span,
+.wpallexport-plugin .export-single .chosen-container-single .chosen-single span {
+	margin-top: 0;
+}
+
+.wpallexport-plugin .timezone-select .chosen-container-single .chosen-single span {
+	margin-top: 0;
+}
+
+.wpallexport-plugin .chosen-container-single .chosen-search input[type="text"] {
+	background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0xNS44NTMgMTYuNTZjLTEuNjgzIDEuNTE3LTMuOTExIDIuNDQtNi4zNTMgMi40NC01LjI0MyAwLTkuNS00LjI1Ny05LjUtOS41czQuMjU3LTkuNSA5LjUtOS41IDkuNSA0LjI1NyA5LjUgOS41YzAgMi40NDItLjkyMyA0LjY3LTIuNDQgNi4zNTNsNy40NCA3LjQ0LS43MDcuNzA3LTcuNDQtNy40NHptLTYuMzUzLTE1LjU2YzQuNjkxIDAgOC41IDMuODA5IDguNSA4LjVzLTMuODA5IDguNS04LjUgOC41LTguNS0zLjgwOS04LjUtOC41IDMuODA5LTguNSA4LjUtOC41eiIvPjwvc3ZnPg==') no-repeat right 5px top 50%;
+	background-size: 12px;
+}
+
 .wpallexport-plugin .wp_all_export_rule_inputs .chosen-container-single .chosen-single div{
 	top: 9px;
+	display: none;
 }
 
 .wpallexport-plugin #wp_all_export_value{
 	font-size: 16px;
-	height: 42px;
+	height: 48px;
 	padding: 10px;	
 	border: 1px solid #ddd;
 	border-radius: 5px;
@@ -1995,24 +2098,32 @@ a.wpallexport-import-to-format span.wpallexport-import-to-title {
 	width: 30%;
 	color:#46ba69;
 	font-size: 14px;
+	vertical-align: top;
 }
 .wpallexport-plugin .wp_all_export_filtering_rules .drag-element .rule_as_is{
 	display: inline-block;
 	width: 20%;
 	color:#40acad;
 	font-size: 14px;
+	vertical-align: top;
 }
 .wpallexport-plugin .wp_all_export_filtering_rules .drag-element .rule_condition_value{
 	display: inline-block;
 	width: 20%;
 	color:#000;
 	font-size: 14px;
+	word-wrap: break-word;
+	vertical-align: top;
+	padding-right: 15px;
+	max-width: 20vw; /* Prevents the column from overflowing when the string is too large */
 }
+
 .wpallexport-plugin .wp_all_export_filtering_rules .drag-element .condition{
 	display: inline-block;
 	width: 25%;
 	color: #000;
 	font-size: 14px;
+	vertical-align: top;
 }
 .wpallexport-plugin .wp_all_export_filtering_rules li{
 	position: relative;
@@ -2197,6 +2308,12 @@ a.wpallexport-import-to-format span.wpallexport-import-to-title {
 	.wpallexport-plugin form.wpallexport-template .load-template {		
 		display: block;
 		font-size: 12px;		
+	}
+
+	.wpallexport-plugin form.wpallexport-template .load-template select {
+		width: auto;
+		height: 40px;
+		padding: 4px 25px 4px 6px;
 	}
 
 	.wpallexport-plugin form.wpallexport-step-3 .wpallexport-section .wpallexport-content-section{
@@ -3394,6 +3511,11 @@ a.wpallexport-import-to-format span.wpallexport-import-to-title {
 .wpallexport-plugin table.wpallexport-layout td.left{float:left;}
 .wpallexport-plugin table.wpallexport-layout td.right{float:right;}
 
+.wpallexport-plugin .manage-column.check-column,
+.wpallexport-plugin #the-pmxi-admin-import-list .check-column{
+	padding: 10px;
+}
+
 /*--------------------------------------------------------------------------
 *
 *	Setting Page
@@ -3480,6 +3602,16 @@ a.wpallexport-import-to-format span.wpallexport-import-to-title {
 }
 .wpallexport-plugin .wpae-custom-field ul li{
 	margin-left: 15px;
+}
+
+.wpallexport-plugin .function-editor,
+.wpallexport-plugin .client-mode-settings {
+	margin-top: 2em;
+}
+
+.wpallexport-plugin .settings .submit-buttons {
+	margin-top: 30px;
+	margin-bottom: 30px;
 }
 /*--------------------------------------------------------------------------
 *
@@ -4141,6 +4273,12 @@ input label {
 	display: none;
 }
 
+.wpallexport-plugin #wp_all_export_xml_element_chosen,
+.wpallexport-plugin #wp_all_export_rule_chosen {
+	background: #fff url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%206l5%205%205-5%202%201-7%207-7-7%202-1z%22%20fill%3D%22%23555%22%2F%3E%3C%2Fsvg%3E') no-repeat right 5px top 50%;
+    background-size: auto;
+	background-size: 16px 16px;
+}
 .wpallexport-plugin .chosen-container-single .chosen-single {
 	height: 41px;
 	line-height: 38px;
@@ -4149,9 +4287,12 @@ input label {
 	box-shadow: none;
 	color: #555 !important;
 }
-
 .wpallexport-plugin .chosen-container-single .chosen-single div {
 	top: 9px;
+}
+.wpallexport-plugin .chosen-results li.no-results {
+	padding: 10px;
+	font-size: 15px;
 }
 /** END COMBINE MULTIPLE ELEMENTS INTO ONE **/
 
@@ -4187,6 +4328,17 @@ input label {
     width: 558px;
     margin: 0 auto;
 }
+.wpallexport-plugin .wp_all_export_saving_status {
+	padding: 10px;
+	display: block;
+}
+
+.wpallexport-plugin .wp_all_export_saving_status.error,
+.wpallexport-plugin .wp_all_export_saving_status.updated {
+	background: white !important;
+}
 /** END INSTALL ELEMENTS NOTICE */
 
-
+.category-mapper .mask {
+	display: none;
+}

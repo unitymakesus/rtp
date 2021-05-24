@@ -210,7 +210,7 @@ if ( ! class_exists('XmlExportACF') )
 
 		private static $fc_sub_field_names = array();
 
-		public static function export_acf_field($field_value  = '', $exportOptions, $ID, $pid, &$article, $xmlWriter = false, &$acfs, $element_name = '', $element_name_ns = '', $fieldSnipped = '', $group_id = '', $preview = false, $return_value = false, $is_sub_field = false )
+		public static function export_acf_field($field_value  = '', $exportOptions, $ID, $pid, &$article, $xmlWriter = false, &$acfs, $element_name = '', $element_name_ns = '', $fieldSnipped = '', $group_id = '', $preview = false, $return_value = false, $is_sub_field = false, $implode_delimiter = '' )
 		{
             global $acf;
 
@@ -240,7 +240,10 @@ if ( ! class_exists('XmlExportACF') )
 			{
                 $field_value = maybe_unserialize($field_value);
 
-				$implode_delimiter = XmlExportEngine::$implode;
+				if ( empty($implode_delimiter) ) {
+					$implode_delimiter = XmlExportEngine::$implode;
+				}
+
 
 				switch ($field_options['type'])
 				{
@@ -721,7 +724,8 @@ if ( ! class_exists('XmlExportACF') )
 										'',
 										$preview,
 										$is_xml_export ? false : true,
-										true
+										true,
+										$implode_delimiter
 									);
 
 									$acfs[$element_name][] = $element_name . '_' . $sub_field_name;
@@ -758,15 +762,15 @@ if ( ! class_exists('XmlExportACF') )
                                         '',
                                         $preview,
                                         $is_xml_export ? false : true,
-                                        true
+                                        true,
+										$implode_delimiter
                                     );
 
                                     if ( ! isset( $acfs[ $element_name ] ) || is_array( $acfs[ $element_name ] ) ) {
                                         $acfs[$element_name][] = $element_name . '_' . $sub_field_name;
                                     }
 
-                                    $article[$element_name . '_' . $sub_field_name] = ($preview) ? trim(preg_replace('~[\r\n]+~', ' ', htmlspecialchars($sub_field_value))) : $sub_field_value;
-                                }
+                                    $article[$element_name . '_' . $sub_field_name] = ($preview) ? trim(preg_replace('~[\r\n]+~', ' ', htmlspecialchars($sub_field_value))) : $sub_field_value;                                }
                             }
                         }
 
@@ -872,7 +876,8 @@ if ( ! class_exists('XmlExportACF') )
 										'',
 										$preview,
 										$is_xml_export ? false : true,
-										true
+										true,
+										($implode_delimiter == '|' )  ? ',' : '|'
 									);
 
 									if ( ! $is_xml_export )
@@ -924,8 +929,7 @@ if ( ! class_exists('XmlExportACF') )
 							{
 								$additional_articles = array();
 
-								$sub_repeater_delimiter = apply_filters('wp_all_export_repeater_delimiter', $exportOptions['delimiter'], XmlExportEngine::$exportID);
-
+                                $sub_repeater_delimiter = apply_filters('wp_all_export_repeater_delimiter', $exportOptions['delimiter'] == ',' ? '|' : ',',  XmlExportEngine::$exportID);
 								foreach ($rowValues as $key => $values)
 								{
 									$is_have_subvalues = array_filter(array_keys($values), 'is_numeric');
@@ -1102,7 +1106,8 @@ if ( ! class_exists('XmlExportACF') )
 												'',
 												$preview,
 												$is_xml_export ? false : true,
-												true
+												true,
+												$implode_delimiter
 											);
 
 											if ( ! $is_xml_export )
@@ -1406,8 +1411,6 @@ if ( ! class_exists('XmlExportACF') )
 
 			$field_template = false;
 
-			$is_multiple_field_value = false;
-
 			$is_xml_template = $exportOptions['export_to'] == 'xml';
 
 			$xpath_separator = $is_xml_template ? '/' : '_';
@@ -1415,7 +1418,7 @@ if ( ! class_exists('XmlExportACF') )
 			$implode_delimiter = XmlExportEngine::$implode;
 
 			if (!empty($parent_delimiter)){
-				$implode_delimiter = $parent_delimiter == '|' ? ',' : '|';
+				$implode_delimiter = ($parent_delimiter == '|' ? ',' : '|');
 			}
 
 			switch ($field_options['type'])
@@ -1643,7 +1646,7 @@ if ( ! class_exists('XmlExportACF') )
 					{
 						$field_template = array(
 							'is_variable' => 'csv',
-							'separator' => $implode_delimiter,
+							'separator' => $implode_delimiter ,
 							'rows' => array()
 						);
 					}

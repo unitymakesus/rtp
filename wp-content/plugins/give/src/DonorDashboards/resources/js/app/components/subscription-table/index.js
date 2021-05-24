@@ -1,7 +1,6 @@
 import { Fragment, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { __ } from '@wordpress/i18n';
-;
 
 import Table from '../table';
 import SubscriptionRow from '../subscription-row';
@@ -22,7 +21,7 @@ const SubscriptionTable = ( { subscriptions, perPage } ) => {
 	const getSubscriptionRows = () => {
 		return subscriptionsArray.reduce( ( rows, subscription, index ) => {
 			if ( index >= start && index < end ) {
-				rows.push( <SubscriptionRow subscription={ subscription } /> );
+				rows.push( <SubscriptionRow subscription={ subscription } key={index} /> );
 			}
 			return rows;
 		}, [] );

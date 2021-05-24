@@ -22,11 +22,12 @@ class AddonService
 
         foreach ($exports as $item) {
 
+            if(!isset($item['options']['cpt'])) {
+                continue;
+            }
+
             if(!is_array($item['options']['cpt'])) {
                 $item['options']['cpt'] = array($item['options']['cpt']);
-            }
-            if(!isset($item['options']['export_type'])) {
-                return false;
             }
 
             if (

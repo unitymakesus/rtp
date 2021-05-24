@@ -996,7 +996,7 @@ FLBuilder::register_settings_form(
 										'fields' => array( 'youtube_link', 'yt_thumbnail_size' ),
 									),
 									'vimeo'   => array(
-										'fields' => array( 'vimeo_link' ),
+										'fields' => array( 'vimeo_link', 'vimeo_dnt_track' ),
 									),
 									'wistia'  => array(
 										'fields' => array( 'wistia_link' ),
@@ -1105,6 +1105,16 @@ FLBuilder::register_settings_form(
 								'label'       => __( 'Select Image', 'uabb' ),
 								'show_remove' => true,
 								'connections' => array( 'photo' ),
+							),
+							'vimeo_dnt_track'    => array(
+								'type'    => 'select',
+								'label'   => __( 'Enable Do Not Track', 'uabb' ),
+								'default' => 'no',
+								'options' => array(
+									'yes' => __( 'Yes', 'uabb' ),
+									'no'  => __( 'No', 'uabb' ),
+								),
+								'help'    => __( 'Enabling this option will block the player from tracking any session data, including all cookies and analytics. ', 'uabb' ),
 							),
 						),
 					),

@@ -266,11 +266,11 @@ class PPW_Admin {
 	 */
 	public function ppw_add_menu() {
 		$setting_page = new PPW_Settings();
-		add_menu_page( 'Protect Password Settings', 'Password Protect WordPress', 'manage_options', PPW_Constants::MENU_NAME, array(
+		add_menu_page( 'Protect Password Settings', 'Password Protect WordPress', ppw_get_allowed_capability(), PPW_Constants::MENU_NAME, array(
 			$setting_page,
 			'render_ui'
 		), PPW_DIR_URL . 'admin/images/ppw-icon-20x20.png' );
-		add_submenu_page( PPW_Constants::MENU_NAME, __( 'PPWP › Settings', PPW_Constants::DOMAIN ), __( 'Settings', PPW_Constants::DOMAIN ), 'manage_options', PPW_Constants::MENU_NAME );
+		add_submenu_page( PPW_Constants::MENU_NAME, __( 'PPWP › Settings', PPW_Constants::DOMAIN ), __( 'Settings', PPW_Constants::DOMAIN ), ppw_get_allowed_capability(), PPW_Constants::MENU_NAME );
 		$this->partial_protection_submenu();
 
 		// Hide sitewide when Pro activate.
@@ -287,7 +287,7 @@ class PPW_Admin {
 	public function sitewide_submenu() {
 		$setting_page = new PPW_Sitewide_Settings();
 
-		add_submenu_page( PPW_Constants::MENU_NAME, __( 'PPWP › Sitewide', PPW_Constants::DOMAIN ), __( 'Sitewide Protection', PPW_Constants::DOMAIN ), 'manage_options', PPW_Constants::SITEWIDE_PAGE_PREFIX, array(
+		add_submenu_page( PPW_Constants::MENU_NAME, __( 'PPWP › Sitewide', PPW_Constants::DOMAIN ), __( 'Sitewide Protection', PPW_Constants::DOMAIN ), ppw_get_allowed_capability(), PPW_Constants::SITEWIDE_PAGE_PREFIX, array(
 			$setting_page,
 			'render_ui',
 		) );
@@ -304,7 +304,7 @@ class PPW_Admin {
 			PPW_Constants::MENU_NAME,
 			__( 'PPWP › Integrations', PPW_Constants::DOMAIN ),
 			__( 'Integrations', PPW_Constants::DOMAIN ),
-			'manage_options',
+			ppw_get_allowed_capability(),
 			PPW_Constants::EXTERNAL_SERVICES_PREFIX,
 			array(
 				$setting_page,
@@ -319,7 +319,7 @@ class PPW_Admin {
 	public function partial_protection_submenu() {
 		$setting_page = new PPW_Partial_Protection_Settings();
 		add_submenu_page( PPW_Constants::MENU_NAME, __( 'PPWP › Partial Protection', 'password-protect-page' ), __( 'Partial Protection', 'password-protect-page' ),
-			'manage_options', PPW_Constants::PCP_PAGE_PREFIX, array(
+			ppw_get_allowed_capability(), PPW_Constants::PCP_PAGE_PREFIX, array(
 				$setting_page,
 				'render_ui'
 			)
@@ -655,11 +655,14 @@ class PPW_Admin {
 	 * Update category settings.
 	 */
 	public function ppw_free_update_category_settings() {
-		$setting_keys = array(
+
+		$setting_keys = apply_filters('ppw_category_keys', array(
 			'ppwp_is_protect_category',
 			'ppwp_categories_password',
 			'ppwp_protected_categories_selected',
-		);
+		) );
+
+		$data_settings = apply_filters('ppw_category_data_settings', wp_unslash( $_REQUEST['settings'] ), $setting_keys );
 		if ( ppw_free_is_setting_data_invalid( $_REQUEST, $setting_keys, false ) ) {
 			wp_send_json(
 				array(
@@ -672,7 +675,8 @@ class PPW_Admin {
 			wp_die();
 		}
 
-		$data_settings = wp_unslash( $_REQUEST['settings'] );
+		do_action('ppw_before_update_category_settings', $setting_keys, $data_settings);
+
 		$passwords     = PPW_Repository_Passwords::get_instance()->get_all_shared_categories_password();
 
 		// Add new shared password if password is not exist
@@ -760,6 +764,8 @@ class PPW_Admin {
 		if ( empty( $password ) ) {
 			return;
 		}
+
+		do_action( 'ppw_sitewide_before_validate_password', $password );
 
 		$password_is_valid = $entire_site_service->entire_site_is_valid_password( $password );
 		if ( $password_is_valid ) {

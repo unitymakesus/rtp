@@ -267,7 +267,7 @@ if ( apply_filters( 'uabb_heading_remove_description_default_space', true ) ) {
 			array(
 				'settings'     => $settings,
 				'setting_name' => 'font_typo',
-				'selector'     => ".fl-node-$id .uabb-heading,.fl-node-$id .uabb-heading-wrapper .uabb-heading",
+				'selector'     => ".fl-node-$id .uabb-heading,.fl-node-$id .uabb-heading-wrapper .uabb-heading .uabb-heading-text",
 			)
 		);
 	}

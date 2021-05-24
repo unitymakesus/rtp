@@ -539,8 +539,8 @@ FLBuilder::register_module(
 									'sections' => array( 'creative_menu_responsive_mobile_style', 'creative_menu_responsive_style' ),
 								),
 								'text'            => array(
-									'fields'   => array( 'creative_mobile_menu_type', 'creative_menu_mobile_breakpoint', 'creative_menu_responsive_alignment', 'creative_menu_mobile_toggle_color', 'creative_menu_mobile_toggle_text', 'creative_menu_navigation_alignment' ),
-									'sections' => array( 'creative_menu_responsive_mobile_style', 'creative_menu_responsive_style' ),
+									'fields'   => array( 'creative_mobile_menu_type', 'creative_menu_mobile_breakpoint', 'creative_menu_responsive_alignment', 'creative_menu_mobile_toggle_text', 'creative_menu_navigation_alignment' ),
+									'sections' => array( 'menu_button_colors', 'creative_menu_responsive_mobile_style', 'creative_menu_responsive_style' ),
 								),
 								'expanded'        => array(
 									'fields'   => array( 'creative_menu_responsive_alignment' ),
@@ -579,6 +579,80 @@ FLBuilder::register_module(
 								'type'     => 'css',
 								'selector' => '.uabb-creative-menu-mobile-toggle-container, .uabb-creative-menu-mobile-toggle-container > .uabb-creative-menu-mobile-toggle.text',
 								'property' => 'text-align',
+							),
+						),
+					),
+				),
+				'menu_button_colors'                    => array(
+					'title'  => __( 'Menu Button Styling', 'uabb' ),
+					'fields' => array(
+						'text_color'       => array(
+							'type'       => 'color',
+							'label'      => __( 'Text Color', 'uabb' ),
+							'show_reset' => true,
+							'show_alpha' => true,
+							'preview'    => array(
+								'type'     => 'css',
+								'selector' => '.uabb-creative-menu-mobile-toggle.text .uabb-creative-menu-mobile-toggle-label',
+								'property' => 'color',
+							),
+						),
+						'text_hover_color' => array(
+							'type'       => 'color',
+							'label'      => __( 'Text Hover Color', 'uabb' ),
+							'default'    => '',
+							'show_reset' => true,
+							'show_alpha' => true,
+							'preview'    => array(
+								'type' => 'none',
+							),
+						),
+						'button_bg_color'  => array(
+							'type'        => 'color',
+							'connections' => array( 'color' ),
+							'label'       => __( 'Background Color', 'uabb' ),
+							'show_reset'  => true,
+							'show_alpha'  => true,
+							'connections' => array( 'color' ),
+							'preview'     => array(
+								'type'     => 'css',
+								'selector' => '.uabb-creative-menu-mobile-toggle.text',
+								'property' => 'background-color',
+							),
+						),
+						'bg_hover_color'   => array(
+							'type'       => 'color',
+							'label'      => __( 'Background Hover Color', 'uabb' ),
+							'default'    => '',
+							'show_reset' => true,
+							'show_alpha' => true,
+							'preview'    => array(
+								'type' => 'none',
+							),
+						),
+						'button_border'    => array(
+							'type'    => 'border',
+							'label'   => __( 'Border', 'uabb' ),
+							'slider'  => true,
+							'units'   => array( 'px' ),
+							'preview' => array(
+								'type'     => 'css',
+								'selector' => '.uabb-creative-menu-mobile-toggle.text',
+								'property' => 'border',
+								'unit'     => 'px',
+							),
+						),
+						'button_padding'   => array(
+							'type'        => 'dimension',
+							'label'       => __( 'Padding', 'uabb' ),
+							'description' => 'px',
+							'responsive'  => true,
+							'preview'     => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-creative-menu-mobile-toggle.text',
+								'property'  => 'padding',
+								'unit'      => 'px',
+								'important' => true,
 							),
 						),
 					),

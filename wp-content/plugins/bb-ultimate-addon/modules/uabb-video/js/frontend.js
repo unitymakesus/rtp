@@ -127,7 +127,7 @@
 
   		var iframe 		= $( "<iframe/>" );
       var vurl 		= selector.data( 'src' );
-			var hosted_video_html = JSON.parse( selector.parent().parent().data( 'html' ) );
+			var hosted_video_html = selector.parent().parent().data( 'html' );
 
       if ( 0 == selector.find( 'iframe' ).length ) {
 

@@ -201,6 +201,10 @@ if ( ! class_exists( 'PPW_Constants' ) ) {
 		const SHORT_CODE_FORM_CLASS = '[PPW_FORM_CLASS]';
 
 		const SHORT_CODE_PASSWORD_LABEL = '[PPWP_FORM_PASSWORD_LABEL]';
+
+		const SHORTCODE_ABOVE_PASSWORD_INPUT = '[PPWP_FORM_ABOVE_PASSWORD_INPUT]';
+
+		const SHORTCODE_BELOW_PASSWORD_INPUT = '[PPWP_FORM_BELOW_PASSWORD_INPUT]';
 		//phpcs:ignore #endregion
 
 		//phpcs:ignore
@@ -415,6 +419,10 @@ if ( ! class_exists( 'PPW_Constants' ) ) {
 		const DEFAULT_SHORTCODE_ERROR_MSG = 'Please enter the correct password!';
 
 		const DEFAULT_SHORTCODE_LOADING = 'Loading...';
+
+		const DEFAULT_SHORTCODE_SHOW_PASSWORD = false;
+
+		const DEFAULT_SHORTCODE_SHOW_PASSWORD_TEXT = 'Show password';
 
 		const TBL_NAME = 'pda_passwords';
 

@@ -12,6 +12,9 @@ $settings->title_color        = UABB_Helper::uabb_colorpicker( $settings, 'title
 $settings->title_hover_color  = UABB_Helper::uabb_colorpicker( $settings, 'title_hover_color' );
 $settings->title_active_color = UABB_Helper::uabb_colorpicker( $settings, 'title_active_color' );
 
+$settings->description_color        = UABB_Helper::uabb_colorpicker( $settings, 'description_color' );
+$settings->description_active_color = UABB_Helper::uabb_colorpicker( $settings, 'description_active_color' );
+
 $settings->title_background_color        = UABB_Helper::uabb_colorpicker( $settings, 'title_background_color', true );
 $settings->title_background_hover_color  = UABB_Helper::uabb_colorpicker( $settings, 'title_background_hover_color', true );
 $settings->title_active_background_color = UABB_Helper::uabb_colorpicker( $settings, 'title_active_background_color', true );
@@ -243,6 +246,29 @@ if ( 'iconfall' !== $settings->style ) {
 			)
 		);
 	}
+}
+?>
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-tabs .uabb-tabs-nav<?php echo esc_attr( $id ); ?> .uabb-tab-description {
+	<?php if ( isset( $settings->description_color ) && ! empty( $settings->description_color ) ) { ?>
+	color: <?php echo esc_attr( $settings->description_color ); ?>;
+	<?php } ?>
+}
+
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-tabs .uabb-tabs-nav<?php echo esc_attr( $id ); ?> .uabb-tab-current .uabb-tab-description,
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-tabs .uabb-tabs-nav<?php echo esc_attr( $id ); ?> .uabb-tab-current:hover .uabb-tab-description {
+	<?php if ( isset( $settings->description_active_color ) && ! empty( $settings->description_active_color ) ) { ?>
+	color: <?php echo esc_attr( $settings->description_active_color ); ?>;
+	<?php } ?>
+}
+<?php
+if ( class_exists( 'FLBuilderCSS' ) ) {
+	FLBuilderCSS::typography_field_rule(
+		array(
+			'settings'     => $settings,
+			'setting_name' => 'description_typography',
+			'selector'     => ".fl-node-$id .uabb-tabs .uabb-tab-description",
+		)
+	);
 }
 ?>
 <?php if ( ! $version_bb_check ) { ?>

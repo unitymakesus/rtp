@@ -3,11 +3,11 @@
 function pmxe_wp_ajax_wpae_filtering_count(){
 
 	if ( ! check_ajax_referer( 'wp_all_export_secure', 'security', false )){
-		exit( json_encode(array('html' => __('Security check1', 'wp_all_export_plugin'))) );
+		exit( json_encode(array('html' => __('Security check', 'wp_all_export_plugin'))) );
 	}
 
 	if ( ! current_user_can( PMXE_Plugin::$capabilities ) && ! current_user_can(PMXE_Plugin::CLIENT_MODE_CAP) ){
-		exit( json_encode(array('html' => __('Security check2', 'wp_all_export_plugin'))) );
+		exit( json_encode(array('html' => __('Security check', 'wp_all_export_plugin'))) );
 	}
 
 	ob_start();
@@ -21,7 +21,8 @@ function pmxe_wp_ajax_wpae_filtering_count(){
 	$filter_args = array(
 		'filter_rules_hierarhy' => empty($post['filter_rules_hierarhy']) ? array() : $post['filter_rules_hierarhy'],
 		'product_matching_mode' => empty($post['product_matching_mode']) ? 'strict' : $post['product_matching_mode'],
-		'taxonomy_to_export' => empty($post['taxonomy_to_export']) ? '' : $post['taxonomy_to_export']
+		'taxonomy_to_export' => empty($post['taxonomy_to_export']) ? '' : $post['taxonomy_to_export'],
+		'sub_post_type_to_export' => empty($post['sub_post_type_to_export']) ? '' : $post['sub_post_type_to_export']
 	);
 
 	$input  = new PMXE_Input();	
@@ -312,56 +313,67 @@ function pmxe_wp_ajax_wpae_filtering_count(){
 		}
 		else
 		{
-			remove_all_actions('parse_query');
-			remove_all_filters('posts_clauses');
-            wp_all_export_remove_before_post_except_toolset_actions();
 
-            $cpt = ($is_products_export) ? array('product', 'product_variation') : array($post['cpt']);
+		    if(strpos($post['cpt'], 'custom_') === 0) {
+                $addon = GF_Export_Add_On::get_instance();
 
-			// get total custom post type records
-			$totalQuery = new WP_Query( array( 'post_type' => $cpt, 'post_status' => 'any', 'orderby' => 'ID', 'order' => 'ASC', 'posts_per_page' => 10 ));
-		
-				if ( ! empty($totalQuery->found_posts)){
-				$total_records = $totalQuery->found_posts;			
-			}
+                $exportQuery = $addon->add_on->get_query();
 
-			wp_reset_postdata();
+                PMXE_Plugin::$session->set('exportQuery', $exportQuery);
 
-			ob_start();
-			// get custom post type records depends on filters			
-			add_filter('posts_where', 'wp_all_export_posts_where', 10, 1);
-			add_filter('posts_join', 'wp_all_export_posts_join', 10, 1);
+                $foundRecords = $exportQuery->found_posts;
+
+            } else {
+                remove_all_actions('parse_query');
+                remove_all_filters('posts_clauses');
+                wp_all_export_remove_before_post_except_toolset_actions();
+
+                $cpt = ($is_products_export) ? array('product', 'product_variation') : array($post['cpt']);
+
+                // get total custom post type records
+                $totalQuery = new WP_Query(array('post_type' => $cpt, 'post_status' => 'any', 'orderby' => 'ID', 'order' => 'ASC', 'posts_per_page' => 10));
+
+                if (!empty($totalQuery->found_posts)) {
+                    $total_records = $totalQuery->found_posts;
+                }
+
+                wp_reset_postdata();
+
+                ob_start();
+                // get custom post type records depends on filters
+                add_filter('posts_where', 'wp_all_export_posts_where', 10, 1);
+                add_filter('posts_join', 'wp_all_export_posts_join', 10, 1);
 
 
-			if($is_products_export) {
+                if ($is_products_export) {
 
-				add_filter('posts_where', 'wp_all_export_numbering_where', 15, 1);
+                    add_filter('posts_where', 'wp_all_export_numbering_where', 15, 1);
 
-				$productsQuery = new WP_Query( array( 'post_type' => array('product', 'product_variation'), 'post_status' => 'any', 'orderby' => 'ID', 'order' => 'ASC', 'posts_per_page' => 10));
-				$variationsQuery = new WP_Query( array( 'post_type' => 'product_variation', 'post_status' => 'any', 'orderby' => 'ID', 'order' => 'ASC', 'posts_per_page' => 10));
+                    $productsQuery = new WP_Query(array('post_type' => array('product', 'product_variation'), 'post_status' => 'any', 'orderby' => 'ID', 'order' => 'ASC', 'posts_per_page' => 10));
+                    $variationsQuery = new WP_Query(array('post_type' => 'product_variation', 'post_status' => 'any', 'orderby' => 'ID', 'order' => 'ASC', 'posts_per_page' => 10));
 
-				$foundProducts = $productsQuery->found_posts;
+                    $foundProducts = $productsQuery->found_posts;
 
-				$foundVariations = $variationsQuery->found_posts;
+                    $foundVariations = $variationsQuery->found_posts;
 
-				$foundRecords = $foundProducts;
-				$hasVariations = !!$foundVariations;
+                    $foundRecords = $foundProducts;
+                    $hasVariations = !!$foundVariations;
 
-                remove_filter('posts_where', 'wp_all_export_numbering_where');
+                    remove_filter('posts_where', 'wp_all_export_numbering_where');
 
-			} else {
-				$exportQuery = new WP_Query( array( 'post_type' => $cpt, 'post_status' => 'any', 'orderby' => 'ID', 'order' => 'ASC', 'posts_per_page' => 10));
-				if ( ! empty($exportQuery->found_posts))
-				{
-					$foundRecords = $exportQuery->found_posts;
-				}
-			}
+                } else {
+                    $exportQuery = new WP_Query(array('post_type' => $cpt, 'post_status' => 'any', 'orderby' => 'ID', 'order' => 'ASC', 'posts_per_page' => 10));
+                    if (!empty($exportQuery->found_posts)) {
+                        $foundRecords = $exportQuery->found_posts;
+                    }
+                }
 
-			remove_filter('posts_where', 'wp_all_export_posts_where');
+                remove_filter('posts_where', 'wp_all_export_posts_where');
 
-			remove_filter('posts_join', 'wp_all_export_posts_join');			
+                remove_filter('posts_join', 'wp_all_export_posts_join');
 
-			ob_end_clean();
+                ob_end_clean();
+            }
 
 		}
 	}

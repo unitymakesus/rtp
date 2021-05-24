@@ -268,7 +268,26 @@ class PMXE_Admin_Settings extends PMXE_Controller_Admin
 
         if (!$this->errors->get_error_codes()) { // no validation errors detected
 
+
+            $current_cron_job_key = PMXE_Plugin::getInstance()->getOption('cron_job_key');
+            $new_cron_job_key = $post['cron_job_key'];
+
+            if($new_cron_job_key !== $current_cron_job_key) {
+
+                // Cron job key changed
+                $scheduling_service = \Wpae\Scheduling\Scheduling::create();
+                $exports = new PMXE_Export_List();
+                $exports = $exports->getBy('parent_id', 0)->convertRecords();
+
+                foreach ($exports as $export) {
+                    if($export->options['scheduling_enable'] === "1") {
+                        $scheduling_service->updateApiKey($export->id, $new_cron_job_key);
+                    }
+                }
+            }
+
             PMXE_Plugin::getInstance()->updateOption($post);
+
 
             if (empty($_POST['pmxe_license_activate']) and empty($_POST['pmxe_license_deactivate'])) {
 

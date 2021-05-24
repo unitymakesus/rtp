@@ -62,7 +62,8 @@ class PMXE_Export_Record extends PMXE_Model_Record {
 		$filter_args = array(
 			'filter_rules_hierarhy' => $this->options['filter_rules_hierarhy'],
 			'product_matching_mode' => $this->options['product_matching_mode'],
-            'taxonomy_to_export' => empty($this->options['taxonomy_to_export']) ? '' : $this->options['taxonomy_to_export']
+            'taxonomy_to_export' => empty($this->options['taxonomy_to_export']) ? '' : $this->options['taxonomy_to_export'],
+            'sub_post_type_to_export' => empty($this->options['sub_post_type_to_export']) ? '' : $this->options['sub_post_type_to_export']
 		);
 
         $filters = \Wpae\Pro\Filtering\FilteringFactory::getFilterEngine();
@@ -109,7 +110,7 @@ class PMXE_Export_Record extends PMXE_Model_Record {
 				$exportQuery = eval('return new WP_Query(array(' . $this->options['wp_query'] . ', \'offset\' => ' . $this->exported . ', \'posts_per_page\' => ' . $this->options['records_per_iteration'] . '));');			
 				remove_filter('posts_join', 'wp_all_export_posts_join');			
 				remove_filter('posts_where', 'wp_all_export_posts_where');		
-			}			
+			}
 		}
 		else
 		{
@@ -166,19 +167,25 @@ class PMXE_Export_Record extends PMXE_Model_Record {
                 remove_filter('terms_clauses', 'wp_all_export_terms_clauses');
             }
 			else
-			{				
-				remove_all_actions('parse_query');
-				remove_all_filters('posts_clauses');
-                wp_all_export_remove_before_post_except_toolset_actions();
+			{
+                if(strpos($this->options['cpt'][0], 'custom_') === 0) {
+                    $addon = GF_Export_Add_On::get_instance();
+                    $exportQuery = $addon->add_on->get_query($this->exported, $this->options['records_per_iteration']);
 
-                add_filter('posts_where', 'wp_all_export_posts_where', 10, 1);
-				add_filter('posts_join', 'wp_all_export_posts_join', 10, 1);
-				
-				$exportQuery = new WP_Query( array( 'post_type' => $this->options['cpt'], 'post_status' => 'any', 'orderby' => 'ID', 'order' => 'ASC', 'ignore_sticky_posts' => 1, 'offset' => $this->exported, 'posts_per_page' => $this->options['records_per_iteration'] ));
+                } else {
+                    remove_all_actions('parse_query');
+                    remove_all_filters('posts_clauses');
+                    wp_all_export_remove_before_post_except_toolset_actions();
 
-				remove_filter('posts_join', 'wp_all_export_posts_join');			
-				remove_filter('posts_where', 'wp_all_export_posts_where');				
-			}
+                    add_filter('posts_where', 'wp_all_export_posts_where', 10, 1);
+                    add_filter('posts_join', 'wp_all_export_posts_join', 10, 1);
+
+                    $exportQuery = new WP_Query(array('post_type' => $this->options['cpt'], 'post_status' => 'any', 'orderby' => 'ID', 'order' => 'ASC', 'ignore_sticky_posts' => 1, 'offset' => $this->exported, 'posts_per_page' => $this->options['records_per_iteration']));
+
+                    remove_filter('posts_join', 'wp_all_export_posts_join');
+                    remove_filter('posts_where', 'wp_all_export_posts_where');
+                }
+            }
 		}
 
 		XmlExportEngine::$exportQuery = $exportQuery;
@@ -359,7 +366,26 @@ class PMXE_Export_Record extends PMXE_Model_Record {
 				'canceled' => 0,
 				'registered_on' => date('Y-m-d H:i:s'),
 				'iteration' => ++$this->iteration
-			))->update();	
+			))->update();
+
+            if ( ! in_array(XmlExportEngine::$exportOptions['xml_template_type'], array('custom', 'XmlGoogleMerchants')) )
+            {
+                $main_xml_tag = apply_filters('wp_all_export_main_xml_tag', $this->options['main_xml_tag'], $this->id);
+
+                // Add an opening tag also if the file is empty
+                $content = file_get_contents($file_path);
+                if(strpos($content, $main_xml_tag) === false) {
+                    file_put_contents($file_path, '<' . $main_xml_tag . '>', FILE_APPEND);
+                }
+
+                file_put_contents($file_path, '</'.$main_xml_tag.'>', FILE_APPEND);
+
+                $xml_footer = apply_filters('wp_all_export_xml_footer', '', $this->id);
+
+                if ( ! empty($xml_footer) ) file_put_contents($file_path, $xml_footer, FILE_APPEND);
+            }
+
+
 			do_action('pmxe_after_export', $this->id, $this);
 		}
 		elseif ( ! $postCount or $foundPosts == $this->exported )
@@ -379,7 +405,7 @@ class PMXE_Export_Record extends PMXE_Model_Record {
 				    if ( ! in_array(XmlExportEngine::$exportOptions['xml_template_type'], array('custom', 'XmlGoogleMerchants')) )
 					{
 						$main_xml_tag = apply_filters('wp_all_export_main_xml_tag', $this->options['main_xml_tag'], $this->id);
-					
+
 						file_put_contents($file_path, '</'.$main_xml_tag.'>', FILE_APPEND);
 
 						$xml_footer = apply_filters('wp_all_export_xml_footer', '', $this->id);
@@ -473,7 +499,7 @@ class PMXE_Export_Record extends PMXE_Model_Record {
 			$readme = __("The other two files in this zip are the export file containing all of your data and the import template for WP All Import. \n\nTo import this data, create a new import with WP All Import and upload this zip file.", "wp_all_export_plugin");	
 
 			file_put_contents($bundle_dir . 'readme.txt', $readme);
-		}			
+		}
 
 		// [ Add child exports to the bundle]
 		$exportList = new PMXE_Export_List();				
@@ -504,7 +530,7 @@ class PMXE_Export_Record extends PMXE_Model_Record {
 			else
 			{
 				$filepath = wp_all_export_get_absolute_path($child_export->options['filepath']);
-			}				
+			}
 
 			if ( ! empty($child_export->options['tpl_data']))
 			{
@@ -522,15 +548,6 @@ class PMXE_Export_Record extends PMXE_Model_Record {
 		// \[ Add child exports to the bundle]	
 
 		file_put_contents($bundle_dir . $template, json_encode($templates));							
-
-		// if ($this->options['creata_a_new_export_file'] && ! empty($this->options['cpt']) and class_exists('WooCommerce') and in_array('shop_order', $this->options['cpt']) and empty($this->parent_id) )
-		// {
-		// 	$bundle_path = $export_dir . $friendly_name . '-' . ($this->iteration + 1) . '.zip';			
-		// }
-		// else
-		// {
-		// 	$bundle_path = $export_dir . $friendly_name . '.zip';			
-		// }		
 
 		$bundle_path = $export_dir . $friendly_name . '.zip';			
 
@@ -709,7 +726,7 @@ class PMXE_Export_Record extends PMXE_Model_Record {
 	}
 
     public static function is_bundle_supported( $options )
-    {	
+    {
     	// custom XML template do not support import bundle
     	if ( $options['export_to'] == 'xml' && ! empty($options['xml_template_type']) && in_array($options['xml_template_type'], array('custom', 'XmlGoogleMerchants')) ) return false;
 

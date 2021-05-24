@@ -40,7 +40,7 @@
 	height: 20px;
 	width: 20px;
 }
-.uabb-cart-badge-top { 
+.uabb-badge-style-top .uabb-cart-btn-badge {
 	position: absolute;
 	top: -15px;
 	right: -18px;
@@ -383,7 +383,7 @@
 	left: 0;
 	right: 0;
 	z-index: 1000;
-	opacity: 0;
+	opacity: 1;
 	background: rgba(0,0,0,0.75);
 	-webkit-transition: all 0.3s;
 	   -moz-transition: all 0.3s;

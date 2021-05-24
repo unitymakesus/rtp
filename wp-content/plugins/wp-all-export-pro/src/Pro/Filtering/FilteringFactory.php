@@ -63,7 +63,19 @@ class FilteringFactory
                 </div>
                 <div class="wpallexport-collapsed-content" style="padding: 0;">
                     <div class="wpallexport-collapsed-content-inner">
-                        <?php include_once PMXE_ROOT_DIR . '/views/admin/export/blocks/filters.php'; ?>
+                        <?php
+                        if(is_array($post['cpt'])) {
+                            $post['cpt'] = $post['cpt'][0];
+                        }
+                        if (strpos($post['cpt'], 'custom') !== 0) { ?>
+                            <?php include_once PMXE_ROOT_DIR . '/views/admin/export/blocks/filters.php'; ?>
+                        <?php } else { ?>
+                            <div class="wpallexport-free-edition-notice wpallexport-user-export-notice" style="display: block; width: auto;" >
+                                <p style="margin-top: 7px; margin-bottom: 7px;">
+                                    <?php echo 'The Gravity Forms Export Add-On doesn\'t support filtering at this time.'; ?>
+                                </p>
+                            </div>
+                        <?php } ?>
                     </div>
                 </div>
             </div>

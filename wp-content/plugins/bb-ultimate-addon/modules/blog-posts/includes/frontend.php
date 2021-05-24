@@ -118,6 +118,11 @@ if ( 'masonary' === $settings->is_carousel || 'grid' === $settings->is_carousel 
 		do_action( 'uabb_blog_posts_before_post', $the_query->posts[ $i ]->ID, $settings );
 		?>
 	<div class="uabb-blog-posts-col-<?php echo esc_attr( $col ); ?> uabb-post-wrapper <?php echo ( 'masonary' === $settings->is_carousel ) ? ' uabb-blog-posts-masonary-item-' . esc_attr( $module->node ) . ' ' : ''; ?> <?php echo ( 'masonary' === $settings->is_carousel || 'grid' === $settings->is_carousel ) ? esc_attr( $class ) : ''; ?> <?php echo ( 'grid' === $settings->is_carousel ) ? ' uabb-blog-posts-grid-item-' . esc_attr( $module->node ) . ' ' : ''; ?>">
+		<?php
+		if ( 'box' === $settings->cta_type ) {
+			echo '<a href="' . get_permalink( $the_query->posts[ $i ]->ID ) . '" target="' . esc_attr( $settings->link_target ) . '" ' . wp_kses_post( BB_Ultimate_Addon_Helper::get_link_rel( $settings->link_target, $settings->link_nofollow, 0 ) ) . ' class="uabb-blog-post-element-link"></a>'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
+		?>
 		<div class="uabb-blog-posts-shadow clearfix">
 
 			<div class="uabb-blog-post-inner-wrap <?php echo 'uabb-thumbnail-position-' . esc_attr( $settings->blog_image_position ); ?> <?php echo ( 'img,title,meta,content,cta' !== $settings->layout_sort_order ) ? 'uabb-blog-reordered' : ''; ?> <?php echo esc_attr( $left_hide_class ); ?>">

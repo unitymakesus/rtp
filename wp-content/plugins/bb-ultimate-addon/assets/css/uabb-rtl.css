@@ -219,22 +219,6 @@
     right: auto;
     left: -32px;
 }
-.uabb-horizontal .uabb-btn.uabb-btn-two {
-    border-top-left-radius: 50px;
-    border-bottom-left-radius: 50px;
-}
-.uabb-horizontal .uabb-btn.uabb-btn-two {
-    border-top-right-radius: 0 !important;
-    border-bottom-right-radius: 0 !important;
-}
-.uabb-horizontal .uabb-btn.uabb-btn-one {
-    border-top-right-radius: 50px;
-    border-bottom-right-radius: 50px;
-}
-.uabb-horizontal .uabb-btn.uabb-btn-one {
-    border-top-left-radius: 0 !important;
-    border-bottom-left-radius: 0 !important;
-} 
 /*-- Dual Buttons End --*/
 
 /*-- Testimonials Start --*/

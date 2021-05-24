@@ -244,8 +244,8 @@ class FacetWP_Facet
             </div>
             <div>
                 <select class="facet-operator">
-                    <option value="and"><?php _e( 'Narrow the result set', 'fwp' ); ?></option>
-                    <option value="or"><?php _e( 'Widen the result set', 'fwp' ); ?></option>
+                    <option value="and"><?php _e( 'Match all', 'fwp' ); ?></option>
+                    <option value="or"><?php _e( 'Match any', 'fwp' ); ?></option>
                 </select>
             </div>
         </div>
@@ -256,10 +256,10 @@ class FacetWP_Facet
             <div><?php _e( 'Sort by', 'fwp' ); ?>:</div>
             <div>
                 <select class="facet-orderby">
-                    <option value="count"><?php _e( 'Highest Count', 'fwp' ); ?></option>
-                    <option value="display_value"><?php _e( 'Display Value', 'fwp' ); ?></option>
-                    <option value="raw_value"><?php _e( 'Raw Value', 'fwp' ); ?></option>
-                    <option value="term_order"><?php _e( 'Term Order', 'fwp' ); ?></option>
+                    <option value="count"><?php _e( 'Highest count', 'fwp' ); ?></option>
+                    <option value="display_value"><?php _e( 'Display value', 'fwp' ); ?></option>
+                    <option value="raw_value"><?php _e( 'Raw value', 'fwp' ); ?></option>
+                    <option value="term_order"><?php _e( 'Term order', 'fwp' ); ?></option>
                 </select>
             </div>
         </div>

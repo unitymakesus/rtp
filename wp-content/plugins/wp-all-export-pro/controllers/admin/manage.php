@@ -351,7 +351,7 @@ class PMXE_Admin_Manage extends PMXE_Controller_Admin
                     $scheduling->deleteScheduleIfExists($item->id);
                 }
             }
-            wp_redirect(add_query_arg('pmxe_nt', urlencode(sprintf(__('Client mode toggled for %d %s', 'wp_all_export_plugin'), $items->count(), _n('export', 'exports', $items->count(), 'wp_all_export_plugin'))), $this->baseUrl));
+            wp_redirect(add_query_arg('pmxe_nt', urlencode(sprintf(__('%d %s deleted', 'wp_all_export_plugin'), $items->count(), _n('export', 'exports', $items->count(), 'wp_all_export_plugin'))), $this->baseUrl)); die();
             die();
         }
         
@@ -655,6 +655,12 @@ class PMXE_Admin_Manage extends PMXE_Controller_Admin
                     return $friendly_name;
                 }
             } else {
+
+                $is_rapid_add_on_export = PMXE_Helper::is_rapid_export_addon($post_types);
+                if($is_rapid_add_on_export) {
+                    return 'Gravity Forms Entries Export - ' . date("Y F d H:i");
+                }
+
                 $post_type_details = get_post_type_object(array_shift($post_types));
                 $friendly_name = $post_type_details->labels->name . ' Export - ' . date("Y F d H:i");
                 return $friendly_name;

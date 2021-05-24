@@ -81,8 +81,6 @@ function pmxe_wp_ajax_wpallexport()
     } else {
         XmlExportEngine::$post_types = $exportOptions['cpt'];
 
-        // $is_products_export = ($exportOptions['cpt'] == 'product' and class_exists('WooCommerce'));
-
         if (in_array('users', $exportOptions['cpt']) or in_array('shop_customer', $exportOptions['cpt'])) {
             add_action('pre_user_query', 'wp_all_export_pre_user_query', 10, 1);
             $exportQuery = new WP_User_Query(array('orderby' => 'ID', 'order' => 'ASC', 'number' => $posts_per_page, 'offset' => $export->exported));
@@ -122,16 +120,23 @@ function pmxe_wp_ajax_wpallexport()
             remove_action('comments_clauses', 'wp_all_export_comments_clauses');
         }
         else {
-            remove_all_actions('parse_query');
-            remove_all_filters('posts_clauses');
-            remove_all_filters('posts_orderby');
-            wp_all_export_remove_before_post_except_toolset_actions();
+            if(strpos($exportOptions['cpt'][0], 'custom_') === 0) {
+                $addon = GF_Export_Add_On::get_instance();
+                $exportQuery = $addon->add_on->get_query($export->exported, $posts_per_page);
 
-            add_filter('posts_join', 'wp_all_export_posts_join', 10, 1);
-            add_filter('posts_where', 'wp_all_export_posts_where', 10, 1);
-            $exportQuery = new WP_Query(array('post_type' => $exportOptions['cpt'], 'post_status' => 'any', 'orderby' => 'ID', 'order' => 'ASC', 'offset' => $export->exported, 'posts_per_page' => $posts_per_page));
-            remove_filter('posts_where', 'wp_all_export_posts_where');
-            remove_filter('posts_join', 'wp_all_export_posts_join');
+            } else {
+
+                remove_all_actions('parse_query');
+                remove_all_filters('posts_clauses');
+                remove_all_filters('posts_orderby');
+                wp_all_export_remove_before_post_except_toolset_actions();
+
+                add_filter('posts_join', 'wp_all_export_posts_join', 10, 1);
+                add_filter('posts_where', 'wp_all_export_posts_where', 10, 1);
+                $exportQuery = new WP_Query(array('post_type' => $exportOptions['cpt'], 'post_status' => 'any', 'orderby' => 'ID', 'order' => 'ASC', 'offset' => $export->exported, 'posts_per_page' => $posts_per_page));
+                remove_filter('posts_where', 'wp_all_export_posts_where');
+                remove_filter('posts_join', 'wp_all_export_posts_join');
+            }
         }
     }
 
@@ -189,6 +194,7 @@ function pmxe_wp_ajax_wpallexport()
             $foundPosts = $exportQuery->get_total();
             $postCount = count($exportQuery->get_results());
         } else {
+
             $foundPosts = $exportQuery->found_posts;
             $postCount = $exportQuery->post_count;
         }
@@ -196,6 +202,7 @@ function pmxe_wp_ajax_wpallexport()
     // [ \get total founded records ]
 
     if (!$export->exported) {
+
         $attachment_list = $export->options['attachment_list'];
         if (!empty($attachment_list)) {
             foreach ($attachment_list as $attachment) {
@@ -269,7 +276,14 @@ function pmxe_wp_ajax_wpallexport()
                 }
 
                 if (!in_array(XmlExportEngine::$exportOptions['xml_template_type'], array('custom', 'XmlGoogleMerchants'))) {
+
                     $main_xml_tag = apply_filters('wp_all_export_main_xml_tag', $exportOptions['main_xml_tag'], $export->id);
+
+                    // Add an opening tag also if the file is empty
+                    $content = file_get_contents(PMXE_Plugin::$session->file);
+                    if(strpos($content, $main_xml_tag) === false) {
+                        file_put_contents(PMXE_Plugin::$session->file, '<' . $main_xml_tag . '>', FILE_APPEND);
+                    }
 
                     file_put_contents(PMXE_Plugin::$session->file, '</' . $main_xml_tag . '>', FILE_APPEND);
 
@@ -355,6 +369,7 @@ function pmxe_wp_ajax_wpallexport()
         } else {
             update_option('wp_all_export_queue_' . (empty($export->parent_id) ? $export->id : $export->parent_id), $queue_exports);
         }
+
 
         wp_send_json(array(
             'export_id' => $export->id,

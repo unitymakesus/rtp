@@ -61,11 +61,18 @@ class FacetWP_Ajax
         if ( isset( $settings['settings'] ) ) {
             update_option( 'facetwp_settings', json_encode( $settings ), 'no' );
 
-            $response = [
-                'code' => 'success',
-                'message' => __( 'Settings saved', 'fwp' ),
-                'reindex' => FWP()->diff->is_reindex_needed()
-            ];
+            if ( FWP()->diff->is_reindex_needed() ) {
+                $response = [
+                    'code' => 'error',
+                    'message' => __( 'Settings saved, please re-index', 'fwp' )
+                ];
+            }
+            else {
+                $response = [
+                    'code' => 'success',
+                    'message' => __( 'Settings saved', 'fwp' )
+                ];
+            }
         }
         else {
             $response = [
@@ -123,6 +130,8 @@ class FacetWP_Ajax
 
             $wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}facetwp_index" );
             delete_option( 'facetwp_version' );
+            delete_option( 'facetwp_indexing' );
+            delete_option( 'facetwp_transients' );
 
             $response = [
                 'code' => 'success',

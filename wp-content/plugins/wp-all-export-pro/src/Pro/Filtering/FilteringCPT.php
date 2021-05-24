@@ -67,7 +67,12 @@ class FilteringCPT extends FilteringBase
 
         apply_filters('wp_all_export_single_filter_rule', $rule);
 
-        $this->fixRuleForFeaturedProduct($rule);
+        // If WooCommerce Prdoducts are exported, alter the way featured meta is filtered
+        if ( ! empty(\XmlExportEngine::$post_types) and class_exists('WooCommerce')){
+            if (@in_array("product", \XmlExportEngine::$post_types)){
+                $this->fixRuleForFeaturedProduct($rule);
+            }
+        }
 
         switch ($rule->element) {
             case 'ID':

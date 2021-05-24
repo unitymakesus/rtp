@@ -459,6 +459,7 @@ FLBuilder::register_module(
 							'placeholder' => '75',
 							'maxlength'   => '3',
 							'size'        => '4',
+							'responsive'  => true,
 							'units'       => array( 'px' ),
 							'slider'      => array(
 								'px' => array(
@@ -688,13 +689,14 @@ FLBuilder::register_module(
 					'fields' => array(
 
 						'testimonial_icon_image_size'   => array(
-							'type'        => 'unit',
-							'label'       => __( 'Size', 'uabb' ),
-							'placeholder' => '75',
-							'maxlength'   => '3',
-							'size'        => '4',
-							'units'       => array( 'px' ),
-							'slider'      => array(
+							'type'       => 'unit',
+							'label'      => __( 'Size', 'uabb' ),
+							'default'    => '75',
+							'maxlength'  => '3',
+							'size'       => '4',
+							'responsive' => true,
+							'units'      => array( 'px' ),
+							'slider'     => array(
 								'px' => array(
 									'min'  => 0,
 									'max'  => 1000,

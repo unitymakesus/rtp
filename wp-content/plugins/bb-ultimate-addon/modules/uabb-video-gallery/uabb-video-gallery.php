@@ -631,7 +631,8 @@ class UABBVideoGallery extends FLBuilderModule {
 					$vurl = 'https://www.youtube.com/embed/' . $url['video_id'] . '?autoplay=1&version=3&enablejsapi=1';
 					break;
 				case 'vimeo':
-					$vurl = 'https://player.vimeo.com/video/' . $url['video_id'] . '?autoplay=1&version=3&enablejsapi=1';
+					$dnt_track = ( isset( $item->vimeo_dnt_track ) && 'yes' === $item->vimeo_dnt_track ) ? '1' : '0';
+					$vurl      = 'https://player.vimeo.com/video/' . $url['video_id'] . '?autoplay=1&version=3&enablejsapi=1&dnt=' . $dnt_track;
 					break;
 				case 'wistia':
 				case 'hosted':
@@ -648,7 +649,8 @@ class UABBVideoGallery extends FLBuilderModule {
 						$vurl = 'https://www.youtube.com/embed/' . $url['video_id'] . '?autoplay=1&version=3&enablejsapi=1';
 						break;
 					case 'vimeo':
-						$vurl = 'https://player.vimeo.com/video/' . $url['video_id'] . '?autoplay=1&version=3&enablejsapi=1';
+						$dnt_track = ( isset( $item->vimeo_dnt_track ) && 'yes' === $item->vimeo_dnt_track ) ? '1' : '0';
+						$vurl      = 'https://player.vimeo.com/video/' . $url['video_id'] . '?autoplay=1&version=3&enablejsapi=1&dnt=' . $dnt_track;
 						break;
 					case 'wistia':
 					case 'hosted':

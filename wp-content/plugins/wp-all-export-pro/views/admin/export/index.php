@@ -4,13 +4,13 @@ do_action('pmxe_addons_html');
 <table class="wpallexport-layout wpallexport-step-1">
 	<tr>
 		<td class="left">
-			<div class="wpallexport-wrapper">	
+			<div class="wpallexport-wrapper">
 				<h2 class="wpallexport-wp-notices"></h2>
 				<div class="wpallexport-header">
 					<div class="wpallexport-logo"></div>
 					<div class="wpallexport-title">
 						<p><?php _e('WP All Export', 'wp_all_export_plugin'); ?></p>
-						<h2><?php _e('Export to XML / CSV', 'wp_all_export_plugin'); ?></h2>					
+						<h2><?php _e('Export to XML / CSV', 'wp_all_export_plugin'); ?></h2>
 					</div>
 					<div class="wpallexport-links">
 						<a href="http://www.wpallimport.com/support/" target="_blank"><?php _e('Support', 'wp_all_export_plugin'); ?></a> | <a href="http://www.wpallimport.com/documentation/" target="_blank"><?php _e('Documentation', 'wp_all_export_plugin'); ?></a>
@@ -102,44 +102,53 @@ do_action('pmxe_addons_html');
 
 								<select id="file_selector">
 									<option value=""><?php _e('Choose a post type...', 'wp_all_export_plugin'); ?></option>									
-					            	<?php if (count($sorted_cpt)): $unknown_cpt = array(); ?>
-										<?php foreach ($sorted_cpt as $key => $ct):?>
-											<?php
+					            	<?php if (count($sorted_cpt)) {
+					            	    $unknown_cpt = array();
+										foreach ($sorted_cpt as $key => $ct) {
 
-                        // Remove unused post types
-                        if( in_array($key, array('wp_block', 'customize_changeset', 'custom_css', 'scheduled_action', 'scheduled-action', 'user_request', 'oembed_cache'))) {
-                           continue;
-                        }
-												$image_src = 'dashicon-cpt';																								
-												$cpt_label = $ct->labels->name;												
+                                                // Remove unused post types
+                                                if( in_array($key, array('wp_block', 'customize_changeset', 'custom_css', 'scheduled_action', 'scheduled-action', 'user_request', 'oembed_cache'))) {
+                                                   continue;
+                                                }
 
-												if (  in_array($key, array('post', 'page', 'product', 'import_users', 'shop_order', 'shop_coupon', 'shop_customer', 'users', 'comments', 'taxonomies') ) )
-												{
-													$image_src = 'dashicon-' . $key;	 
-												}
-												else if($key == 'shop_review') {
+												$image_src = 'dashicon-cpt';
+
+                                                if(isset($ct->icon)) {
+                                                    $image_src = $ct->icon;
+                                                }
+												$cpt_label = $ct->labels->name;
+
+                                                if (in_array($key, array('post', 'page', 'product', 'import_users', 'shop_order', 'shop_coupon', 'shop_customer', 'users', 'comments', 'taxonomies'))) {
+                                                    $image_src = 'dashicon-' . $key;
+                                                } else if ($key == 'shop_review') {
                                                     $image_src = 'dashicon-review';
                                                 }
-												else
-												{
-													$unknown_cpt[$key] = $ct;
-													continue;
-												}
-																				
+                                                else {
+                                                    $unknown_cpt[$key] = $ct;
+                                                    continue;
+                                                }
+
 											?>
 											<option value="<?php echo $key;?>" data-imagesrc="dashicon <?php echo $image_src; ?>" <?php if ($key == $post['cpt']) echo 'selected="selected"'; ?>><?php echo $cpt_label; ?></option>
-										<?php endforeach ?>
-									<?php endif ?>
-									<?php if ( ! empty($unknown_cpt)):  ?>
-										<?php foreach ($unknown_cpt as $key => $ct):?>
+										<?php
+										}
+									 } ?>
+									<?php if ( ! empty($unknown_cpt)){  ?>
+										<?php foreach ($unknown_cpt as $key => $ct) {?>
 											<?php
-											$image_src = 'dashicon-cpt';																								
-											$cpt_label = $ct->labels->name;												
+											$image_src = 'dashicon-cpt';
+											$cpt_label = $ct->labels->name;
+
+											if(isset($ct->custom_icon)) {
+											    $image_src = $ct->custom_icon;
+											}
 											?>
 											<option value="<?php echo $key;?>" data-imagesrc="dashicon <?php echo $image_src; ?>" <?php if ($key == $post['cpt']) echo 'selected="selected"'; ?>><?php echo $cpt_label; ?></option>
-										<?php endforeach ?>
-									<?php endif;?>
-								</select>								
+										<?php
+										}
+									}
+									?>
+								</select>
 								<input type="hidden" name="cpt" value="<?php echo $post['cpt']; ?>"/>									
 								<div class="taxonomy_to_export_wrapper">
 									<input type="hidden" name="taxonomy_to_export" value="<?php echo $post['taxonomy_to_export'];?>">
@@ -151,6 +160,11 @@ do_action('pmxe_addons_html');
 										<?php endforeach;?>
 									</select>
 								</div>
+                                <div class="sub_post_type_to_export_wrapper">
+                                    <input type="hidden" name="sub_post_type_to_export" value="<?php echo $post['taxonomy_to_export'];?>">
+                                    <select id="sub_post_to_export">
+                                    </select>
+                                </div>
 							</div>
 						</div>	
 
@@ -223,7 +237,6 @@ do_action('pmxe_addons_html');
 					
 					<table><tr><td class="wpallexport-note"></td></tr></table>
 				</form>
-				
 				<a href="http://soflyy.com/" target="_blank" class="wpallexport-created-by"><?php _e('Created by', 'wp_all_export_plugin'); ?> <span></span></a>
 				
 			</div>

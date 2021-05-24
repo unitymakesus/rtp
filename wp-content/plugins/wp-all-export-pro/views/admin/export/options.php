@@ -18,7 +18,7 @@ $l10n = array(
 			<div class="wpallexport-logo"></div>
 			<div class="wpallexport-title">
 				<p><?php _e('WP All Export', 'wp_all_export_plugin'); ?></p>
-				<h2><?php _e('Export to XML / CSV', 'wp_all_export_plugin'); ?></h2>					
+				<h2><?php _e('Export to XML / CSV', 'wp_all_export_plugin'); ?></h2>
 			</div>
 			<div class="wpallexport-links">
 				<a href="http://www.wpallimport.com/support/" target="_blank"><?php _e('Support', 'wp_all_export_plugin'); ?></a> | <a href="http://www.wpallimport.com/documentation/" target="_blank"><?php _e('Documentation', 'wp_all_export_plugin'); ?></a>
@@ -100,6 +100,7 @@ $l10n = array(
 					<input type="hidden" name="selected_post_type" value="<?php echo $selected_post_type; ?>"/>	
 					<input type="hidden" name="export_type" value="<?php echo $post['export_type']; ?>"/>
 					<input type="hidden" name="taxonomy_to_export" value="<?php echo $post['taxonomy_to_export'];?>">
+					<input type="hidden" name="sub_post_type_to_export" value="<?php echo $post['sub_post_type_to_export'];?>">
 					<input type="hidden" name="wpml_lang" value="<?php echo empty(PMXE_Plugin::$session->wpml_lang) ? $post['wpml_lang'] : PMXE_Plugin::$session->wpml_lang;?>" />
 					<input type="hidden" id="export_variations" name="export_variations" value="<?php echo XmlExportEngine::getProductVariationMode();?>" />
                     <input type="hidden" name="record-count" class="wpae-record-count" value="0" />

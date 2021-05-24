@@ -354,6 +354,30 @@ FLBuilder::register_module(
 								'type' => 'none',
 							),
 						),
+						'_btn_one_text_color'       => array(
+							'type'        => 'color',
+							'label'       => __( 'Text Color', 'uabb' ),
+							'default'     => '',
+							'show_reset'  => true,
+							'connections' => array( 'color' ),
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type'     => 'css',
+								'selector' => '.uabb-btn-one-text',
+								'property' => 'color',
+							),
+						),
+						'_btn_one_text_hover_color' => array(
+							'type'        => 'color',
+							'label'       => __( 'Text Hover Color', 'uabb' ),
+							'default'     => '',
+							'show_reset'  => true,
+							'connections' => array( 'color' ),
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type' => 'none',
+							),
+						),
 						'_btn_one_back_color'       => array(
 							'type'        => 'color',
 							'label'       => __( 'Background Color', 'uabb' ),
@@ -481,6 +505,27 @@ FLBuilder::register_module(
 							'preview' => array(
 								'type' => 'none',
 							),
+						),
+						'_btn_two_text_color'       => array(
+							'type'        => 'color',
+							'label'       => __( 'Text Color', 'uabb' ),
+							'default'     => '',
+							'show_reset'  => true,
+							'connections' => array( 'color' ),
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type'     => 'css',
+								'selector' => '.uabb-btn-two-text',
+								'property' => 'color',
+							),
+						),
+						'_btn_two_text_hover_color' => array(
+							'type'        => 'color',
+							'label'       => __( 'Text Hover Color', 'uabb' ),
+							'default'     => '',
+							'show_reset'  => true,
+							'connections' => array( 'color' ),
+							'show_alpha'  => true,
 						),
 						'_btn_two_back_color'       => array(
 							'type'        => 'color',
@@ -770,37 +815,13 @@ FLBuilder::register_module(
 				'typography_btn_one' => array(
 					'title'  => __( 'Button 1', 'uabb' ),
 					'fields' => array(
-						'_btn_one_typo'             => array(
+						'_btn_one_typo' => array(
 							'type'       => 'typography',
 							'label'      => __( 'Typography', 'uabb' ),
 							'responsive' => true,
 							'preview'    => array(
 								'type'     => 'css',
 								'selector' => '.uabb-btn-one-text',
-							),
-						),
-						'_btn_one_text_color'       => array(
-							'type'        => 'color',
-							'label'       => __( 'Text Color', 'uabb' ),
-							'default'     => '',
-							'show_reset'  => true,
-							'connections' => array( 'color' ),
-							'show_alpha'  => true,
-							'preview'     => array(
-								'type'     => 'css',
-								'selector' => '.uabb-btn-one-text',
-								'property' => 'color',
-							),
-						),
-						'_btn_one_text_hover_color' => array(
-							'type'        => 'color',
-							'label'       => __( 'Text Hover Color', 'uabb' ),
-							'default'     => '',
-							'show_reset'  => true,
-							'connections' => array( 'color' ),
-							'show_alpha'  => true,
-							'preview'     => array(
-								'type' => 'none',
 							),
 						),
 					),
@@ -808,7 +829,7 @@ FLBuilder::register_module(
 				'typography_btn_two' => array(
 					'title'  => __( 'Button 2', 'uabb' ),
 					'fields' => array(
-						'_btn_two_typo'             => array(
+						'_btn_two_typo' => array(
 							'type'       => 'typography',
 							'label'      => __( 'Typography', 'uabb' ),
 							'responsive' => true,
@@ -816,27 +837,6 @@ FLBuilder::register_module(
 								'type'     => 'css',
 								'selector' => '.uabb-btn-two-text',
 							),
-						),
-						'_btn_two_text_color'       => array(
-							'type'        => 'color',
-							'label'       => __( 'Text Color', 'uabb' ),
-							'default'     => '',
-							'show_reset'  => true,
-							'connections' => array( 'color' ),
-							'show_alpha'  => true,
-							'preview'     => array(
-								'type'     => 'css',
-								'selector' => '.uabb-btn-two-text',
-								'property' => 'color',
-							),
-						),
-						'_btn_two_text_hover_color' => array(
-							'type'        => 'color',
-							'label'       => __( 'Text Hover Color', 'uabb' ),
-							'default'     => '',
-							'show_reset'  => true,
-							'connections' => array( 'color' ),
-							'show_alpha'  => true,
 						),
 					),
 				),

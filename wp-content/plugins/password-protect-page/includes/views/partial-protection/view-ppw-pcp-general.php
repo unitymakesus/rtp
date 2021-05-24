@@ -87,8 +87,7 @@ $use_shortcode_page_builder = ppw_core_get_setting_type_bool_by_option_name( PPW
 						<tr>
 							<td>
 								<code class="ppw-shortcode-attr">passwords</code>
-								<p class="description"><a
-											href="https://passwordprotectwp.com/docs/manage-shortcode-global-passwords/#define">Global
+								<p class="description"><a target="_blank" href="https://passwordprotectwp.com/docs/manage-shortcode-global-passwords/#define">Global
 										inline passwords</a>, which are used to unlock the protected section</p>
 							</td>
 							<td>
@@ -104,8 +103,7 @@ $use_shortcode_page_builder = ppw_core_get_setting_type_bool_by_option_name( PPW
 						<tr>
 							<td>
 								<code class="ppw-shortcode-attr">pwd</code>
-								<p class="description">ID-based <a
-											href="https://passwordprotectwp.com/docs/manage-shortcode-global-passwords/#id">shortcode
+								<p class="description">ID-based <a target="_blank" href="https://passwordprotectwp.com/docs/manage-shortcode-global-passwords/#id">shortcode
 										global passwords</a></p>
 							</td>
 							<td>
@@ -119,8 +117,7 @@ $use_shortcode_page_builder = ppw_core_get_setting_type_bool_by_option_name( PPW
 						<tr>
 							<td>
 								<code class="ppw-shortcode-attr">pwd_label</code>
-								<p class="description">Label-based <a
-											href="https://passwordprotectwp.com/docs/manage-shortcode-global-passwords/#label">shortcode
+								<p class="description">Label-based <a target="_blank" href="https://passwordprotectwp.com/docs/manage-shortcode-global-passwords/#label">shortcode
 										global passwords</a></p>
 							</td>
 							<td>
@@ -143,8 +140,7 @@ $use_shortcode_page_builder = ppw_core_get_setting_type_bool_by_option_name( PPW
 						<tr>
 							<td>
 								<code class="ppw-shortcode-attr">hidden_form_text</code>
-								<p class="description"><a
-											href="https://passwordprotectwp.com/docs/protect-content-sections-single-password-form/">Hide
+								<p class="description"><a target="_blank" href="https://passwordprotectwp.com/docs/protect-content-sections-single-password-form/">Hide
 										password form</a> or display a text instead</p>
 							</td>
 							<td>
@@ -272,8 +268,7 @@ $use_shortcode_page_builder = ppw_core_get_setting_type_bool_by_option_name( PPW
 						<tr>
 							<td>
 								<code class="ppw-shortcode-attr">download_limit</code>
-								<p class="description">Set the maximum number of times users can <a
-											href=https://passwordprotectwp.com/docs/how-to-password-protect-files-in-content/#download-limit>download
+								<p class="description">Set the maximum number of times users can <a target="_blank"  href="https://passwordprotectwp.com/docs/how-to-password-protect-files-in-content/#download-limit">download
 										a file embedded into content</a></p>
 							</td>
 							<td>
@@ -297,6 +292,18 @@ $use_shortcode_page_builder = ppw_core_get_setting_type_bool_by_option_name( PPW
 								<p class="description">Style the password form based on id</p>
 							</td>
 							<td>Default: <i>empty</i></td>
+							<td>optional</td>
+						</tr>
+						<tr>
+							<td>
+								<code class="ppw-shortcode-attr">acf_field</code>
+								<p class="description">Add <a target="_blank" href="https://passwordprotectwp.com/docs/add-additional-fields-pcp-form">additional fields</a> to PCP password form</p>
+							</td>
+							<td>
+								<ul>
+									<li>Default: <i>empty</i></li>
+									<li>Available in PPWP Suite only</li>
+								</ul>
 							<td>optional</td>
 						</tr>
 						</tbody>

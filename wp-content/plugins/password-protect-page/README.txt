@@ -53,7 +53,7 @@ Partial Content Protection feature allows you to [password protect certain secti
 You can also choose when to publish the secure content to users. For example, they’re allowed to see the content without having to enter passwords from XXX to XXX using the following shortcode attributes.
 
 `
-[ppwp passwords=123 on="2020/10/20 14:00:00" off="2020/10/30 14:00:00"] Your protected section will be shown automatically from 2 pm October 20, 2020 to 2 pm  October 30, 2020[/ppwp]
+[ppwp passwords=123 on="2020/10/20 14:00:00" off="2020/10/30 14:00:00"] Your protected section will be shown automatically from 2 pm October 20, 2020 to 2 pm October 30, 2020[/ppwp]
 `
 
 == Integrate with Page Builders ==
@@ -77,18 +77,18 @@ Users will be able to [unlock all protected posts at once](https://passwordprote
 
 Please note that this feature **does not** password protect all posts automatically. It simply allows you to use master passwords to unlock those that you’ve already password protected. Original passwords attached to each post will still be working, together with these master passwords.
 
-The master passwords feature also comes with an easy-to-use interface allowing you to create unlimited master passwords and manage all of them in one place. You will have full control to (de)activate, delete passwords as well as restrict usage passwords by usage, time, and user role.
+The master passwords feature also comes with an easy-to-use interface allowing you to create unlimited master passwords simultaneously and manage all of them in one place. You will have full control to (de)activate, delete passwords as well as restrict usage passwords by usage, time, and user role.
 
 == Customize Password Form & Messages with WordPress Customizer ==
-Customize the sitewide login form and single password form via WordPress built-in customizer.
+Customize all your password forms, i.e. the sitewide login form, single and partial content protection (PCP) password form, via WordPress Customizer.
 
-You’re allowed to remove or change our default logo to your own for the sitewide login form. Also, you can change the color and design of the form to match the look and feel of your website.
+Regarding sitewide login form, you’re allowed to remove or change our default logo to your own. Also, you can change the color and design of the form to match the look and feel of your website.
 
-As for the single password form, you will be able to change the WordPress default error message as well as password form instructions, namely headline, description, password input placeholder, and button text.
+[Besides the default login page](https://passwordprotectwp.com/docs/customize-wp-password-protected-entire-site-login-page/?utm_source=wp.org&utm_medium=guide-link&utm_campaign=password-protect-page-lite), you can now select one from our pre-designed themes that suits your site best.
+
+As for the [single password form](https://passwordprotectwp.com/docs/customize-password-form-wordpress-customizer/?utm_source=wp.org&utm_medium=guide-link&utm_campaign=password-protect-page-lite) and the [PCP password form](https://passwordprotectwp.com/docs/customize-pcp-form-wordpress-customizer/?utm_source=wp.org&utm_medium=guide-link&utm_campaign=password-protect-page-lite), you will be able to change the WordPress default error message as well as password form instructions, namely headline, description, password input placeholder, and button text.
 
 The button and text's font-size, color, and background can also be customized through a friendly WYSIWYG HTML Editor.
-
-Besides the default login page, you can now select one from our pre-designed themes that suits your site best.
 
 
 == Hide Password Protected Content ==
@@ -135,7 +135,7 @@ By default, users won't have to re-enter passwords to access a protected page or
 >* Track password usage, i.e. the time they're logged in, IP address and browser used, with Statistics extension
 >* [Password protect WordPress categories](https://passwordprotectwp.com/extensions/access-levels/?utm_source=wp.org&utm_medium=plugin-desc&utm_campaign=password-protect-page-lite&utm_content=pro-features) with different access levels
 >* Integrate with Prevent Direct Access Gold to protect files embedded in content
->* Sell password protected content via quick access links with [WooCommerce Integration extension](https://passwordprotectwp.com/extensions/woocommerce-integration/?utm_source=wp.org&utm_medium=plugin-desc&utm_campaign=password-protect-page-lite&utm_content=pro-features).
+>* Sell password protected whole or partial content with [WooCommerce Integration extension](https://passwordprotectwp.com/extensions/woocommerce-integration/?utm_source=wp.org&utm_medium=plugin-desc&utm_campaign=password-protect-page-lite&utm_content=pro-features).
 >* Protect the entire shop page, including individual products and category pages with the same passwords.
 >* Import and export passwords as well as requiring users to provide both password and username or email to unlock protected content with [Password Suite extension](https://passwordprotectwp.com/extensions/password-suite/?utm_source=wp.org&utm_medium=plugin-desc&utm_campaign=password-protect-page-lite&utm_content=pro-features).
 >* Restrict password usage based on WordPress users or IP addresses with [Smart Restriction extension](https://passwordprotectwp.com/extensions/smart-restriction/?utm_source=wp.org&utm_medium=plugin-desc&utm_campaign=password-protect-page-lite&utm_content=pro-features).
@@ -166,7 +166,7 @@ Please check out these guides on [how to password protect WordPress page](https:
 There are 2 easy ways to install our plugin:
 
 = 1.The standard way =
-* Go to menu Plugins > Add New  from your WordPress admin dashboard
+* Go to menu Plugins > Add New from your WordPress admin dashboard
 * Search for "WordPress Password Protect Page - PPWP Plugin"
 * Click to install
 * Activate Password Protect WordPress Lite from your Plugins page
@@ -226,7 +226,7 @@ Yes, the Pro version enables you to [automatically password protect child pages]
 
 2. Click on "Protect" button link for a new random password to be generated automatically.
 
-3.Protect your private pages and posts by user roles. You can create one password per role with our Free version but unlimited passwords with our Pro version.
+3. Protect your private pages and posts by user roles. You can create one password per role with our Free version but unlimited passwords with our Pro version.
 
 4. Users don't need to re-enter password when accessing your private content until its cookies expire. Simply change the default value under our plugin's Settings page.
 
@@ -268,6 +268,19 @@ N/A
 
 == Changelog ==
 
+= 1.7.6 =
+
+* [Feature] Customize PCP form with WordPress Customizer.
+* [Improvement] Add "Show password" checkbox to PCP form.
+* [Improvement] Add hooks to improve session cookies feature in the Pro version.
+* [BugFix] Always display “on” value for additional field checkboxes on PPWP Statistics
+
+= 1.7.5 =
+
+* [Feature] Modify user permission to access plugin’s settings page
+* [Improvement] Allow adding multiple master passwords at once
+* [BugFix] Fatal error on PHP 8.0
+
 = 1.7.4 =
 
 * [Feature] Support reCAPTCHA for sitewide protection
@@ -276,6 +289,7 @@ N/A
 * [Improvement] Support AJAX to work with reCAPTCHA
 
 = 1.7.3 =
+
 * [Improvement] Allow setting the cookie expiration time in seconds
 * [Improvement] Allow editing Label & Error Message in Elementor Widget
 * [BugFix] Can't edit password form via WP Customizer in Firefox, Opera, Edge, Safari,...
@@ -320,7 +334,7 @@ N/A
 * [BugFix] Post excerpts don't display when enable "Use Custom Form Action" option
 * [BugFix] Conflict with Impreza theme when displaying pcp form
 * [BugFix] Post is not protected with the password role is 0
-* [BugFix] Fix PHP Notice:  register_rest_route notice happened with WP 5.5
+* [BugFix] Fix PHP Notice: register_rest_route notice happened with WP 5.5
 
 
 = 1.5.1 =
@@ -341,7 +355,7 @@ N/A
 
 * [Feature] Share hook to handle tabs in sitewide sub-menu
 * [Improvement] Improve individual password form customizer
-* [BugFix] Use space instead of   in single password form
+* [BugFix] Use space instead of in single password form
 * [Improvement] Share hook to support custom form before rendering the password form.
 
 = 1.4.5 =

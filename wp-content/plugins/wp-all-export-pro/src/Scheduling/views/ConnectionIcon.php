@@ -14,7 +14,7 @@ $scheduling = \Wpae\Scheduling\Scheduling::create();
     <?php if ( $scheduling->checkConnection() ) {
         ?>
         <span class="wpallexport-help" title="Connection to WP All Export servers is stable and confirmed"
-              style="background-image: none; width: 20px; height: 20px;;">
+              style="background-image: none; width: 20px; height: 20px;">
         <img src="<?php echo PMXE_ROOT_URL; ?>/static/img/s-check.png" style="width: 16px;"/>
     </span>
         <?php
