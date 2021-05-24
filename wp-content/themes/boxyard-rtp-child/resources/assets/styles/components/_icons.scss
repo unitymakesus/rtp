@@ -63,6 +63,10 @@
     &.icon-youtube a::before {
       background-image: image('socialicons/youtube.svg');
     }
+
+    &.icon-tiktok a::before {
+      background-image: image('socialicons/tiktok.svg');
+    }
   }
 }
 
