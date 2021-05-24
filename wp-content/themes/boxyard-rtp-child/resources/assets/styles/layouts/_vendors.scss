@@ -284,6 +284,10 @@
     p {
       font-size: 0.75rem;
       margin: 0;
+
+      &:last-of-type {
+        margin-bottom: 1rem;
+      }
     }
 
     .vendor-content {
@@ -293,6 +297,23 @@
 
     .vendor-icon {
       width: 30px;
+    }
+
+    .vendor-label {
+      display: inline;
+      padding: 0.25rem 0.5rem;
+      font-size: 0.875rem;
+      line-height: 1;
+    }
+
+    .vendor-label--coming-soon {
+      background-color: #757575;
+      color: $color-white;
+    }
+
+    .vendor-label--view-hours {
+      background-color: $color-red-boxyard;
+      color: $color-white;
     }
 
     .vendor-img {

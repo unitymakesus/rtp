@@ -72,6 +72,9 @@ $prompts = get_terms([
               <h3 class="h4">{{ $vendor->post_title }}</h3>
             </a>
             {!! get_field('vendor_short_description', $vendor) !!}
+            @if ($label = get_field('vendor_pool_label', $vendor))
+              <span class="vendor-label vendor-label--{{ $label['value'] }}">{{ $label['label'] }}</span>
+            @endif
           </div>
           @if (has_post_thumbnail($vendor))
           <div class="vendor-img">
