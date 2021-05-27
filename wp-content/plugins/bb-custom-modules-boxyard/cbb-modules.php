@@ -77,6 +77,7 @@ add_filter( 'fl_builder_register_module', function($enabled, $instance) {
     'html',
     'cbb-navigation-card',
     'cbb-text-card',
+    'cbb-events-feed',
     'uabb-info-list',
     'separator',
   ];
