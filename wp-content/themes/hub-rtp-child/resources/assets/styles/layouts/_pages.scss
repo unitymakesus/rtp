@@ -23,3 +23,24 @@
 .error404 .entry-content {
   min-height: 40vh;
 }
+
+.sbi {
+  position: relative;
+
+  &::after {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 52px;
+    height: 52px;
+    background-repeat: no-repeat;
+    background-size: 32px;
+    background-position: center;
+    background-image: image('socialicons/instagram.svg');
+    background-color: $color-white;
+    padding: 1rem;
+    content: '';
+    pointer-events: none;
+    z-index: 10;
+  }
+}
