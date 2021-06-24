@@ -289,8 +289,7 @@ defined('MECEXEC') or die();
     $this->show_other_locations($event); // Show Additional Locations
   }
   ?>
-
-
+    <a class="btn-secondary" href="<?php echo esc_url(home_url('/calendar/')); ?>"><?php echo __('Return To Calendar', 'sage'); ?></a>
 </div>
 </article>
 </div>
